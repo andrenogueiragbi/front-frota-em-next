@@ -5,19 +5,16 @@ import Link from 'next/link';
 import { Container, Col, Row, Card, Form, Table } from 'react-bootstrap';
 
 // import widget/custom components
-import { StatRightTopIcon,StatRightTopIconFeet } from "widgets";
+import { StatRightTopIconFeet } from "widgets";
 
 // import sub components
-import {
-    ActiveProjects, Teams,
-    TasksPerformance, ListDriver,
-} from "sub-components";
 
 // import required data files
-import ProjectsStatsData from "data/dashboard/ProjectsStatsData";
 import DataFleet from "data/dashboard/DataFleet";
 
 const Home = () => {
+
+
     return (
         <Fragment>
             <div className="bg-primary pt-10 pb-21"></div>
@@ -65,17 +62,20 @@ const Home = () => {
                                             </div>
                                         </div>
                                     </Col>
-                                    {DataFleet.map((item, index) => {
-                                        return (
-                                            <Col xl={3} lg={6} md={12} xs={12} className="mt-6" key={index}>
-                                                <StatRightTopIconFeet info={item} />
-                                            </Col>
-                                        )
-                                    })}
+                                    {DataFleet.map((item, index) => (
+
+                                        <Col xl={3} lg={6} md={12} xs={12} className="mt-6" key={index}>
+                                            <StatRightTopIconFeet key={index} info={item} />
+                                        </Col>
+
+                                    ))}
                                 </Row>
 
 
                             </Container>
+                            <Card.Footer className="bg-white text-center">
+                                {/*                                 <Link href="#" className="link-primary">View All Projects</Link>
+ */}                            </Card.Footer>
 
 
 
@@ -86,6 +86,7 @@ const Home = () => {
 
 
             </Container>
+
         </Fragment>
     )
 }

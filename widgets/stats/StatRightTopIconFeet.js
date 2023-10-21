@@ -1,3 +1,4 @@
+'use client'
 // Widget : Stat Style 
 // Style : Stat widget with right top icon
 
@@ -7,8 +8,12 @@ import { Card, Image } from 'react-bootstrap';
 
 const StatRightTopIcon = props => {
     const { info } = props;
+
+
+
+
     return (
-        <Card>
+        <Card key={info.id} >
             <Card.Body>
                 <div className="d-flex justify-content-between align-items-center mb-3">
                     <div>
@@ -21,14 +26,25 @@ const StatRightTopIcon = props => {
 
                 <div className="d-flex justify-content-between align-items-center mb-3">
                     <div>
-                        <h1 className="fw-bold">{info.code}</h1>
+                        <div className="bg-primary d-flex d-flex justify-content-center align-items-center  " style={{ width: '55px', height: '55px',borderRadius: '100px' }}>
+                            <div className="d-flex justify-content-center align-items-center" >
+                                <div className="text-center">
+                                    <h1 className="text-white fs-6 badge text-wrap">C100</h1>
+                                </div>
+                            </div>
+                        </div>
+
                         <p className="mb-0">{info.marca}</p>
                     </div>
 
 
-                    <div style={{background: '#E8E9EA'}} className='border border-black rounded text-center'>
-                        <div style={{ fontSize: '8px' }} className="bg-primary text-center m-0 p-0">
-                            <span  className='text-white '>BRASIL</span>
+                    <div style={{ background: '#E8E9EA' }} className='border border-black rounded text-center'>
+                        <div style={{ fontSize: '8px' }} className="bg-primary d-flex justify-content-between align-items-center">
+
+                            <Image className="ms-1" src={`/images/frota/mercosul.png`} height={8} width={12} alt="" />
+                            <span className='text-white'>BRASIL </span>
+                            <Image className="me-1" src={`/images/frota/brasil.png`} height={7} width={11} alt="" />
+
                         </div>
                         <div className="mt-1 ms-2 me-2 fw-bold text-black">{info.placa.toUpperCase()}</div>
                     </div>

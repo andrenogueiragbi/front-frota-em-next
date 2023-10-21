@@ -73,7 +73,7 @@ const listDriver = () => {
                         </tbody>
                     </Table>
                     <Card.Footer className="bg-white text-center">
-                        <Link href="#" className="link-primary">View All Projects</Link>
+                       {/*  <Link href="#" className="link-primary">View All Projects</Link> */}
                     </Card.Footer>
                 </Card>
             </Col>
