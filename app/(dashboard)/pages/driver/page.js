@@ -2,20 +2,24 @@
 // import node module libraries
 import { Fragment } from "react";
 import Link from 'next/link';
-import { Container, Col, Row } from 'react-bootstrap';
+import { useState, useEffect } from 'react'
+import { NewDriver } from 'modals'
+import DataMotorista from "data/dashboard/DataMotorista";
 
-// import widget/custom components
-import { StatRightTopIcon } from "widgets";
+
 
 // import sub components
-import { ActiveProjects, Teams, 
-    TasksPerformance ,ListDriver,
-} from "sub-components";
+import { ListDriver } from "sub-components";
 
-// import required data files
-import ProjectsStatsData from "data/dashboard/ProjectsStatsData";
+import { Col, Row, Container, Alert } from 'react-bootstrap';
 
-const Home = () => {
+
+const Driver = () => {
+
+    const [showNew, setShowNew] = useState(false)
+    const [motorista, setMotorista] = useState(DataMotorista)
+
+
     return (
         <Fragment>
             <div className="bg-primary pt-10 pb-21"></div>
@@ -29,7 +33,7 @@ const Home = () => {
                                     <h3 className="mb-0  text-white">Moristas</h3>
                                 </div>
                                 <div>
-                                    <Link href="#" className="btn btn-white">Criar Novo Motorista</Link>
+                                    <Link onClick={() => setShowNew(!showNew)} href="#" className="btn btn-white">Criar Novo Motorista</Link>
                                 </div>
                             </div>
                         </div>
@@ -38,12 +42,17 @@ const Home = () => {
                 </Row>
 
                 {/* Active Projects  */}
-                <ListDriver />
+                <ListDriver motorista={motorista} />
 
-        
+
+
             </Container>
-            
+            {/* MODAL EDIT*/}
+
+            <NewDriver id={motorista.length+1} motorista={motorista} setMotorista={setMotorista} showNew={showNew} setShowNew={setShowNew} />
+
+
         </Fragment>
     )
 }
-export default Home;
+export default Driver;

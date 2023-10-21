@@ -2,7 +2,7 @@
 // import node module libraries
 import { Fragment } from "react";
 import Link from 'next/link';
-import { Container, Col, Row, Card, Form, Table } from 'react-bootstrap';
+import { Container, Col, Row, Card, Form, } from 'react-bootstrap';
 
 // import widget/custom components
 import { StatRightTopIconFeet } from "widgets";
@@ -64,7 +64,7 @@ const Home = () => {
                                     </Col>
                                     {DataFleet.map((item, index) => (
 
-                                        <Col xl={3} lg={6} md={12} xs={12} className="mt-6" key={index}>
+                                        <Col xl={4} lg={6} md={12} xs={12} className="mt-6" key={index}>
                                             <StatRightTopIconFeet key={index} info={item} />
                                         </Col>
 
