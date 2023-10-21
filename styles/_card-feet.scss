@@ -1,0 +1,61 @@
+// 
+// user.scss
+// Use this to write your custom SCSS
+//
+
+
+
+
+.my-custom-card {
+    border: solid 1px #624BFF;
+    transition: color 1.5s;
+}
+
+.my-custom-card:hover {
+    background-color: #3518f0;
+    /* Cor de fundo ao passar o mouse */
+    cursor: pointer;
+
+
+}
+
+
+
+.type_feet {
+    color: black;
+}
+
+.type_marca_feet {
+    color: gray;
+}
+
+.text_color_code {
+    color: #fff;
+
+}
+
+.ball_code {
+    background-color: #624BFF;
+}
+
+.my-custom-card:hover .type_feet {
+    color: #fff;
+
+}
+
+
+.my-custom-card:hover .type_marca_feet {
+    color: #fff;
+
+}
+
+.my-custom-card:hover .ball_code {
+    background-color: #fff;
+
+}
+
+.my-custom-card:hover .text_color_code {
+    color: #624BFF;
+
+}
+

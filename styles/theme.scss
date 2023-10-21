@@ -40,10 +40,11 @@
 // User
 @import "user";
 
-.heading-permalink{
+.heading-permalink {
     color: transparent;
     margin-left: -2rem;
-    &:hover{
+
+    &:hover {
         color: transparent;
 
 
@@ -51,18 +52,19 @@
 
 
 
-&::before {
-    color: rgba(82,95,127,0);
-    content: "#";
+    &::before {
+        color: rgba(82, 95, 127, 0);
+        content: "#";
 
 
 
-}
-&:hover:before{
-    color: $primary;
+    }
+
+    &:hover:before {
+        color: $primary;
 
 
 
-}
+    }
 
 }
