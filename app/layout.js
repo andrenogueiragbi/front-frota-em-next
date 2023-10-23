@@ -1,5 +1,9 @@
 // import theme style scss file
 import 'styles/theme.scss';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import ContextProvider from 'hooks/DataFake';
+
 
 
 export const metadata = {
@@ -10,10 +14,15 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
     return (
-        <html lang="en">
+        <html lang="pt-br">
             <body className='bg-light'>
-                {children}
-             
+                <ContextProvider>
+                    {children}
+
+                </ContextProvider>
+
+                <ToastContainer />
+
             </body>
         </html>
     )

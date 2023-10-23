@@ -1,28 +1,86 @@
 // import node module libraries
 import Link from 'next/link';
 import { Col, Row, Card, Table, Image, Form } from 'react-bootstrap';
-import { useState, useEffect } from 'react'
+import { useState, useEffect,useContext } from 'react'
+import moment from 'moment'
 
 import { EditDriver } from 'modals'
 
-// import required data files
-import DataDriver from "data/dashboard/DataDriver";
+
+import AlertToast from 'widgets/Alert/Alert'
+import { DataContext } from 'hooks/DataFake';
+
+
+function LineTr({ item }) {
+    const [showEdit, setShowEdit] = useState(false)
+
+    const {deleteMotorista} = useContext(DataContext);
+
+    function editDriver(item) {
+        setShowEdit(!showEdit)
+
+    }
+
+    function deleteDriver(id,nome){
+        AlertToast(`ID: ${id}, ${nome} apagado!`,'info')
+        deleteMotorista(id)
+
+    }
+
+
+
+
+    return (
+        <tr key={item.id}>
+            <td className="align-middle">{item.id}</td>
+            <td className="align-middle">
+                <div className="d-flex align-items-center">
+                    <div>
+
+                        <div className="d-flex justify-content-between align-items-center">
+
+                            <Image src={`${item.foto}`} className="rounded-circle avatar-md" alt="" />
+
+                        </div>
+
+                    </div>
+                    <div className="ms-3 lh-1">
+                        <h5 className=" mb-1">
+                            <Link href="#" className="text-inherit">{item.nome}</Link></h5>
+                    </div>
+                </div>
+            </td>
+            <td className="align-middle">{item.cargo}</td>
+
+            <td className="align-middle"><span className={`badge bg-${item.categoria.toUpperCase() == 'A' ? 'primary' : item.categoria.toUpperCase() == 'AB' ? 'success' : item.categoria.toUpperCase() == 'C' ? 'danger' : item.categoria.toUpperCase() == 'D' ? 'warning' : 'info'}`}>{item.categoria}</span></td>
+            <td className="align-middle">{ moment(item.vencimento, 'YYYY-MM-DD').format('DD/MM/YYYY')}</td>
+
+            {/* icons */}
+
+
+
+            <td className="align-middle">
+                <div className="d-flex align-items-center">
+                    <button className="bg-transparent border border-danger border-2 p-1 m-1 rounded-2 d-flex justify-content-center align-items-center" onClick={() => deleteDriver(item.id,item.nome)} ><i className="fe fe-x fs-3 text-danger" title='Inativar'></i></button>
+                    <button className="bg-transparent border border-warning border-2 p-1 m-1 rounded-2 d-flex justify-content-center align-items-center" onClick={() => editDriver(item)} ><i className="fe fe-edit-3 fs-3 text-warning" title='Editar'></i></button>
+                    <EditDriver item={item} showEdit={showEdit} setShowEdit={setShowEdit} />
+
+                </div>
+            </td>
+
+
+        </tr>
+
+    )
+}
+
 
 
 
 const listDriver = ({ motorista }) => {
 
-    const [showEdit, setShowEdit] = useState(false)
-    const [valueEdit,setValueEdit] = useState([])
-  
 
-    function editDriver(item) {
-        console.log("ITEM AQUI NA PAGE LIST",item)
 
-        setValueEdit(item)
-        setShowEdit(!showEdit)
-        
-    }
 
 
     return (
@@ -49,44 +107,10 @@ const listDriver = ({ motorista }) => {
                         </thead>
 
                         <tbody>
-                            {motorista.map((item, index) => {
-                                return (
-                                    <tr key={index}>
-                                        <td className="align-middle">{item.id}</td>
-                                        <td className="align-middle">
-                                            <div className="d-flex align-items-center">
-                                                <div>
+                            {motorista.map((item, index) => (
+                                <LineTr key={index} item={item} />
 
-                                                    <div className="d-flex justify-content-between align-items-center">
-
-                                                        <Image src={`${item.foto}`} className="rounded-circle avatar-md" alt="" />
-
-                                                    </div>
-
-                                                </div>
-                                                <div className="ms-3 lh-1">
-                                                    <h5 className=" mb-1">
-                                                        <Link href="#" className="text-inherit">{item.nome}</Link></h5>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td className="align-middle">{item.cargo}</td>
-
-                                        <td className="align-middle"><span className={`badge bg-${item.categoria.toUpperCase() == 'A' ? 'primary' : item.categoria.toUpperCase() == 'AB' ? 'success' : item.categoria.toUpperCase() == 'C' ? 'danger' : item.categoria.toUpperCase() == 'D' ? 'warning' : 'info'}`}>{item.categoria}</span></td>
-                                        <td className="align-middle">{item.vencimento}</td>
-
-                                        {/* icons */}
-                                        <td className="align-middle">
-
-                                            <a className="badge bg-danger m-2" onClick={() => notify()} ><i className="m-1 fe fe-x-square text-white  fs-3" title='Inativar'></i></a>
-                                            <a className="badge bg-info m-2" onClick={() => editDriver(item)} ><i className="m-1 fe fe-edit-2 text-white  fs-3" title='Editar'></i></a>
-
-
-                                        </td>
-
-                                    </tr>
-                                )
-                            })}
+                            ))}
                         </tbody>
                     </Table>
                     <Card.Footer className="bg-white text-center">
@@ -94,8 +118,7 @@ const listDriver = ({ motorista }) => {
                     </Card.Footer>
                 </Card>
             </Col>
-           <EditDriver valueEdit={valueEdit} showEdit={showEdit} setShowEdit={setShowEdit} />
-            
+
 
 
         </Row>

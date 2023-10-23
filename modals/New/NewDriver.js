@@ -1,11 +1,15 @@
 
 import { Modal, Button } from 'react-bootstrap';
-import { useState, useEffect } from 'react';
-import { multisite } from 'data/pricing/PricingPlansData';
+import { useState, useEffect, useContext } from 'react';
+import AlertToast from 'widgets/Alert/Alert';
+import { DataContext } from 'hooks/DataFake';
 
 
 
-const modalDriverNew = ({ showNew, setShowNew, motorista, setMotorista }) => {
+
+const modalDriverNew = ({ showNew, setShowNew }) => {
+
+    const { addMotorista } = useContext(DataContext);
 
     const [formData, setForm] = useState({
         id: "",
@@ -27,6 +31,7 @@ const modalDriverNew = ({ showNew, setShowNew, motorista, setMotorista }) => {
         foto: "",
         whatsapp: "",
         foto: "",
+        integracao:""
     });
 
 
@@ -39,8 +44,6 @@ const modalDriverNew = ({ showNew, setShowNew, motorista, setMotorista }) => {
         setForm({
             ...formData,
             [name]: value,
-            id: motorista.length + 1,
-            foto: `https://i.pravatar.cc/150?img=${motorista.length + 1}`
 
         });
 
@@ -50,10 +53,18 @@ const modalDriverNew = ({ showNew, setShowNew, motorista, setMotorista }) => {
     function newMotor() {
 
         if (formData.nome) {
-            setMotorista([...motorista, formData]);
+
+            addMotorista(formData.nome, formData.CPF, formData.RG, formData.cargo, formData.supervisor, formData.ncnh, formData.categoria, formData.emissao, formData.vencimento, formData.endereco, formData.bairro, formData.cidade, formData.n, formData.uf, formData.email, formData.celular, formData.whatsapp, formData.integracao)
+
+            //setMotorista([...motorista, formData]);
+            AlertToast('Dados Salvos!','success')
+
+
 
         } else {
-            alert('Por favor! Preencher o nome no motorista.')
+            return AlertToast('Dados inválidos para salvar!', 'info')
+
+
         }
 
 
@@ -66,13 +77,13 @@ const modalDriverNew = ({ showNew, setShowNew, motorista, setMotorista }) => {
             CPF: "",
             RG: "",
             cargo: "",
-            supervidor: "",
+            supervisor: "",
             ncnh: "",
             categoria: "",
             vencimento: "",
             endereco: "",
             bairro: "",
-            cidadde: "",
+            cidade: "",
             n: "",
             uf: "",
             email: "",
@@ -80,6 +91,7 @@ const modalDriverNew = ({ showNew, setShowNew, motorista, setMotorista }) => {
             foto: "",
             whatsapp: "",
             foto: "",
+            integracao:""
         })
         setShowNew(!showNew) //fechando modal
 
@@ -96,13 +108,13 @@ const modalDriverNew = ({ showNew, setShowNew, motorista, setMotorista }) => {
             CPF: "",
             RG: "",
             cargo: "",
-            supervidor: "",
+            supervisor: "",
             ncnh: "",
             categoria: "",
             vencimento: "",
             endereco: "",
             bairro: "",
-            cidadde: "",
+            cidade: "",
             n: "",
             uf: "",
             email: "",
@@ -110,6 +122,7 @@ const modalDriverNew = ({ showNew, setShowNew, motorista, setMotorista }) => {
             foto: "",
             whatsapp: "",
             foto: "",
+            integracao:""
         })
         setShowNew(!showNew) //fechando modal
 
@@ -158,12 +171,12 @@ const modalDriverNew = ({ showNew, setShowNew, motorista, setMotorista }) => {
 
                         <div className="col-md-3">
                             <label className="col-form-label">Supervisor:</label>
-                            <input type="text" className="form-control" />
+                            <input type="text" name="supervisor" className="form-control" value={formData.supervisor} onChange={(e) => handleInputChange(e)} />
                         </div>
 
                         <div className="col-md-2">
                             <label className="col-form-label">Nº CNH:</label>
-                            <input type="text" className="form-control" />
+                            <input type="text" name="ncnh" className="form-control" value={formData.ncnh} onChange={(e) => handleInputChange(e)} />
                         </div>
 
                         <div className="col-md-2">
@@ -171,8 +184,8 @@ const modalDriverNew = ({ showNew, setShowNew, motorista, setMotorista }) => {
                             <input type="text" name="categoria" className="form-control" value={formData.categoria} onChange={(e) => handleInputChange(e)} />
                         </div>
                         <div className="col-md-2">
-                            <label className="col-form-label" value={formData.vencimento} onChange={(e) => handleInputChange(e)} >Vencimento CNH:</label>
-                            <input type="date" name="vencimento" className="form-control" />
+                            <label className="col-form-label"  >Vencimento CNH:</label>
+                            <input type="date" name="vencimento" className="form-control" value={formData.vencimento} onChange={(e) => handleInputChange(e)} />
                         </div>
 
 
@@ -184,26 +197,26 @@ const modalDriverNew = ({ showNew, setShowNew, motorista, setMotorista }) => {
 
                         <div className="col-md-3">
                             <label className="col-form-label">Endereço:</label>
-                            <input type="text" className="form-control" />
+                            <input type="text" name="endereco" className="form-control" value={formData.endereco} onChange={(e) => handleInputChange(e)} />
                         </div>
 
                         <div className="col-md-3">
                             <label className="col-form-label">Bairro:</label>
-                            <input type="text" className="form-control" />
+                            <input type="text" name="bairro" className="form-control" value={formData.bairro} onChange={(e) => handleInputChange(e)} />
                         </div>
 
                         <div className="col-md-3">
                             <label className="col-form-label">Cidade</label>
-                            <input type="text" className="form-control" />
+                            <input type="text" name="cidade" className="form-control" value={formData.cidade} onChange={(e) => handleInputChange(e)} />
                         </div>
 
                         <div className="col-md-1">
                             <label className="col-form-label">Nº</label>
-                            <input type="text" className="form-control" />
+                            <input type="text" name="n" className="form-control" value={formData.n} onChange={(e) => handleInputChange(e)} />
                         </div>
                         <div className="col-md-2">
                             <label className="col-form-label">UF</label>
-                            <input type="text" className="form-control" />
+                            <input type="text" name="uf" className="form-control" value={formData.uf} onChange={(e) => handleInputChange(e)} />
                         </div>
 
 
@@ -215,22 +228,22 @@ const modalDriverNew = ({ showNew, setShowNew, motorista, setMotorista }) => {
 
                         <div className="col-md-4">
                             <label className="col-form-label">Email:</label>
-                            <input type="text" className="form-control" />
+                            <input type="text" name="email" className="form-control" value={formData.email} onChange={(e) => handleInputChange(e)} />
                         </div>
 
                         <div className="col-md-3">
                             <label className="col-form-label">Celular:</label>
-                            <input type="text" className="form-control" />
+                            <input type="text" name="celular" className="form-control" value={formData.celular} onChange={(e) => handleInputChange(e)} />
                         </div>
 
                         <div className="col-md-3">
                             <label className="col-form-label">Whatsapp:</label>
-                            <input type="text" className="form-control" />
+                            <input type="text" name="whatsapp" className="form-control" value={formData.whatsapp} onChange={(e) => handleInputChange(e)} />
                         </div>
 
                         <div className="col-md-2">
                             <label className="col-form-label">Código Integração:</label>
-                            <input type="text" className="form-control" />
+                            <input type="text" name="integracao" className="form-control" value={formData.integracao} onChange={(e) => handleInputChange(e)} />
                         </div>
 
 

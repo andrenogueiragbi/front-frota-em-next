@@ -8,7 +8,7 @@ export const Fleet = [
       code: "M1",
       icon: '/images/frota/titan.png' ,
       marca: 'Honda',
-      placa: uuid().slice(0, 3)+' '+uuid().slice(3, 7)
+      placa: "ABC 1234"
    },
    {
       id: 2,
@@ -16,7 +16,7 @@ export const Fleet = [
       code: "C2",
       icon: '/images/frota/yaris.png' ,
       marca: 'Toyata',
-      placa: uuid().slice(0, 3)+' '+uuid().slice(3, 7)
+      placa: "ABC 1234"
    },
    {
       id: 3,
@@ -24,7 +24,7 @@ export const Fleet = [
       code: "C333",
       icon: '/images/frota/uno2.png' ,
       marca: 'Fiat',
-      placa: uuid().slice(0, 3)+' '+uuid().slice(3, 7)
+      placa: "ABC 1234"
    },
    {
       id: 4,
@@ -32,7 +32,7 @@ export const Fleet = [
       code: "C4",
       icon: '/images/frota/hb20.png' ,
       marca: 'Hunday',
-      placa: uuid().slice(0, 3)+' '+uuid().slice(3, 7)
+      placa: "ABC 1234"
    },
    {
       id: 5,
@@ -41,7 +41,7 @@ export const Fleet = [
       icon: '/images/frota/hb20.png' ,
       marca: 'Hunday',
       placa: 'abc1236',
-      placa: uuid().slice(0, 3)+' '+uuid().slice(3, 7)
+      placa: "ABC 1234"
    },
    {
       id: 6,
@@ -49,7 +49,7 @@ export const Fleet = [
       code: "C22",
       icon: '/images/frota/yaris.png' ,
       marca: 'Toyata',
-      placa: uuid().slice(0, 3)+' '+uuid().slice(3, 7)
+      placa: "ABC 1234"
    },
    {
       id: 7,
@@ -57,7 +57,7 @@ export const Fleet = [
       code: "C4",
       icon: '/images/frota/hb20.png' ,
       marca: 'Hunday',
-      placa: String(uuid().slice(0, 3)+' '+uuid().slice(3, 7))
+      placa: String("ABC 1234")
    },
    {
       id: 8,
@@ -65,7 +65,7 @@ export const Fleet = [
       code: "C5",
       icon: '/images/frota/uno2.png' ,
       marca: 'Fiat',
-      placa: uuid().slice(0, 3)+' '+uuid().slice(3, 7)
+      placa: "ABC 1234"
    },
    {
       id: 9,
@@ -73,7 +73,7 @@ export const Fleet = [
       code: "C6",
       icon: '/images/frota/uno.png' ,
       marca: 'Fiat',
-      placa: uuid().slice(0, 3)+' '+uuid().slice(3, 7)
+      placa: "ABC 1234"
    },
 
    {
@@ -82,7 +82,7 @@ export const Fleet = [
       code: "C9",
       icon: '/images/frota/uno.png' ,
       marca: 'Fiat',
-      placa: uuid().slice(0, 3)+' '+uuid().slice(3, 7)
+      placa: "ABC 1234"
    },
    {
       id: 11,
@@ -90,7 +90,7 @@ export const Fleet = [
       code: "C9",
       icon: '/images/frota/h20-write.png' ,
       marca: 'Fiat',
-      placa: uuid().slice(0, 3)+' '+uuid().slice(3, 7)
+      placa: "ABC 1234"
    },
 
 ];

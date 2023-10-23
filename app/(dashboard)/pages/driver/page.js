@@ -2,22 +2,21 @@
 // import node module libraries
 import { Fragment } from "react";
 import Link from 'next/link';
-import { useState, useEffect } from 'react'
+import { useState, useEffect,useContext } from 'react'
 import { NewDriver } from 'modals'
-import DataMotorista from "data/dashboard/DataMotorista";
+import {DataContext} from 'hooks/DataFake';
 
 
 
 // import sub components
 import { ListDriver } from "sub-components";
-
-import { Col, Row, Container, Alert } from 'react-bootstrap';
+import { Col, Row, Container } from 'react-bootstrap';
 
 
 const Driver = () => {
 
     const [showNew, setShowNew] = useState(false)
-    const [motorista, setMotorista] = useState(DataMotorista)
+    const {sorteMotorista} = useContext(DataContext);
 
 
     return (
@@ -42,14 +41,14 @@ const Driver = () => {
                 </Row>
 
                 {/* Active Projects  */}
-                <ListDriver motorista={motorista} />
+                <ListDriver motorista={sorteMotorista} />
 
 
 
             </Container>
             {/* MODAL EDIT*/}
 
-            <NewDriver motorista={motorista} setMotorista={setMotorista} showNew={showNew} setShowNew={setShowNew} />
+            <NewDriver showNew={showNew} setShowNew={setShowNew} />
 
 
         </Fragment>
