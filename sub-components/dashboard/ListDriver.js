@@ -10,16 +10,17 @@ import DataDriver from "data/dashboard/DataDriver";
 
 
 
-const listDriver = ({ motorista, Editmotorista, setEditmotorista }) => {
+const listDriver = ({ motorista }) => {
 
     const [showEdit, setShowEdit] = useState(false)
+    const [valueEdit,setValueEdit] = useState([])
   
 
     function editDriver(item) {
-        console.log("ITEM AQUI NA PAGE",item)
+        console.log("ITEM AQUI NA PAGE LIST",item)
 
+        setValueEdit(item)
         setShowEdit(!showEdit)
-        setEditmotorista(item)
         
     }
 
@@ -93,8 +94,8 @@ const listDriver = ({ motorista, Editmotorista, setEditmotorista }) => {
                     </Card.Footer>
                 </Card>
             </Col>
+           <EditDriver valueEdit={valueEdit} showEdit={showEdit} setShowEdit={setShowEdit} />
             
-            <EditDriver valueEdit={Editmotorista} showEdit={showEdit} setShowEdit={setShowEdit} />
 
 
         </Row>

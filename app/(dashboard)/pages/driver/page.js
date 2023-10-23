@@ -18,7 +18,6 @@ const Driver = () => {
 
     const [showNew, setShowNew] = useState(false)
     const [motorista, setMotorista] = useState(DataMotorista)
-    const [Editmotorista, setEditmotorista] = useState([])
 
 
     return (
@@ -43,14 +42,14 @@ const Driver = () => {
                 </Row>
 
                 {/* Active Projects  */}
-                <ListDriver motorista={motorista} Editmotorista={Editmotorista} setEditmotorista={setEditmotorista} />
+                <ListDriver motorista={motorista} />
 
 
 
             </Container>
             {/* MODAL EDIT*/}
 
-            <NewDriver id={motorista.length + 1} motorista={motorista} setMotorista={setMotorista} showNew={showNew} setShowNew={setShowNew} />
+            <NewDriver motorista={motorista} setMotorista={setMotorista} showNew={showNew} setShowNew={setShowNew} />
 
 
         </Fragment>
