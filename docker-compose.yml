@@ -1,0 +1,21 @@
+version: '3.2'
+
+
+
+services:
+
+  controle_frota:
+    build: .
+    image: micks/controle_frota:1.0
+    container_name: controle_frota
+    ports:
+      - "3000:3000"
+    environment:
+      - RAD_DEBUG=yes
+    restart: always
+    network_mode: bridge
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: '0.5GB'
