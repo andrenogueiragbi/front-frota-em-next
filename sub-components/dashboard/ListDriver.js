@@ -1,7 +1,7 @@
 // import node module libraries
 import Link from 'next/link';
 import { Col, Row, Card, Table, Image, Form } from 'react-bootstrap';
-import { useState,useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 import { EditDriver } from 'modals'
 
@@ -10,9 +10,18 @@ import DataDriver from "data/dashboard/DataDriver";
 
 
 
-const listDriver = ({motorista}) => {
+const listDriver = ({ motorista, Editmotorista, setEditmotorista }) => {
 
     const [showEdit, setShowEdit] = useState(false)
+  
+
+    function editDriver(item) {
+        console.log("ITEM AQUI NA PAGE",item)
+
+        setShowEdit(!showEdit)
+        setEditmotorista(item)
+        
+    }
 
 
     return (
@@ -68,8 +77,8 @@ const listDriver = ({motorista}) => {
                                         {/* icons */}
                                         <td className="align-middle">
 
-                                            <a className="badge bg-danger m-2" onClick={()=>notify()} href="#"><i className="m-1 fe fe-x-square text-white  fs-3" title='Inativar'></i></a>
-                                            <a className="badge bg-info m-2" onClick={() => setShowEdit(!showEdit)} href="#"><i className="m-1 fe fe-edit-2 text-white  fs-3" title='Editar'></i></a>
+                                            <a className="badge bg-danger m-2" onClick={() => notify()} ><i className="m-1 fe fe-x-square text-white  fs-3" title='Inativar'></i></a>
+                                            <a className="badge bg-info m-2" onClick={() => editDriver(item)} ><i className="m-1 fe fe-edit-2 text-white  fs-3" title='Editar'></i></a>
 
 
                                         </td>
@@ -84,8 +93,9 @@ const listDriver = ({motorista}) => {
                     </Card.Footer>
                 </Card>
             </Col>
-            <EditDriver showEdit={showEdit} setShowEdit={setShowEdit} />
             
+            <EditDriver valueEdit={Editmotorista} showEdit={showEdit} setShowEdit={setShowEdit} />
+
 
         </Row>
     )
