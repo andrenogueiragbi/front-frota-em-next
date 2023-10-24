@@ -1,7 +1,8 @@
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Image } from 'react-bootstrap';
 import { useState, useEffect, useContext } from 'react';
 import { DataContext } from 'hooks/DataFake';
 import AlertToast from 'widgets/Alert/Alert';
+
 
 
 const modalFeetEdit = ({ item, showEdit, setShowEdit }) => {
@@ -23,7 +24,7 @@ const modalFeetEdit = ({ item, showEdit, setShowEdit }) => {
         ano: item.ano,
         nmotor: item.nmotor,
         tipo: item.tipo,
-        status:item.status,
+        status: item.status,
     });
 
 
@@ -54,7 +55,7 @@ const modalFeetEdit = ({ item, showEdit, setShowEdit }) => {
 
 
 
-        <Modal className='modal-xl' show={showEdit} onHide={() => setShowEdit(!showEdit)} >
+        <Modal className='modal' show={showEdit} onHide={() => setShowEdit(!showEdit)} >
             <Modal.Header className='bg-secondary' closeButton>
                 <Modal.Title className='text-white fs-4 text-wrap'>Editar Frota</Modal.Title>
             </Modal.Header>
@@ -64,74 +65,164 @@ const modalFeetEdit = ({ item, showEdit, setShowEdit }) => {
 
                 <form >
 
-                    <div className="col-md-2 me-auto">
-                        <label >Status:</label>
-                        <select name="status" className="form-control" id="status-select" value={formData?.status} onChange={(e) => handleInputChange(e)} >
-                            <option value="ATIVO">ATIVO</option>
-                            <option value="INATIVO">INATIVO</option>
-                        </select>
+                    <div className="row">
+
+                        <div className="d-flex justify-content-center mb-3 ">
+                            <div className="icon-shape">
+                                <div className='d-flex flex-column'>
+                                    <div className='d-flex flex-column align-items-center'>
+                                        <Image className="m-3" src={item.icon} height={50} width={90} alt="" />
+                                        <label className='bg-primary' style={{ borderRadius: '5px', color: '#fff', cursor: 'pointer', margin: '10px', padding: '6px' }} htmlFor="customFile">Selecione uma foto &#187;</label>
+                                        <input style={{ display: 'none' }} id='customFile' type='file' />
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="input-group col-md-6 me-auto ps-20 pe-20">
+                            <label className="input-group-text">Status</label>
+                            <select name="status" className="form-control custom-select " id="status-select" value={formData?.status} onChange={(e) => handleInputChange(e)}>
+                                <option value="ATIVO">ATIVO</option>
+                                <option value="INATIVO">INATIVO</option>
+                            </select>
+                        </div>
+
+
+
+
+
+
+
+                        {/*                         <div className="col-md-6 me-auto  d-flex justify-content-center ">
+                            <div className="icon-shape">
+                                <div className='d-flex flex-column'>
+                                    <Image onChange={handleFileChange} src={item.icon} height={50} width={90} alt="" />
+                                    <input  type="file" />
+
+                                </div>
+                            </div>
+                        </div>
+ */}
+
+
                     </div>
+
+
+
 
                     <div className="row">
 
-                        <div className="col-md-4 me-auto">
+                        <div className="col-md-6 me-auto">
                             <label className="col-form-label">Modelo:</label>
-                            <input type="text" name="model" className="form-control" value={formData?.model} onChange={(e) => handleInputChange(e)} />
+                            <input type="text" name="model" className="form-control" required value={formData?.model} onChange={(e) => handleInputChange(e)} />
                         </div>
 
-                        <div className="col-md-4">
+                        <div className="col-md-6">
                             <label className="col-form-label">Codigo:</label>
-                            <input type="text" name="code" className="form-control" value={formData?.code} onChange={(e) => handleInputChange(e)} />
+                            <input type="text" name="code" className="form-control" required value={formData?.code} onChange={(e) => handleInputChange(e)} />
                         </div>
-
-                        <div className="col-md-4">
-                            <label className="col-form-label">Marca:</label>
-                            <input type="text" name="marca" className="form-control" value={formData?.marca} onChange={(e) => handleInputChange(e)} />
-                        </div>
-
 
                     </div>
 
+
+
                     <div className="row">
 
-                        <div className="col-md-4 me-auto">
+                        <div className="col-md-6 me-auto">
                             <label className="col-form-label">Placa:</label>
-                            <input type="text" name="placa" className="form-control" value={formData?.placa} onChange={(e) => handleInputChange(e)} />
+                            <input type="text" name="placa" className="form-control" required value={formData?.placa} onChange={(e) => handleInputChange(e)} />
                         </div>
 
-                        <div className="col-md-4">
-                            <label className="col-form-label">chassi:</label>
+                        <div className="col-md-6">
+                            <label className="col-form-label">Chassi:</label>
                             <input type="text" name="chassi" className="form-control" value={formData?.chassi} onChange={(e) => handleInputChange(e)} />
                         </div>
 
-                        <div className="col-md-4">
-                            <label className="col-form-label">Combustivel:</label>
-                            <input type="text" name="combustivel" className="form-control" value={formData?.combustivel} onChange={(e) => handleInputChange(e)} />
-                        </div>
 
 
                     </div>
 
-
                     <div className="row">
 
-                        <div className="col-md-4 me-auto">
-                            <label className="col-form-label">Ano:</label>
-                            <input type="text" name="ano" className="form-control" value={formData?.ano} onChange={(e) => handleInputChange(e)} />
-                        </div>
-
-                        <div className="col-md-4">
+                        <div className="col-md-6">
                             <label className="col-form-label">Nº Motor:</label>
                             <input type="text" name="nmotor" className="form-control" value={formData?.nmotor} onChange={(e) => handleInputChange(e)} />
                         </div>
 
-                        <div className="col-md-4">
-                            <label className="col-form-label">Tipo:</label>
-                            <input type="text" name="tipo" className="form-control" value={formData?.tipo} onChange={(e) => handleInputChange(e)} />
+
+                        <div className="col-md-6 me-auto">
+                            <label className="col-form-label">Ano:</label>
+                            <input type="date" name="ano" className="form-control" value={formData?.ano} onChange={(e) => handleInputChange(e)} />
+                        </div>
+
+
+
+                    </div>
+
+
+
+
+                    <div className="row">
+
+
+                        <div className="col-md-6">
+                            <label className="col-form-label">Combustível:</label>
+                            <select name="combustivel" className="form-control" id="status-select" value={formData?.combustivel} onChange={(e) => handleInputChange(e)} >
+                                <option value="">Selecione uma opção</option>
+                                <option value="Álcool">Álcool</option>
+                                <option value="Gasolina">Gasolina</option>
+                                <option value="Flex">Flex</option>
+                                <option value="GNV">GNV</option>
+                            </select>
+                        </div>
+
+
+                        <div className="col-md-6">
+                            <label className="col-form-label">Marca:</label>
+                            <input type="text" name="marca" className="form-control" required value={formData?.marca} onChange={(e) => handleInputChange(e)} />
                         </div>
 
 
                     </div>
+
+
+
+
+
+
+                    <div className="row">
+
+                        <div className="col-md-6">
+                            <label className="col-form-label">Tipo:</label>
+                            <select name="tipo" className="form-control" id="status-select" value={formData?.tipo} onChange={(e) => handleInputChange(e)} >
+                                <option value="">Selecione uma opção</option>
+                                <option value="Sedan">Sedan</option>
+                                <option value="Hatch">Hatch</option>
+                                <option value="Picape">Picape</option>
+                                <option value="SUV">SUV</option>
+                                <option value="Motocicleta">Motocicleta</option>
+                                <option value="Sidecar">Sidecar</option>
+                                <option value="Bicicleta">Bicicleta</option>
+
+                            </select>
+                            {/*  <input type="text" name="tipo" className="form-control" value={formData?.tipo} onChange={(e) => handleInputChange(e)} /> */}
+                        </div>
+
+
+                        <div className="col-md-6 me-auto">
+                            <label className="col-form-label">Observação:</label>
+                            <input type="text" name="ano" className="form-control" value={formData?.ano} onChange={(e) => handleInputChange(e)} />
+                        </div>
+
+
+
+                    </div>
+
+
+
 
 
                 </form>
