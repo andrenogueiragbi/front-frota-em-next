@@ -9,7 +9,7 @@ services:
     image: micks/controle_frota:1.0
     container_name: controle_frota
     ports:
-      - "3000:3000"
+      - "3333:3000"
     environment:
       - RAD_DEBUG=yes
     restart: always
