@@ -42,7 +42,7 @@ export const DashboardMenu = [
 		icon: 'truck',
 		link: '/pages/fleet'
 	},
-	{
+/* 	{
 		id: uuid(),
 		title: 'Pages',
 		icon: 'layers',
@@ -54,7 +54,7 @@ export const DashboardMenu = [
 			{ id: uuid(), link: '/not-found', name: '404 Error' }
 		]
 	},	
-
+ */
 
 
 

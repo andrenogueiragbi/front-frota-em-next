@@ -1,4 +1,4 @@
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Image } from 'react-bootstrap';
 import { useState, useEffect, useContext } from 'react';
 import { DataContext } from 'hooks/DataFake';
 import AlertToast from 'widgets/Alert/Alert';
@@ -48,8 +48,8 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit }) => {
 
     function editMotor() {
 
-        AlertToast('Dados atualizados!','success')
-        updateMotorista(id,formData)
+        AlertToast('Dados atualizados!', 'success')
+        updateMotorista(id, formData)
         setShowEdit(!showEdit)
 
     }
@@ -64,7 +64,14 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit }) => {
 
         <Modal className='modal-xl' show={showEdit} onHide={() => setShowEdit(!showEdit)} >
             <Modal.Header className='bg-secondary' closeButton>
-                <Modal.Title className='text-white fs-4 text-wrap'>Editar Motorista</Modal.Title>
+                <Modal.Title className='text-center d-flex align-items-center  text-white' title='Nova Frota'>
+                    <i className="fe fe-file-text fs-3 text-white me-2"></i>
+                    Editar Motorista
+                    <i className="fe fe-users fs-3 text-white ms-2"></i>
+                </Modal.Title>
+            
+            
+            
             </Modal.Header>
             <Modal.Body  >
 
@@ -72,13 +79,41 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit }) => {
 
                 <form >
 
-                    <div className="col-md-2 me-auto">
-                        <label >Status:</label>
-                        <select name="status" className="form-control" id="status-select" value={formData?.status} onChange={(e) => handleInputChange(e)} >
-                            <option value="ATIVO">ATIVO</option>
-                            <option value="INATIVO">INATIVO</option>
-                        </select>
+                    <div className="d-flex justify-content-center mb-3 ">
+                        <div className="icon-shape">
+                            <div className='d-flex flex-column'>
+                                <div className='d-flex flex-column align-items-center'>
+                                    <Image className="m-3 rounded-circle" src={item.foto} height={90} width={90} alt="" />
+                                    <label className='bg-primary' style={{ borderRadius: '5px', color: '#fff', cursor: 'pointer', margin: '10px', padding: '6px' }} htmlFor="customFile">Selecione uma foto &#187;</label>
+                                    <input style={{ display: 'none' }} id='customFile' type='file' />
+
+                                </div>
+
+
+                            </div>
+                        </div>
                     </div>
+
+
+                    <div className="d-flex justify-content-center mb-3 ">
+                        <div className="icon-shape">
+                            <div className='d-flex flex-column'>
+                                <div className="input-group col-md-6">
+                                    <label className="input-group-text">Status</label>
+                                    <select name="status" className="form-control custom-select " id="status-select" value={formData?.status} onChange={(e) => handleInputChange(e)}>
+                                        <option value="ATIVO">ATIVO</option>
+                                        <option value="INATIVO">INATIVO</option>
+                                    </select>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
 
                     <div className="row">
 

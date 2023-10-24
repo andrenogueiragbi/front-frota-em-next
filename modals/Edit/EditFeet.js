@@ -57,7 +57,11 @@ const modalFeetEdit = ({ item, showEdit, setShowEdit }) => {
 
         <Modal className='modal' show={showEdit} onHide={() => setShowEdit(!showEdit)} >
             <Modal.Header className='bg-secondary' closeButton>
-                <Modal.Title className='text-white fs-4 text-wrap'>Editar Frota</Modal.Title>
+                <Modal.Title className='text-center d-flex align-items-center  text-white' title='Nova Frota'>
+                    <i className="fe fe-file-text fs-3 text-white me-2"></i>
+                    Editar Frota
+                    <i className="fe fe-truck fs-3 text-white ms-2"></i>
+                </Modal.Title>
             </Modal.Header>
             <Modal.Body  >
 
