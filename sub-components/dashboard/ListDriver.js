@@ -1,7 +1,7 @@
 // import node module libraries
 import Link from 'next/link';
 import { Col, Row, Card, Table, Image, Form } from 'react-bootstrap';
-import { useState, useEffect,useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import moment from 'moment'
 
 import { EditDriver } from 'modals'
@@ -14,15 +14,14 @@ import { DataContext } from 'hooks/DataFake';
 function LineTr({ item }) {
     const [showEdit, setShowEdit] = useState(false)
 
-    const {deleteMotorista} = useContext(DataContext);
+    const { deleteMotorista } = useContext(DataContext);
 
-    function editDriver(item) {
-        setShowEdit(!showEdit)
 
-    }
 
-    function deleteDriver(id,nome){
-        AlertToast(`ID: ${id}, ${nome} apagado!`,'info')
+
+
+    function deleteDriver(id, nome) {
+        AlertToast(`ID: ${id}, ${nome} apagado!`, 'info')
         deleteMotorista(id)
 
     }
@@ -53,7 +52,7 @@ function LineTr({ item }) {
             <td className="align-middle">{item.cargo}</td>
 
             <td className="align-middle"><span className={`badge bg-${item.categoria.toUpperCase() == 'A' ? 'primary' : item.categoria.toUpperCase() == 'AB' ? 'success' : item.categoria.toUpperCase() == 'C' ? 'danger' : item.categoria.toUpperCase() == 'D' ? 'warning' : 'info'}`}>{item.categoria}</span></td>
-            <td className="align-middle">{ moment(item.vencimento, 'YYYY-MM-DD').format('DD/MM/YYYY')}</td>
+            <td className="align-middle">{moment(item.vencimento, 'YYYY-MM-DD').format('DD/MM/YYYY')}</td>
 
             {/* icons */}
 
@@ -61,8 +60,8 @@ function LineTr({ item }) {
 
             <td className="align-middle">
                 <div className="d-flex align-items-center">
-                    <button className="bg-transparent border border-danger border-2 p-1 m-1 rounded-2 d-flex justify-content-center align-items-center" onClick={() => deleteDriver(item.id,item.nome)} ><i className="fe fe-x fs-3 text-danger" title='Inativar'></i></button>
-                    <button className="bg-transparent border border-warning border-2 p-1 m-1 rounded-2 d-flex justify-content-center align-items-center" onClick={() => editDriver(item)} ><i className="fe fe-edit-3 fs-3 text-warning" title='Editar'></i></button>
+                    <button className="bg-transparent border border-danger border-2 p-1 m-1 rounded-2 d-flex justify-content-center align-items-center" onClick={() => deleteDriver(item.id, item.nome)} ><i className="fe fe-x fs-3 text-danger" title='Inativar'></i></button>
+                    <button className="bg-transparent border border-warning border-2 p-1 m-1 rounded-2 d-flex justify-content-center align-items-center" onClick={() => setShowEdit(!showEdit)} ><i className="fe fe-edit-3 fs-3 text-warning" title='Editar'></i></button>
                     <EditDriver item={item} showEdit={showEdit} setShowEdit={setShowEdit} />
 
                 </div>

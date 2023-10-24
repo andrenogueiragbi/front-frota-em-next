@@ -2,9 +2,14 @@
 import EditDriver from 'modals/Edit/EditDriver';
 import NewDriver from 'modals/New/NewDriver';
 
+import EditFeet from 'modals/Edit/EditFeet';
+import NewFeet from 'modals/New/NewFeet';
+
 
 export {
     EditDriver,
-    NewDriver
+    NewDriver,
+    EditFeet,
+    NewFeet
 
 };

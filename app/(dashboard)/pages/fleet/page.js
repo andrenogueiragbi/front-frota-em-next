@@ -1,8 +1,9 @@
 'use client'
 // import node module libraries
-import { Fragment } from "react";
+import { Fragment, useContext, useState } from "react";
 import Link from 'next/link';
 import { Container, Col, Row, Card, Form, } from 'react-bootstrap';
+
 
 // import widget/custom components
 import { StatRightTopIconFeet } from "widgets";
@@ -11,8 +12,14 @@ import { StatRightTopIconFeet } from "widgets";
 
 // import required data files
 import DataFleet from "data/dashboard/DataFleet";
+import { DataContext } from 'hooks/DataFake';
+import { NewFeet } from 'modals'
 
 const Home = () => {
+
+    const { sorteFrota } = useContext(DataContext);
+    const [showNew, setShowNew] = useState(false)
+
 
 
     return (
@@ -28,7 +35,7 @@ const Home = () => {
                                     <h3 className="mb-0  text-white">Frota</h3>
                                 </div>
                                 <div>
-                                    <Link href="#" className="btn btn-white">Criar Nova Frota</Link>
+                                    <Link onClick={() => setShowNew(!showNew)} href="#" className="btn btn-white">Criar Nova Frota</Link>
                                 </div>
                             </div>
                         </div>
@@ -62,10 +69,10 @@ const Home = () => {
                                             </div>
                                         </div>
                                     </Col>
-                                    {DataFleet.map((item, index) => (
+                                    {sorteFrota.map((item, index) => (
 
                                         <Col xl={4} lg={6} md={12} xs={12} className="mt-6" key={index}>
-                                            <StatRightTopIconFeet key={index} info={item} />
+                                            <StatRightTopIconFeet key={index} item={item} />
                                         </Col>
 
                                     ))}
@@ -86,6 +93,8 @@ const Home = () => {
 
 
             </Container>
+            <NewFeet showNew={showNew} setShowNew={setShowNew} />
+
 
         </Fragment>
     )

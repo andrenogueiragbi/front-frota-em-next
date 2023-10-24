@@ -54,37 +54,245 @@ const DataContextProvider = (props) => {
         }
     ])
 
+    const [frota, setFrota] = useState([
+        {
+            id: 1,
+            model: "Titan 125CG",
+            code: "M1",
+            icon: '/images/frota/titan.png',
+            marca: 'Honda',
+            placa: "ABC 1234",
+            km: "10",
+            chassi: "dfghdfgd5fg45dfg",
+            combustivel: "Alcool",
+            ano: "2023",
+            nmotor: "1452554",
+            tipo: "Mota",
+            status: "INATIVO"
+        },
+        {
+            id: 2,
+            model: "Yaris",
+            code: "C2",
+            icon: '/images/frota/yaris.png',
+            marca: 'Toyata',
+            placa: "ABC 1234",
+            km: "",
+            chassi: "",
+            combustivel: "",
+            ano: "",
+            nmotor: "",
+            tipo: "",
+            status: "ATIVO"
+        },
+        {
+            id: 3,
+            model: "Uno",
+            code: "C333",
+            icon: '/images/frota/uno2.png',
+            marca: 'Fiat',
+            placa: "ABC 1234",
+            km: "",
+            chassi: "",
+            combustivel: "",
+            ano: "",
+            nmotor: "",
+            tipo: "",
+            status: "ATIVO"
+        },
+        {
+            id: 4,
+            model: "HB20",
+            code: "C4",
+            icon: '/images/frota/hb20.png',
+            marca: 'Hunday',
+            placa: "ABC 1234",
+            km: "",
+            chassi: "",
+            combustivel: "",
+            ano: "",
+            nmotor: "",
+            tipo: "",
+            status: "ATIVO"
+        },
+        {
+            id: 5,
+            model: "HB20",
+            code: "C4",
+            icon: '/images/frota/hb20.png',
+            marca: 'Hunday',
+            placa: 'abc1236',
+            km: "",
+            chassi: "",
+            combustivel: "",
+            ano: "",
+            nmotor: "",
+            tipo: "",
+            status: "ATIVO"
+        },
+        {
+            id: 6,
+            model: "Yaris",
+            code: "C22",
+            icon: '/images/frota/yaris.png',
+            marca: 'Toyata',
+            placa: "ABC 1234",
+            km: "",
+            chassi: "",
+            combustivel: "",
+            ano: "",
+            nmotor: "",
+            tipo: "",
+            status: "ATIVO"
+        },
+        {
+            id: 7,
+            model: "HB20",
+            code: "C4",
+            icon: '/images/frota/hb20.png',
+            marca: 'Hunday',
+            placa: "ABC 1234",
+            km: "",
+            chassi: "",
+            combustivel: "",
+            ano: "",
+            nmotor: "",
+            tipo: "",
+            status: "ATIVO"
+        },
+        {
+            id: 8,
+            model: "Uno",
+            code: "C5",
+            icon: '/images/frota/uno2.png',
+            marca: 'Fiat',
+            placa: "ABC 1234",
+            km: "",
+            chassi: "",
+            combustivel: "",
+            ano: "",
+            nmotor: "",
+            tipo: "",
+            status: "ATIVO"
+        },
+        {
+            id: 9,
+            model: "Uno",
+            code: "C6",
+            icon: '/images/frota/uno.png',
+            marca: 'Fiat',
+            placa: "ABC 1234",
+            km: "",
+            chassi: "",
+            combustivel: "",
+            ano: "",
+            nmotor: "",
+            tipo: "",
+            status: "ATIVO"
+        },
 
-/*     useEffect(() => {
-        setMotorista(JSON.parse(localStorage.getItem('motorista')))
-    }, [])
+        {
+            id: 10,
+            model: "Uno",
+            code: "C9",
+            icon: '/images/frota/uno.png',
+            marca: 'Fiat',
+            placa: "ABC 1234",
+            km: "",
+            chassi: "",
+            combustivel: "",
+            ano: "",
+            nmotor: "",
+            tipo: "",
+            status: "ATIVO"
+        },
+        {
+            id: 11,
+            model: "HB20",
+            code: "C9",
+            icon: '/images/frota/h20-write.png',
+            marca: 'Fiat',
+            placa: "ABC 1234",
+            km: "",
+            chassi: "",
+            combustivel: "",
+            ano: "",
+            nmotor: "",
+            tipo: "",
+            status: "ATIVO"
+        },
+
+    ])
 
 
-    useEffect(() => {
-        localStorage.setItem('motorista', JSON.stringify(motorista));
-    })
- */
+    /*     useEffect(() => {
+            setMotorista(JSON.parse(localStorage.getItem('motorista')))
+        }, [])
+    
+    
+        useEffect(() => {
+            localStorage.setItem('motorista', JSON.stringify(motorista));
+        })
+     */
 
+
+    /* DADOS DE MOTORISTA */
     const sorteMotorista = motorista.sort((a, b) => (a.nome < b.nome ? -1 : 1));
 
 
     const addMotorista = (nome, CPF, RG, cargo, supervisor, ncnh, categoria, emissao, vencimento, endereco, bairro, cidade, n, uf, email, celular, whatsapp, integracao) => {
-        setMotorista([...motorista, { id: motorista.length + 1, nome, CPF, RG, cargo, supervisor, ncnh, categoria, emissao, vencimento, endereco, bairro, cidade, n, uf, email, celular, whatsapp, integracao, status:"ATIVO", foto: `https://i.pravatar.cc/150?img=${motorista.length + 1}` }])
+        setMotorista([...motorista, { id: motorista.length + 1, nome, CPF, RG, cargo, supervisor, ncnh, categoria, emissao, vencimento, endereco, bairro, cidade, n, uf, email, celular, whatsapp, integracao, status: "ATIVO", foto: `https://i.pravatar.cc/150?img=${motorista.length + 1}` }])
     }
 
-     const deleteMotorista = (id) => {
+    const deleteMotorista = (id) => {
         setMotorista(motorista.filter(motorista => motorista.id !== id))
     }
 
     const updateMotorista = (id, updatedMotorista) => {
         setMotorista(motorista.map((motorista) => motorista.id === id ? updatedMotorista : motorista))
-    } 
+    }
+
+
+    /*DADOS DE FROTA*/
+
+
+    const sorteFrota = frota.sort((a, b) => (a.id < b.id ? -1 : 1));
+
+
+    const addFrota = (model, code, marca, placa, km, chassi, combustivel, ano, nmotor, tipo) => {
+
+
+        setFrota([...frota, {
+            id: frota.length + 1, 
+            model,
+            code,
+            marca,
+            placa,
+            km,
+            chassi,
+            combustivel,
+            ano,
+            nmotor,
+            tipo,
+            icon: '/images/frota/h20-write.png'
+
+        }])
+    }
+    /*
+        const deleteMotorista = (id) => {
+            setMotorista(motorista.filter(motorista => motorista.id !== id))
+        }
+    */
+    const updateFrota = (id, updatedFrota) => {
+        setFrota(frota.map((frota) => frota.id === id ? updatedFrota : frota))
+    }
+
 
 
 
 
     return (
-        <DataContext.Provider value={{ sorteMotorista,addMotorista,updateMotorista,deleteMotorista,/*  addEmployee, deleteEmployee, updateEmployee  */ }}>
+        <DataContext.Provider value={{ sorteMotorista, addMotorista, updateMotorista, deleteMotorista, sorteFrota, updateFrota, addFrota,/*  addEmployee, deleteEmployee, updateEmployee  */ }}>
             {props.children}
         </DataContext.Provider>
     )
