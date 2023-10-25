@@ -69,7 +69,7 @@ const DataContextProvider = (props) => {
             nmotor: "1452554",
             tipo: "Mota",
             status: "INATIVO",
-            km:"10"
+            km: "10"
         },
         {
             id: 2,
@@ -85,7 +85,7 @@ const DataContextProvider = (props) => {
             nmotor: "",
             tipo: "",
             status: "ATIVO",
-            km:"10"
+            km: "10"
         },
         {
             id: 3,
@@ -101,7 +101,7 @@ const DataContextProvider = (props) => {
             nmotor: "",
             tipo: "",
             status: "ATIVO",
-            km:"10"
+            km: "10"
         },
         {
             id: 4,
@@ -117,7 +117,7 @@ const DataContextProvider = (props) => {
             nmotor: "",
             tipo: "",
             status: "ATIVO",
-            km:"10"
+            km: "10"
         },
         {
             id: 5,
@@ -133,7 +133,7 @@ const DataContextProvider = (props) => {
             nmotor: "",
             tipo: "",
             status: "ATIVO",
-            km:"10"
+            km: "10"
         },
         {
             id: 6,
@@ -149,7 +149,7 @@ const DataContextProvider = (props) => {
             nmotor: "",
             tipo: "",
             status: "ATIVO",
-            km:"10"
+            km: "10"
         },
         {
             id: 7,
@@ -165,7 +165,7 @@ const DataContextProvider = (props) => {
             nmotor: "",
             tipo: "",
             status: "ATIVO",
-            km:"10"
+            km: "10"
         },
         {
             id: 8,
@@ -181,7 +181,7 @@ const DataContextProvider = (props) => {
             nmotor: "",
             tipo: "",
             status: "ATIVO",
-            km:"10"
+            km: "10"
         },
         {
             id: 9,
@@ -197,7 +197,7 @@ const DataContextProvider = (props) => {
             nmotor: "",
             tipo: "",
             status: "ATIVO",
-            km:"10"
+            km: "10"
         },
 
         {
@@ -214,7 +214,7 @@ const DataContextProvider = (props) => {
             nmotor: "",
             tipo: "",
             status: "ATIVO",
-            km:"10"
+            km: "10"
         },
         {
             id: 11,
@@ -230,17 +230,18 @@ const DataContextProvider = (props) => {
             nmotor: "",
             tipo: "",
             status: "ATIVO",
-            km:"10"
+            km: "10"
         },
 
     ])
 
     const [multa, setMulta] = useState([{
         id: 1,
-        motorista: "André Pereira Nogueira",
+        motorista_id: 1,
+        veiculo_id: 1,
         data: "01 jan 2021",
         hora: "12:51",
-        tipo:"Ultrapassagem em faixa de mão dupla",
+        tipo: "Ultrapassagem em faixa de mão dupla",
         local: "BR 030 saida para Caetité",
         justificativa: "Não percebeu",
         placa: "ABC 1234",
@@ -248,15 +249,16 @@ const DataContextProvider = (props) => {
         pagamento: "Á vista",
         p_empresa: "200,00",
         p_motorista: "398,37",
-        veiculo: "Hunday GB20 - C12"
+        pontos: "20",
 
     },
     {
         id: 2,
-        motorista: "Silas Teixeira",
+        motorista_id: 2,
+        veiculo_id: 2,
         data: "05 mar 2023",
         hora: "08:52",
-        tipo:"Usar celular em quanto dirige na via",
+        tipo: "Usar celular em quanto dirige na via",
         local: "Rua camerino Neves",
         justificativa: "Não percebeu",
         placa: "ABC 4321",
@@ -264,11 +266,11 @@ const DataContextProvider = (props) => {
         pagamento: "Á vista",
         p_empresa: "0,00",
         p_motorista: "193,00",
-        veiculo: "Chefrolet Zarira - C12"
+        pontos: "2",
 
     }
 
-])
+    ])
 
     /*     useEffect(() => {
             setMotorista(JSON.parse(localStorage.getItem('motorista')))
@@ -295,6 +297,12 @@ const DataContextProvider = (props) => {
 
     const updateMotorista = (id, updatedMotorista) => {
         setMotorista(motorista.map((motorista) => motorista.id === id ? updatedMotorista : motorista))
+    }
+
+
+    const findMotorista = (idProcurar) => {
+        return motorista.find(objeto => objeto.id == idProcurar);
+
     }
 
 
@@ -325,11 +333,32 @@ const DataContextProvider = (props) => {
     }
 
     const updateFrota = (id, updatedFrota) => {
-        setFrota(frota.map((frota) => frota.id === id ? updatedFrota : frota))
+        setFrota(frota.map((frota) => frota.id == id ? updatedFrota : frota))
+    }
+
+    const findFrota = (idProcurar) => {
+        return frota.find(objeto => objeto.id == idProcurar);
+
     }
 
 
+
     const sorteMulta = multa.sort((a, b) => (a.id < b.id ? -1 : 1));
+
+    const addMulta = (veiculo_id, motorista_id, data, hora, tipo, local, justificativa, placa, valor, pagamento, p_empresa, p_motorista, pontos) => {
+
+        console.log(veiculo_id, motorista_id, data, hora, tipo, local, justificativa, placa, valor, pagamento, p_empresa, p_motorista, pontos)
+
+        setMulta([...multa, {
+            id: multa.length + 1,
+            veiculo_id, motorista_id, data, hora, tipo, local, justificativa, placa, valor, pagamento, p_empresa, p_motorista, pontos
+        }])
+    }
+
+    const updateMulta = (id, updatedMulta) => {
+        setMulta(multa.map((multa) => multa.id == id ? updatedMulta : multa))
+    }
+
 
 
 
@@ -338,9 +367,9 @@ const DataContextProvider = (props) => {
 
     return (
         <DataContext.Provider value={{
-            sorteMotorista, addMotorista, updateMotorista, deleteMotorista,
-            sorteFrota, updateFrota, addFrota,
-            sorteMulta,
+            sorteMotorista, addMotorista, updateMotorista, deleteMotorista,findMotorista,
+            sorteFrota, updateFrota, addFrota,findFrota,
+            sorteMulta, addMulta,updateMulta
         }}>
             {props.children}
         </DataContext.Provider>

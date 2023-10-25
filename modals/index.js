@@ -6,6 +6,7 @@ import EditFeet from 'modals/Edit/EditFeet';
 import NewFeet from 'modals/New/NewFeet';
 
 import NewFine from 'modals/New/NewFine';
+import EditFine from 'modals/Edit/EditFine';
 
 
 export {
@@ -13,6 +14,7 @@ export {
     NewDriver,
     EditFeet,
     NewFeet,
-    NewFine
+    NewFine,
+    EditFine
 
 };

@@ -1,9 +1,7 @@
-
 import { Modal, Button, Image } from 'react-bootstrap';
 import { useState, useEffect, useContext } from 'react';
-import AlertToast from 'widgets/Alert/Alert';
 import { DataContext } from 'hooks/DataFake';
-
+import AlertToast from 'widgets/Alert/Alert';
 
 export function year() {
     const dataAtual = new Date();
@@ -11,7 +9,7 @@ export function year() {
     const anostart = parseInt(dataAtual.getFullYear()) - 35;
     const arrayYear = []
 
-    for (let i = anoAtual+1; i >= anostart; i--) {
+    for (let i = anoAtual + 1; i >= anostart; i--) {
         arrayYear.push(i)
 
     }
@@ -23,32 +21,31 @@ export function year() {
 
 
 
+const modalFineEdit = ({ item, showEdit, setShowEdit }) => {
 
-const modalFeetNew = ({ showNew, setShowNew }) => {
-
-    const { addFrota, sorteMotorista, sorteFrota,addMulta } = useContext(DataContext);
+    const { addFrota, sorteMotorista, sorteFrota, addMulta,updateMulta } = useContext(DataContext);
     const formaPagamento = ['Avista', '2 vezes', '3 vezes', '4 vezes', '5 vezes', '6 vezes', '8 vezes', '9 vezes', '10 vezes', '11 vezes', '12 vezes']
 
+    const id = item.id
+
     const [formData, setForm] = useState({
-        motorista_id: "",
-        veiculo_id: "",
-        data: "",
-        hora: "",
-        tipo:"",
-        local: "",
-        justificativa: "",
-        placa: "",
-        valor: "",
-        pagamento: "",
-        p_empresa: "",
-        p_motorista: "",
-        pontos: "",
+        motorista_id: item.motorista_id,
+        veiculo_id: item.veiculo_id,
+        data: item.data,
+        hora: item.hora,
+        tipo: item.tipo,
+        local: item.local,
+        justificativa: item.justificativa,
+        placa: item.placa,
+        valor: item.valor,
+        pagamento: item.pagamento,
+        p_empresa: item.p_empresa,
+        p_motorista: item.p_motorista,
+        pontos: item.pontos,
     });
 
 
-
     function handleInputChange(event) {
-
         const { name, value } = event.target;
 
         setForm({
@@ -60,68 +57,11 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
     };
 
 
-    function newFrota() {
+    function editFine() {
 
-        if (formData.motorista_id && formData.tipo) {
-
-
-            addMulta(formData.veiculo_id, formData.motorista_id, formData.data, formData.hora, formData.tipo, formData.local, formData.justificativa, formData.placa, formData.valor, formData.pagamento, formData.p_empresa, formData.p_motorista, formData.pontos)
-
-            //setMotorista([...motorista, formData]);
-            AlertToast('Dados Salvos!', 'success')
-
-
-
-        } else {
-            return AlertToast('Dados inválidos para salvar!', 'info')
-
-
-        }
-
-
-
-
-
-        setForm({ //Zerando variaveis do formulario
-            motorista_id: "",
-            veiculo_id: "",
-            data: "",
-            hora: "",
-            tipo:"",
-            local: "",
-            justificativa: "",
-            placa: "",
-            valor: "",
-            pagamento: "",
-            p_empresa: "",
-            p_motorista: "",
-            pontos: "",
-        })
-        setShowNew(!showNew) //fechando modal
-
-
-
-    }
-
-
-    function closeModal() {
-
-        setForm({ //Zerando variaveis do formulario
-            motorista_id: "",
-            veiculo_id: "",
-            data: "",
-            hora: "",
-            tipo:"",
-            local: "",
-            justificativa: "",
-            placa: "",
-            valor: "",
-            pagamento: "",
-            p_empresa: "",
-            p_motorista: "",
-            pontos: "",
-        })
-        setShowNew(!showNew) //fechando modal
+        AlertToast('Dados atualizados!', 'success')
+        updateMulta(id, formData)
+        setShowEdit(!showEdit)
 
     }
 
@@ -130,11 +70,14 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
 
 
     return (
-        <Modal className='modal-lg' show={showNew} onHide={() => setShowNew(!showNew)} >
+
+
+
+        <Modal className='modal-lg' show={showEdit} onHide={() => setShowNew(!showNew)} >
             <Modal.Header className='bg-secondary' closeButton>
                 <Modal.Title className='text-center d-flex align-items-center  text-white' title='Nova Frota'>
                     <i className="fe fe-file-plus fs-3 text-white me-2"></i>
-                    Nova Multa
+                    Editar Multa
                     <i className="fe fe-dollar-sign fs-3 text-white ms-2"></i>
                 </Modal.Title>
             </Modal.Header>
@@ -238,7 +181,7 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
                                 <option value="">Selecione uma opção</option>
                                 {sorteFrota.map((item, index) => (
 
-                                    <option  key={index} value={item.id}>{item.code} - {item.model} - {item.marca} - ({item.placa})</option>
+                                    <option key={index} value={item.id}>{item.code} - {item.model} - {item.marca} - ({item.placa})</option>
 
 
                                 ))}
@@ -305,14 +248,19 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
                 <Button variant="secondary" onClick={() => closeModal()}>
                     Fechar
                 </Button>
-                <Button variant="primary" onClick={() => newFrota()}>
+                <Button variant="primary" onClick={() => editFine()}>
                     Salvar
                 </Button>
             </Modal.Footer>
 
         </Modal>
+
+
+
+
+
     )
 
 }
 
-export default modalFeetNew
+export default modalFineEdit
