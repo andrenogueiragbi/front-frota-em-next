@@ -3,6 +3,7 @@
 import { Fragment, useContext, useState } from "react";
 import Link from 'next/link';
 import { Container, Col, Row, Card, Form, } from 'react-bootstrap';
+import {  FineCard } from 'sub-components'
 
 
 // import widget/custom components
@@ -32,10 +33,10 @@ const Home = () => {
                         <div>
                             <div className="d-flex justify-content-between align-items-center">
                                 <div className="mb-2 mb-lg-0">
-                                    <h3 className="mb-0  text-white">Frota</h3>
+                                    <h3 className="mb-0  text-white">Multas</h3>
                                 </div>
                                 <div>
-                                    <Link onClick={() => setShowNew(!showNew)} href="#" className="btn btn-white">Criar Nova Frota</Link>
+                                    <Link onClick={() => setShowNew(!showNew)} href="#" className="btn btn-white">Cadastra Nova Multa</Link>
                                 </div>
                             </div>
                         </div>
@@ -54,25 +55,27 @@ const Home = () => {
                                 </Form>
                             </Card.Header>
 
+                            <Container fluid className="p-6">
+                                {/* Page Heading */}
+
+                                <Row className="mt-6">
+                                    <Col  >
+                                        <Row>
+                                            {/* Current Plan Overview */}
+                                            <FineCard />
+                                            <FineCard />
+                                            <FineCard />
+                                            
 
 
-                            <Container className="mb-10 p-5" >
-                                <Row>
-                                    <Col lg={12} md={12} xs={12}>
-                                        {/* Page header */}
-         
+                                        </Row>
                                     </Col>
-                                    {sorteFrota.map((item, index) => (
-
-                                        <Col xl={4} lg={6} md={12} xs={12} className="mt-6" key={index}>
-                                            <StatRightTopIconFeet key={index} item={item} />
-                                        </Col>
-
-                                    ))}
                                 </Row>
-
-
                             </Container>
+
+
+
+
                             <Card.Footer className="bg-white text-center">
                                 {/*                                 <Link href="#" className="link-primary">View All Projects</Link>
  */}                            </Card.Footer>

@@ -32,6 +32,12 @@ export const DashboardMenu = [
 	},
 	{
 		id: uuid(),
+		title: 'Agenda',
+		icon: 'calendar',
+		link: '/pages/agenda'
+	},
+	{
+		id: uuid(),
 		title: 'Motorista',
 		icon: 'users',
 		link: '/pages/driver'
@@ -42,6 +48,30 @@ export const DashboardMenu = [
 		icon: 'truck',
 		link: '/pages/fleet'
 	},
+	{
+		id: uuid(),
+		title: 'Lançamento',
+		icon: 'archive',
+		children: [
+			{ id: uuid(), link: '/pages/fine', name: 'Multas' },
+			{ id: uuid(), link: '/', name: 'Gastos'},
+			{ id: uuid(), link: '/', name: 'KM'},
+			{ id: uuid(), link: '/', name: 'Revisão'},
+		
+		]
+	},	
+	/* {
+		id: uuid(),
+		title: 'Laçamento',
+		icon: 'layers',
+		children: [
+			{ id: uuid(), link: '/pages/profile', name: 'Profile' },
+			{ id: uuid(), link: '/pages/settings', name: 'Settings'},
+			{ id: uuid(), link: '/pages/billing', name: 'Billing' },
+			{ id: uuid(), link: '/pages/pricing', name: 'Pricing'},
+			{ id: uuid(), link: '/not-found', name: '404 Error' }
+		]
+	},	 */
 /* 	{
 		id: uuid(),
 		title: 'Pages',

@@ -19,6 +19,7 @@ import RecentFromBlog from 'sub-components/profile/RecentFromBlog';
 
 // sub components for /pages/billing
 import CurrentPlan from 'sub-components/billing/CurrentPlan';
+import FineCard from 'sub-components/fine';
 import BillingAddress from 'sub-components/billing/BillingAddress';
 
 // sub components for /pages/settings
@@ -49,5 +50,6 @@ export {
    GeneralSetting, 
    Notifications, 
    Preferences,
-   ListDriver
+   ListDriver,
+   FineCard
 };
