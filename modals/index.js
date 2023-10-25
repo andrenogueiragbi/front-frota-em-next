@@ -5,11 +5,14 @@ import NewDriver from 'modals/New/NewDriver';
 import EditFeet from 'modals/Edit/EditFeet';
 import NewFeet from 'modals/New/NewFeet';
 
+import NewFine from 'modals/New/NewFine';
+
 
 export {
     EditDriver,
     NewDriver,
     EditFeet,
-    NewFeet
+    NewFeet,
+    NewFine
 
 };

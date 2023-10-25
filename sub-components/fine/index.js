@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useState } from 'react'
 import { Row, Col, Card, Image, Modal, Button, Form, Badge } from 'react-bootstrap';
 
-const CurrentPlan = () => {
+const CurrentPlan = ({item}) => {
     const [modalShow, setModalShow] = useState(false);
 
     const ChangePlanModal = (props) => {
@@ -87,27 +87,27 @@ const CurrentPlan = () => {
             <Card className="border border-1 border-primary" >
                 {/* card header  */}
                 <Card.Header className="p-4 bg-white">
-                    <h4 className="mb-0">Condutor: André Pereira Nogueira</h4>
+                    <h4 className="mb-0">Condutor: {item.motorista}</h4>
                 </Card.Header>
                 {/* card body  */}
                 <Card.Body>
                     <Row className="row">
                         <Col xl={8} lg={6} md={12} xs={12}>
                             <div className="mb-2">
-                                <h3 className="mt-2 mb-3 fw-bold">01 Jan 2021 as 08:00 </h3>
-                                <h3 className="mt-2 mb-3 fw-bold">Fazer ultrapassagem em faixa de mão dupla.</h3>
+                                <h3 className="mt-2 mb-3 fw-bold">{item.data} as {item.hora}</h3>
+                                <h3 className="mt-2 mb-3 fw-bold">{item.tipo}</h3>
 
 
                                 <p>
-                                    Local: <span className="text-primary">BR 030 saida para Caetité</span>
+                                    Local: <span className="text-primary">{item.local}</span>
                                 </p>
                                 <p>
-                                    Justificativa: <span className="text-primary">Rede caetite parada geral</span>
+                                    Justificativa: <span className="text-primary">{item.justificativa}</span>
                                 </p>
 
                                 <h3 className='d-flex align-items-center'>
                                     Placa:
-                                    <div style={{ background: '#E8E9EA' }} className='border border-black rounded text-center w-30 ms-3'>
+                                    <div style={{ background: '#E8E9EA' }} className='border border-black rounded text-center w-40 ms-3'>
                                         <div style={{ fontSize: '8px' }} className="bg-primary d-flex justify-content-between align-items-center">
 
                                             <Image className="ms-1" src={`/images/frota/mercosul.png`} height={8} width={12} alt="" />
@@ -115,7 +115,7 @@ const CurrentPlan = () => {
                                             <Image className="me-1" src={`/images/frota/brasil.png`} height={7} width={11} alt="" />
 
                                         </div>
-                                        <div className="mt-1 ms-2 me-2 fw-bold text-black">{'AAA-BCBC'}</div>
+                                        <div className="mt-1 fw-bold text-black">{item.placa}</div>
                                     </div>
 
                                 </h3>
@@ -128,8 +128,8 @@ const CurrentPlan = () => {
                                 <small className="text-muted">
                                     Valor da multa R$:
                                 </small>
-                                <h1 className="fw-bold text-primary">2.699,00</h1>
-                                <Link href="#" className="mb-3 text-muted text-primary-hover d-block">Pagamento: <span className="text-primary">3 vezes</span></Link>
+                                <h1 className="fw-bold text-primary">{item.valor}</h1>
+                                <Link href="#" className="mb-3 text-muted text-primary-hover d-block">Pagamento: <span className="text-primary">{item.pagamento}</span></Link>
 
 
 
@@ -140,11 +140,11 @@ const CurrentPlan = () => {
                                 </p>
                                 <p>
 
-                                    Empresa: <span className="text-primary">R$ 2.699.00</span>
+                                    Empresa: <span className="text-primary">R$ {item.p_empresa}</span>
 
                                 </p>
                                 <p>
-                                    Motorista: <span className="text-primary">R$ 0.00</span>
+                                    Motorista: <span className="text-primary">R$ {item.p_motorista}</span>
                                 </p>
 
 
@@ -161,7 +161,7 @@ const CurrentPlan = () => {
                         <div className="mb-3 mb-lg-0 text-center text-sm-start">
                             <h5 className="text-uppercase mb-0">Veiculo:</h5>
                             <div className="mt-2">
-                                <span className="fw-bold">Hunday GB20 - C12</span>
+                                <span className="fw-bold">{item.veiculo}</span>
                             </div>
                         </div>
                         <div className="text-center text-md-start">

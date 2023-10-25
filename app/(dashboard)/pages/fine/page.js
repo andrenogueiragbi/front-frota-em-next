@@ -3,22 +3,18 @@
 import { Fragment, useContext, useState } from "react";
 import Link from 'next/link';
 import { Container, Col, Row, Card, Form, } from 'react-bootstrap';
-import {  FineCard } from 'sub-components'
+import { FineCard } from 'sub-components'
 
 
-// import widget/custom components
-import { StatRightTopIconFeet } from "widgets";
 
 // import sub components
 
-// import required data files
-import DataFleet from "data/dashboard/DataFleet";
 import { DataContext } from 'hooks/DataFake';
-import { NewFeet } from 'modals'
+import { NewFine } from 'modals'
 
 const Home = () => {
 
-    const { sorteFrota } = useContext(DataContext);
+    const { sorteMulta } = useContext(DataContext);
     const [showNew, setShowNew] = useState(false)
 
 
@@ -59,13 +55,16 @@ const Home = () => {
                                 {/* Page Heading */}
 
                                 <Row className="mt-6">
-                                    <Col  >
+                                    <Col xl={{ span: 8, offset: 2 }} lg={{ span: 10, offset: 1 }} md={12} xs={12}  >
                                         <Row>
-                                            {/* Current Plan Overview */}
-                                            <FineCard />
-                                            <FineCard />
-                                            <FineCard />
-                                            
+                                           
+     
+
+                                            {sorteMulta.map((item, index) => (
+                                                 <FineCard key={index} item={item} />
+
+                                            ))}
+
 
 
                                         </Row>
@@ -89,7 +88,7 @@ const Home = () => {
 
 
             </Container>
-            <NewFeet showNew={showNew} setShowNew={setShowNew} />
+            <NewFine showNew={showNew} setShowNew={setShowNew} />
 
 
         </Fragment>

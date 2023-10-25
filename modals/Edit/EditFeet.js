@@ -3,6 +3,22 @@ import { useState, useEffect, useContext } from 'react';
 import { DataContext } from 'hooks/DataFake';
 import AlertToast from 'widgets/Alert/Alert';
 
+export function year() {
+    const dataAtual = new Date();
+    const anoAtual = parseInt(dataAtual.getFullYear());
+    const anostart = parseInt(dataAtual.getFullYear()) - 35;
+    const arrayYear = []
+
+    for (let i = anoAtual+1; i >= anostart; i--) {
+        arrayYear.push(i)
+
+    }
+
+    return arrayYear
+
+}
+
+
 
 
 const modalFeetEdit = ({ item, showEdit, setShowEdit }) => {
@@ -25,6 +41,7 @@ const modalFeetEdit = ({ item, showEdit, setShowEdit }) => {
         nmotor: item.nmotor,
         tipo: item.tipo,
         status: item.status,
+        km:item.km,
     });
 
 
@@ -157,9 +174,19 @@ const modalFeetEdit = ({ item, showEdit, setShowEdit }) => {
                         </div>
 
 
-                        <div className="col-md-6 me-auto">
+                        <div className="col-md-6">
                             <label className="col-form-label">Ano:</label>
-                            <input type="date" name="ano" className="form-control" value={formData?.ano} onChange={(e) => handleInputChange(e)} />
+                            <select name="ano" className="form-control" id="status-select" value={formData?.ano} onChange={(e) => handleInputChange(e)} >
+                                <option value="">Selecione uma opção</option>
+
+                                {year().map((item,index) => (
+
+                                    <option key={index} value={item}>{item}</option>
+
+
+                                ))}
+
+                            </select>
                         </div>
 
 
@@ -217,9 +244,10 @@ const modalFeetEdit = ({ item, showEdit, setShowEdit }) => {
 
 
                         <div className="col-md-6 me-auto">
-                            <label className="col-form-label">Observação:</label>
-                            <input type="text" name="ano" className="form-control" value={formData?.ano} onChange={(e) => handleInputChange(e)} />
+                            <label className="col-form-label">KM:</label>
+                            <input type="number" min={0} name="km" className="form-control" value={formData?.km} onChange={(e) => handleInputChange(e)} />
                         </div>
+
 
 
 

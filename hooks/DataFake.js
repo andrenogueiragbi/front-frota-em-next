@@ -68,7 +68,8 @@ const DataContextProvider = (props) => {
             ano: "2023",
             nmotor: "1452554",
             tipo: "Mota",
-            status: "INATIVO"
+            status: "INATIVO",
+            km:"10"
         },
         {
             id: 2,
@@ -83,7 +84,8 @@ const DataContextProvider = (props) => {
             ano: "",
             nmotor: "",
             tipo: "",
-            status: "ATIVO"
+            status: "ATIVO",
+            km:"10"
         },
         {
             id: 3,
@@ -98,7 +100,8 @@ const DataContextProvider = (props) => {
             ano: "",
             nmotor: "",
             tipo: "",
-            status: "ATIVO"
+            status: "ATIVO",
+            km:"10"
         },
         {
             id: 4,
@@ -113,7 +116,8 @@ const DataContextProvider = (props) => {
             ano: "",
             nmotor: "",
             tipo: "",
-            status: "ATIVO"
+            status: "ATIVO",
+            km:"10"
         },
         {
             id: 5,
@@ -128,7 +132,8 @@ const DataContextProvider = (props) => {
             ano: "",
             nmotor: "",
             tipo: "",
-            status: "ATIVO"
+            status: "ATIVO",
+            km:"10"
         },
         {
             id: 6,
@@ -143,7 +148,8 @@ const DataContextProvider = (props) => {
             ano: "",
             nmotor: "",
             tipo: "",
-            status: "ATIVO"
+            status: "ATIVO",
+            km:"10"
         },
         {
             id: 7,
@@ -158,7 +164,8 @@ const DataContextProvider = (props) => {
             ano: "",
             nmotor: "",
             tipo: "",
-            status: "ATIVO"
+            status: "ATIVO",
+            km:"10"
         },
         {
             id: 8,
@@ -173,7 +180,8 @@ const DataContextProvider = (props) => {
             ano: "",
             nmotor: "",
             tipo: "",
-            status: "ATIVO"
+            status: "ATIVO",
+            km:"10"
         },
         {
             id: 9,
@@ -188,7 +196,8 @@ const DataContextProvider = (props) => {
             ano: "",
             nmotor: "",
             tipo: "",
-            status: "ATIVO"
+            status: "ATIVO",
+            km:"10"
         },
 
         {
@@ -204,7 +213,8 @@ const DataContextProvider = (props) => {
             ano: "",
             nmotor: "",
             tipo: "",
-            status: "ATIVO"
+            status: "ATIVO",
+            km:"10"
         },
         {
             id: 11,
@@ -219,11 +229,46 @@ const DataContextProvider = (props) => {
             ano: "",
             nmotor: "",
             tipo: "",
-            status: "ATIVO"
+            status: "ATIVO",
+            km:"10"
         },
 
     ])
 
+    const [multa, setMulta] = useState([{
+        id: 1,
+        motorista: "André Pereira Nogueira",
+        data: "01 jan 2021",
+        hora: "12:51",
+        tipo:"Ultrapassagem em faixa de mão dupla",
+        local: "BR 030 saida para Caetité",
+        justificativa: "Não percebeu",
+        placa: "ABC 1234",
+        valor: "598,37",
+        pagamento: "Á vista",
+        p_empresa: "200,00",
+        p_motorista: "398,37",
+        veiculo: "Hunday GB20 - C12"
+
+    },
+    {
+        id: 2,
+        motorista: "Silas Teixeira",
+        data: "05 mar 2023",
+        hora: "08:52",
+        tipo:"Usar celular em quanto dirige na via",
+        local: "Rua camerino Neves",
+        justificativa: "Não percebeu",
+        placa: "ABC 4321",
+        valor: "193,00",
+        pagamento: "Á vista",
+        p_empresa: "0,00",
+        p_motorista: "193,00",
+        veiculo: "Chefrolet Zarira - C12"
+
+    }
+
+])
 
     /*     useEffect(() => {
             setMotorista(JSON.parse(localStorage.getItem('motorista')))
@@ -263,7 +308,7 @@ const DataContextProvider = (props) => {
 
 
         setFrota([...frota, {
-            id: frota.length + 1, 
+            id: frota.length + 1,
             model,
             code,
             marca,
@@ -278,21 +323,25 @@ const DataContextProvider = (props) => {
 
         }])
     }
-    /*
-        const deleteMotorista = (id) => {
-            setMotorista(motorista.filter(motorista => motorista.id !== id))
-        }
-    */
+
     const updateFrota = (id, updatedFrota) => {
         setFrota(frota.map((frota) => frota.id === id ? updatedFrota : frota))
     }
+
+
+    const sorteMulta = multa.sort((a, b) => (a.id < b.id ? -1 : 1));
+
 
 
 
 
 
     return (
-        <DataContext.Provider value={{ sorteMotorista, addMotorista, updateMotorista, deleteMotorista, sorteFrota, updateFrota, addFrota,/*  addEmployee, deleteEmployee, updateEmployee  */ }}>
+        <DataContext.Provider value={{
+            sorteMotorista, addMotorista, updateMotorista, deleteMotorista,
+            sorteFrota, updateFrota, addFrota,
+            sorteMulta,
+        }}>
             {props.children}
         </DataContext.Provider>
     )

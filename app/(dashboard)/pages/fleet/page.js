@@ -10,8 +10,7 @@ import { StatRightTopIconFeet } from "widgets";
 
 // import sub components
 
-// import required data files
-import DataFleet from "data/dashboard/DataFleet";
+
 import { DataContext } from 'hooks/DataFake';
 import { NewFeet } from 'modals'
 

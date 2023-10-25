@@ -4,28 +4,13 @@ import { useState, useEffect, useContext } from 'react';
 import AlertToast from 'widgets/Alert/Alert';
 import { DataContext } from 'hooks/DataFake';
 
-export function year() {
-    const dataAtual = new Date();
-    const anoAtual = parseInt(dataAtual.getFullYear());
-    const anostart = parseInt(dataAtual.getFullYear()) - 35;
-    const arrayYear = []
-
-    for (let i = anoAtual+1; i >= anostart; i--) {
-        arrayYear.push(i)
-
-    }
-
-    return arrayYear
-
-}
-
 
 
 
 const modalFeetNew = ({ showNew, setShowNew }) => {
 
-
-    const { addFrota } = useContext(DataContext);
+    const { addFrota, sorteMotorista, sorteFrota } = useContext(DataContext);
+    const formaPagamento = ['Avista', '1 vezes', '2 vezes', '3 vezes', '4 vezes', '5 vezes', '6 vezes', '8 vezes', '9 vezes', '10 vezes', '11 vezes', '12 vezes']
 
     const [formData, setForm] = useState({
         id: "",
@@ -41,7 +26,6 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
         nmotor: "",
         tipo: "",
         status: "",
-        km:""
     });
 
 
@@ -64,7 +48,7 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
         if (formData.model && formData.code, formData.marca, formData.placa) {
 
 
-            addFrota(formData.model, formData.code, formData.marca, formData.placa, formData.km, formData.chassi, formData.combustivel, formData.ano, formData.nmotor, formData.tipo,formData.km)
+            addFrota(formData.model, formData.code, formData.marca, formData.placa, formData.km, formData.chassi, formData.combustivel, formData.ano, formData.nmotor, formData.tipo)
 
             //setMotorista([...motorista, formData]);
             AlertToast('Dados Salvos!', 'success')
@@ -95,7 +79,6 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
             nmotor: "",
             tipo: "",
             status: "",
-            km:""
         })
         setShowNew(!showNew) //fechando modal
 
@@ -120,7 +103,6 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
             nmotor: "",
             tipo: "",
             status: "",
-            km:""
 
         })
         setShowNew(!showNew) //fechando modal
@@ -132,12 +114,12 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
 
 
     return (
-        <Modal className='modal' show={showNew} onHide={() => setShowNew(!showNew)} >
+        <Modal className='modal-lg' show={showNew} onHide={() => setShowNew(!showNew)} >
             <Modal.Header className='bg-secondary' closeButton>
                 <Modal.Title className='text-center d-flex align-items-center  text-white' title='Nova Frota'>
                     <i className="fe fe-file-plus fs-3 text-white me-2"></i>
-                    Nova Frota
-                    <i className="fe fe-truck fs-3 text-white ms-2"></i>
+                    Nova Multa
+                    <i className="fe fe-dollar-sign fs-3 text-white ms-2"></i>
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body  >
@@ -151,7 +133,7 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
                             <div className="icon-shape">
                                 <div className='d-flex flex-column'>
                                     <div className='d-flex flex-column align-items-center'>
-                                        <Image className="m-3" src='/images/frota/cinza.png' height={60} width={60} alt="" />
+                                        <Image className="m-3" src='/images/frota/multa.png' height={60} width={60} alt="" />
                                         <label className='bg-primary' style={{ borderRadius: '5px', color: '#fff', cursor: 'pointer', margin: '10px', padding: '6px' }} htmlFor="customFile">Selecione uma foto &#187;</label>
                                         <input style={{ display: 'none' }} id='customFile' type='file' />
 
@@ -171,14 +153,29 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
 
                     <div className="row">
 
-                        <div className="col-md-6 me-auto">
-                            <label className="col-form-label">Modelo:</label>
-                            <input type="text" name="model" className="form-control" required value={formData?.model} onChange={(e) => handleInputChange(e)} />
+                        <div className="col-md-6">
+                            <label className="col-form-label">Condutor:</label>
+                            <select name="combustivel" className="form-control" id="status-select" value={formData?.combustivel} onChange={(e) => handleInputChange(e)} >
+                                <option value="">Selecione uma opção</option>
+
+                                {sorteMotorista.map((item, index) => (
+                                    <option key={index} value={item.nome}>{item.nome}</option>
+
+
+                                ))}
+
+                            </select>
                         </div>
 
-                        <div className="col-md-6">
-                            <label className="col-form-label">Codigo:</label>
-                            <input type="text" name="code" className="form-control" required value={formData?.code} onChange={(e) => handleInputChange(e)} />
+
+                        <div className="col-md-3">
+                            <label className="col-form-label">Data:</label>
+                            <input type="date" name="code" className="form-control" required value={formData?.code} onChange={(e) => handleInputChange(e)} />
+                        </div>
+
+                        <div className="col-md-3">
+                            <label className="col-form-label">Hora:</label>
+                            <input type="time" name="marca" className="form-control" required value={formData?.marca} onChange={(e) => handleInputChange(e)} />
                         </div>
 
                     </div>
@@ -187,16 +184,11 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
 
                     <div className="row">
 
-                        <div className="col-md-6 me-auto">
-                            <label className="col-form-label">Placa:</label>
+                        <div className="col-md-12 me-auto">
+                            <label className="col-form-label">Descrição da Multa:</label>
                             <input type="text" name="placa" className="form-control" required value={formData?.placa} onChange={(e) => handleInputChange(e)} />
                         </div>
 
-                        <div className="col-md-6">
-                            <label className="col-form-label">Chassi:</label>
-                            <input type="text" name="chassi" className="form-control" value={formData?.chassi} onChange={(e) => handleInputChange(e)} />
-                        </div>
-
 
 
                     </div>
@@ -204,17 +196,53 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
                     <div className="row">
 
                         <div className="col-md-6">
-                            <label className="col-form-label">Nº Motor:</label>
+                            <label className="col-form-label">Local:</label>
                             <input type="text" name="nmotor" className="form-control" value={formData?.nmotor} onChange={(e) => handleInputChange(e)} />
                         </div>
 
 
-                        <div className="col-md-6">
-                            <label className="col-form-label">Ano:</label>
-                            <select name="ano" className="form-control" id="status-select" value={formData?.ano} onChange={(e) => handleInputChange(e)} >
-                                <option value="">Selecione uma opção</option>
+                        <div className="col-md-6 me-auto">
+                            <label className="col-form-label">Justificativa:</label>
+                            <input type="text" name="ano" className="form-control" value={formData?.ano} onChange={(e) => handleInputChange(e)} />
+                        </div>
 
-                                {year().map((item,index) => (
+
+                    </div>
+
+
+
+
+                    <div className="row">
+
+
+                        <div className="col-md-6">
+                            <label className="col-form-label">Veiculo:</label>
+
+                            <select name="combustivel" className="form-control" id="status-select" value={formData?.combustivel} onChange={(e) => handleInputChange(e)} >
+                                <option value="">Selecione uma opção</option>
+                                {sorteFrota.map((item, index) => (
+
+                                    <option key={index} value={item.model}>{item.code} - {item.model} - {item.marca} - ({item.placa})</option>
+
+
+                                ))}
+
+                            </select>
+                        </div>
+
+
+                        <div className="col-md-3">
+                            <label className="col-form-label">Valor:</label>
+                            <input type="text" name="marca" className="form-control" required value={formData?.marca} onChange={(e) => handleInputChange(e)} />
+                        </div>
+
+
+                        <div className="col-md-3">
+                            <label className="col-form-label">Pagamento:</label>
+
+                            <select name="combustivel" className="form-control" id="status-select" value={formData?.combustivel} onChange={(e) => handleInputChange(e)} >
+                                <option value="">Selecione...</option>
+                                {formaPagamento.map((item, index) => (
 
                                     <option key={index} value={item}>{item}</option>
 
@@ -224,65 +252,26 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
                             </select>
                         </div>
 
-
-
                     </div>
-
 
 
 
                     <div className="row">
 
-
-                        <div className="col-md-6">
-                            <label className="col-form-label">Combustível:</label>
-                            <select name="combustivel" className="form-control" id="status-select" value={formData?.combustivel} onChange={(e) => handleInputChange(e)} >
-                                <option value="">Selecione uma opção</option>
-                                <option value="Álcool">Álcool</option>
-                                <option value="Gasolina">Gasolina</option>
-                                <option value="Flex">Flex</option>
-                                <option value="GNV">GNV</option>
-                            </select>
-                        </div>
-
-
-                        <div className="col-md-6">
-                            <label className="col-form-label">Marca:</label>
+                        <div className="col-md-4">
+                            <label className="col-form-label">Pagamento pela Empresa:</label>
                             <input type="text" name="marca" className="form-control" required value={formData?.marca} onChange={(e) => handleInputChange(e)} />
                         </div>
 
-
-                    </div>
-
-
-
-
-
-
-                    <div className="row">
-
-                        <div className="col-md-6">
-                            <label className="col-form-label">Tipo:</label>
-                            <select name="tipo" className="form-control" id="status-select" value={formData?.tipo} onChange={(e) => handleInputChange(e)} >
-                                <option value="">Selecione uma opção</option>
-                                <option value="Sedan">Sedan</option>
-                                <option value="Hatch">Hatch</option>
-                                <option value="Picape">Picape</option>
-                                <option value="SUV">SUV</option>
-                                <option value="Motocicleta">Motocicleta</option>
-                                <option value="Sidecar">Sidecar</option>
-                                <option value="Bicicleta">Bicicleta</option>
-
-                            </select>
-                            {/*  <input type="text" name="tipo" className="form-control" value={formData?.tipo} onChange={(e) => handleInputChange(e)} /> */}
+                        <div className="col-md-4">
+                            <label className="col-form-label">Pagamento pelo Motorista:</label>
+                            <input type="text" name="marca" className="form-control" required value={formData?.marca} onChange={(e) => handleInputChange(e)} />
                         </div>
 
-
-                        <div className="col-md-6 me-auto">
-                            <label className="col-form-label">KM:</label>
-                            <input type="number" min={0} name="km" className="form-control" value={formData?.km} onChange={(e) => handleInputChange(e)} />
+                        <div className="col-md-4">
+                            <label className="col-form-label">Pontos:</label>
+                            <input type="number" name="marca" className="form-control" required value={formData?.marca} onChange={(e) => handleInputChange(e)} />
                         </div>
-
 
 
                     </div>
