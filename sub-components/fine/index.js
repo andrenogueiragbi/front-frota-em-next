@@ -1,15 +1,27 @@
 // import node module libraries
 import Link from 'next/link';
 import { useState, useContext } from 'react'
-import { Row, Col, Card, Image, Modal, Button, Form, Badge } from 'react-bootstrap';
+import { Row, Col, Card, Image, Button } from 'react-bootstrap';
 import { DataContext } from 'hooks/DataFake';
 import { EditFine } from 'modals'
+import AlertToast from 'widgets/Alert/Alert'
+
+
 
 
 const CurrentPlan = ({ item }) => {
 
-    const { findMotorista, findFrota } = useContext(DataContext);
+    const { findMotorista, findFrota,deleteMulta } = useContext(DataContext);
     const [showEdit, setShowEdit] = useState(false)
+
+    function deleteMultaId(id, nome) {
+
+        AlertToast(`ID: ${id}, multa do ${nome} apagado!`, 'error',2000)
+        deleteMulta(id)
+
+
+
+    }
 
 
 
@@ -96,7 +108,7 @@ const CurrentPlan = ({ item }) => {
                             </div>
                         </div>
                         <div className="text-center text-md-start">
-                            <Link href="#" className="link-danger">Apagar</Link>
+                            <Link href="#" onClick={()=> deleteMultaId(item.id,findMotorista(item.motorista_id)?.nome)} className="link-danger">Apagar</Link>
                             <Button className="btn ms-2" onClick={() => setShowEdit(true)}>
                                 Editar
                             </Button>

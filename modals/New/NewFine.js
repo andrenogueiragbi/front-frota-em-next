@@ -68,12 +68,12 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
             addMulta(formData.veiculo_id, formData.motorista_id, formData.data, formData.hora, formData.tipo, formData.local, formData.justificativa, formData.placa, formData.valor, formData.pagamento, formData.p_empresa, formData.p_motorista, formData.pontos)
 
             //setMotorista([...motorista, formData]);
-            AlertToast('Dados Salvos!', 'success')
+            AlertToast('Dados cadastrados com sucesso!', 'success',2000)
 
 
 
         } else {
-            return AlertToast('Dados inválidos para salvar!', 'info')
+            return AlertToast('Atenção. Verique os campos requeridos!', 'warn')
 
 
         }

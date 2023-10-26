@@ -67,12 +67,12 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
             addFrota(formData.model, formData.code, formData.marca, formData.placa, formData.km, formData.chassi, formData.combustivel, formData.ano, formData.nmotor, formData.tipo,formData.km)
 
             //setMotorista([...motorista, formData]);
-            AlertToast('Dados Salvos!', 'success')
+            AlertToast('Dados cadastrados com sucesso!', 'success',2000)
 
 
 
         } else {
-            return AlertToast('Dados inválidos para salvar!', 'info')
+            return AlertToast('Atenção. Verique os campos requeridos!', 'warn')
 
 
         }

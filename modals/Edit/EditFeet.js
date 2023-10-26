@@ -58,7 +58,7 @@ const modalFeetEdit = ({ item, showEdit, setShowEdit }) => {
 
     function editFeet() {
 
-        AlertToast('Dados atualizados!', 'success')
+        AlertToast('Dados atualizados com sucesso!', 'info',2000)
         updateFrota(id, formData)
         setShowEdit(!showEdit)
 

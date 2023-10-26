@@ -59,7 +59,7 @@ const modalFineEdit = ({ item, showEdit, setShowEdit }) => {
 
     function editFine() {
 
-        AlertToast('Dados atualizados!', 'success')
+        AlertToast('Dados atualizados com sucesso!', 'info',2000)
         updateMulta(id, formData)
         setShowEdit(!showEdit)
 

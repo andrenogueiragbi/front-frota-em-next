@@ -48,7 +48,9 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit }) => {
 
     function editMotor() {
 
-        AlertToast('Dados atualizados!', 'success')
+
+        AlertToast('Dados atualizados com sucesso!', 'info',2000)
+
         updateMotorista(id, formData)
         setShowEdit(!showEdit)
 

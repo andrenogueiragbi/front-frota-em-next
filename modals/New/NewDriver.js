@@ -57,12 +57,12 @@ const modalDriverNew = ({ showNew, setShowNew }) => {
             addMotorista(formData.nome, formData.CPF, formData.RG, formData.cargo, formData.supervisor, formData.ncnh, formData.categoria, formData.emissao, formData.vencimento, formData.endereco, formData.bairro, formData.cidade, formData.n, formData.uf, formData.email, formData.celular, formData.whatsapp, formData.integracao)
 
             //setMotorista([...motorista, formData]);
-            AlertToast('Dados Salvos!', 'success')
+            AlertToast('Dados cadastrados com sucesso!', 'success',2000)
 
 
 
         } else {
-            return AlertToast('Dados inválidos para salvar!', 'info')
+            return AlertToast('Atenção. Verique os campos requeridos!', 'warn')
 
 
         }

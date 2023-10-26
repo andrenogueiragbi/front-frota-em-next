@@ -359,6 +359,10 @@ const DataContextProvider = (props) => {
         setMulta(multa.map((multa) => multa.id == id ? updatedMulta : multa))
     }
 
+    const deleteMulta = (id) => {
+        setMulta(multa.filter(multa => multa.id !== id))
+    }
+
 
 
 
@@ -369,7 +373,7 @@ const DataContextProvider = (props) => {
         <DataContext.Provider value={{
             sorteMotorista, addMotorista, updateMotorista, deleteMotorista,findMotorista,
             sorteFrota, updateFrota, addFrota,findFrota,
-            sorteMulta, addMulta,updateMulta
+            sorteMulta, addMulta,updateMulta,deleteMulta
         }}>
             {props.children}
         </DataContext.Provider>

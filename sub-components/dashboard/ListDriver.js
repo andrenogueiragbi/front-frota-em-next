@@ -21,7 +21,7 @@ function LineTr({ item }) {
 
 
     function deleteDriver(id, nome) {
-        AlertToast(`ID: ${id}, ${nome} apagado!`, 'info')
+        AlertToast(`ID: ${id}, ${nome} apagado!`, 'error')
         deleteMotorista(id)
 
     }
