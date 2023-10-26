@@ -21,9 +21,10 @@ export function year() {
 
 
 
-const modalFineEdit = ({ item, showEdit, setShowEdit }) => {
 
-    const { addFrota, sorteMotorista, sorteFrota, addMulta,updateMulta } = useContext(DataContext);
+const modalFineEdit = ({ item, showEdit, setShowEdit,setUfIBGE,cities,states }) => {
+
+    const { addFrota, sorteMotorista, sorteFrota, addMulta, updateMulta } = useContext(DataContext);
     const formaPagamento = ['Avista', '2 vezes', '3 vezes', '4 vezes', '5 vezes', '6 vezes', '8 vezes', '9 vezes', '10 vezes', '11 vezes', '12 vezes']
 
     const id = item.id
@@ -48,6 +49,8 @@ const modalFineEdit = ({ item, showEdit, setShowEdit }) => {
     function handleInputChange(event) {
         const { name, value } = event.target;
 
+        if (name === 'uf') setUfIBGE(value)
+
         setForm({
             ...formData,
             [name]: value,
@@ -59,7 +62,7 @@ const modalFineEdit = ({ item, showEdit, setShowEdit }) => {
 
     function editFine() {
 
-        AlertToast('Dados atualizados com sucesso!', 'info',2000)
+        AlertToast('Dados atualizados com sucesso!', 'info', 2000)
         updateMulta(id, formData)
         setShowEdit(!showEdit)
 
@@ -73,7 +76,7 @@ const modalFineEdit = ({ item, showEdit, setShowEdit }) => {
 
 
 
-        <Modal className='modal-lg' show={showEdit} onHide={() => setShowNew(!showNew)} >
+        <Modal className='modal-lg' show={showEdit} onHide={() => setShowEdit(!showEdit)} >
             <Modal.Header className='bg-secondary' closeButton>
                 <Modal.Title className='text-center d-flex align-items-center  text-white' title='Nova Frota'>
                     <i className="fe fe-file-plus fs-3 text-white me-2"></i>
@@ -141,11 +144,19 @@ const modalFineEdit = ({ item, showEdit, setShowEdit }) => {
 
 
 
+
+
                     <div className="row">
 
-                        <div className="col-md-12 me-auto">
+                        <div className="col-md-8 me-auto">
                             <label className="col-form-label">Descrição da Multa:</label>
                             <input type="text" name="tipo" className="form-control" required value={formData?.tipo} onChange={(e) => handleInputChange(e)} />
+                        </div>
+
+
+                        <div className="col-md-4">
+                            <label className="col-form-label">Local:</label>
+                            <input type="text" name="local" className="form-control" value={formData?.local} onChange={(e) => handleInputChange(e)} />
                         </div>
 
 
@@ -154,9 +165,35 @@ const modalFineEdit = ({ item, showEdit, setShowEdit }) => {
 
                     <div className="row">
 
-                        <div className="col-md-6">
-                            <label className="col-form-label">Local:</label>
-                            <input type="text" name="local" className="form-control" value={formData?.local} onChange={(e) => handleInputChange(e)} />
+                        <div className="col-md-2">
+                            <label className="col-form-label">UF:</label>
+                            <select name="uf" className="form-control" id="status-select" value={formData?.uf} onChange={(e) => handleInputChange(e)} >
+                                <option value="">Selecione uma opção</option>
+
+                                {states.map((item, index) => (
+                                    <option key={index} value={item.sigla}>{item.sigla}</option>
+
+
+                                ))}
+
+                            </select>
+                        </div>
+
+
+                        <div className="col-md-4">
+                            <label className="col-form-label">Cidade:</label>
+                            <select name="cidade" className="form-control" id="status-select" value={formData?.cidade} onChange={(e) => handleInputChange(e)} >
+                                <option value="">Selecione uma opção</option>
+
+                                {
+                                    cities.map((item, index) => (
+                                        <option key={index} value={item?.nome}>{item?.nome}</option>
+
+
+                                    ))
+                                }
+
+                            </select>
                         </div>
 
 
@@ -167,52 +204,6 @@ const modalFineEdit = ({ item, showEdit, setShowEdit }) => {
 
 
                     </div>
-
-
-
-
-                    <div className="row">
-
-
-                        <div className="col-md-6">
-                            <label className="col-form-label">Veiculo:</label>
-
-                            <select name="veiculo_id" className="form-control" id="status-select" value={formData?.veiculo_id} onChange={(e) => handleInputChange(e)} >
-                                <option value="">Selecione uma opção</option>
-                                {sorteFrota.map((item, index) => (
-
-                                    <option key={index} value={item.id}>{item.code} - {item.model} - {item.marca} - ({item.placa})</option>
-
-
-                                ))}
-
-                            </select>
-                        </div>
-
-
-                        <div className="col-md-3">
-                            <label className="col-form-label">Valor:</label>
-                            <input type="text" name="valor" className="form-control" required value={formData?.valor} onChange={(e) => handleInputChange(e)} />
-                        </div>
-
-
-                        <div className="col-md-3">
-                            <label className="col-form-label">Pagamento:</label>
-
-                            <select name="pagamento" className="form-control" id="status-select" value={formData?.pagamento} onChange={(e) => handleInputChange(e)} >
-                                <option value="">Selecione...</option>
-                                {formaPagamento.map((item, index) => (
-
-                                    <option key={index} value={item}>{item}</option>
-
-
-                                ))}
-
-                            </select>
-                        </div>
-
-                    </div>
-
 
 
                     <div className="row">

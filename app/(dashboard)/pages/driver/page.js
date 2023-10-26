@@ -22,7 +22,7 @@ const Driver = () => {
 
     const [states, setStates] = useState([])
     const [cities, setCities] = useState([])
-    const [ufIBGE, setUfIBGE] = useState('BA')
+    const [ufIBGE, setUfIBGE] = useState(null)
 
 
     useEffect(() => {
@@ -101,7 +101,14 @@ const Driver = () => {
                 </Row>
 
                 {/* Active Projects  */}
-                <ListDriver motorista={sorteMotorista} />
+                <ListDriver
+                    motorista={sorteMotorista}
+                    ufIBGE={ufIBGE}
+                    setUfIBGE={setUfIBGE}
+                    cities={cities}
+                    states={states}
+
+                />
 
 
 

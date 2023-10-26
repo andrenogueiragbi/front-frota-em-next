@@ -11,7 +11,7 @@ export function year() {
     const anostart = parseInt(dataAtual.getFullYear()) - 35;
     const arrayYear = []
 
-    for (let i = anoAtual+1; i >= anostart; i--) {
+    for (let i = anoAtual + 1; i >= anostart; i--) {
         arrayYear.push(i)
 
     }
@@ -24,9 +24,9 @@ export function year() {
 
 
 
-const modalFeetNew = ({ showNew, setShowNew }) => {
+const modalFeetNew = ({ showNew, setShowNew, ufIBGE, setUfIBGE, cities,states }) => {
 
-    const { addFrota, sorteMotorista, sorteFrota,addMulta } = useContext(DataContext);
+    const { addFrota, sorteMotorista, sorteFrota, addMulta } = useContext(DataContext);
     const formaPagamento = ['Avista', '2 vezes', '3 vezes', '4 vezes', '5 vezes', '6 vezes', '8 vezes', '9 vezes', '10 vezes', '11 vezes', '12 vezes']
 
     const [formData, setForm] = useState({
@@ -34,7 +34,7 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
         veiculo_id: "",
         data: "",
         hora: "",
-        tipo:"",
+        tipo: "",
         local: "",
         justificativa: "",
         placa: "",
@@ -43,6 +43,8 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
         p_empresa: "",
         p_motorista: "",
         pontos: "",
+        uf:"",
+        cidade: "",
     });
 
 
@@ -50,6 +52,8 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
     function handleInputChange(event) {
 
         const { name, value } = event.target;
+
+        if (name === 'uf') setUfIBGE(value)
 
         setForm({
             ...formData,
@@ -65,10 +69,10 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
         if (formData.motorista_id && formData.tipo) {
 
 
-            addMulta(formData.veiculo_id, formData.motorista_id, formData.data, formData.hora, formData.tipo, formData.local, formData.justificativa, formData.placa, formData.valor, formData.pagamento, formData.p_empresa, formData.p_motorista, formData.pontos)
+            addMulta(formData.veiculo_id, formData.motorista_id, formData.data, formData.hora, formData.tipo, formData.local, formData.justificativa, formData.placa, formData.valor, formData.pagamento, formData.p_empresa, formData.p_motorista, formData.pontos,formData.uf,formData.cidade)
 
             //setMotorista([...motorista, formData]);
-            AlertToast('Dados cadastrados com sucesso!', 'success',2000)
+            AlertToast('Dados cadastrados com sucesso!', 'success', 2000)
 
 
 
@@ -87,7 +91,7 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
             veiculo_id: "",
             data: "",
             hora: "",
-            tipo:"",
+            tipo: "",
             local: "",
             justificativa: "",
             placa: "",
@@ -96,6 +100,8 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
             p_empresa: "",
             p_motorista: "",
             pontos: "",
+            uf:"",
+            cidade: "",
         })
         setShowNew(!showNew) //fechando modal
 
@@ -111,7 +117,7 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
             veiculo_id: "",
             data: "",
             hora: "",
-            tipo:"",
+            tipo: "",
             local: "",
             justificativa: "",
             placa: "",
@@ -120,6 +126,8 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
             p_empresa: "",
             p_motorista: "",
             pontos: "",
+            uf:"",
+            cidade: "",
         })
         setShowNew(!showNew) //fechando modal
 
@@ -200,9 +208,15 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
 
                     <div className="row">
 
-                        <div className="col-md-12 me-auto">
+                        <div className="col-md-8 me-auto">
                             <label className="col-form-label">Descrição da Multa:</label>
                             <input type="text" name="tipo" className="form-control" required value={formData?.tipo} onChange={(e) => handleInputChange(e)} />
+                        </div>
+
+
+                        <div className="col-md-4">
+                            <label className="col-form-label">Local:</label>
+                            <input type="text" name="local" className="form-control" value={formData?.local} onChange={(e) => handleInputChange(e)} />
                         </div>
 
 
@@ -211,9 +225,35 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
 
                     <div className="row">
 
-                        <div className="col-md-6">
-                            <label className="col-form-label">Local:</label>
-                            <input type="text" name="local" className="form-control" value={formData?.local} onChange={(e) => handleInputChange(e)} />
+                        <div className="col-md-2">
+                            <label className="col-form-label">UF:</label>
+                            <select name="uf" className="form-control" id="status-select" value={formData?.uf} onChange={(e) => handleInputChange(e)} >
+                                <option value="">Selecione uma opção</option>
+
+                                {states.map((item, index) => (
+                                    <option key={index} value={item.sigla}>{item.sigla}</option>
+
+
+                                ))}
+
+                            </select>
+                        </div>
+
+
+                        <div className="col-md-4">
+                            <label className="col-form-label">Cidade:</label>
+                            <select name="cidade" className="form-control" id="status-select" value={formData?.cidade} onChange={(e) => handleInputChange(e)} >
+                                <option value="">Selecione uma opção</option>
+
+                                {
+                                    cities.map((item, index) => (
+                                        <option key={index} value={item?.nome}>{item?.nome}</option>
+
+
+                                    ))
+                                }
+
+                            </select>
                         </div>
 
 
@@ -238,7 +278,7 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
                                 <option value="">Selecione uma opção</option>
                                 {sorteFrota.map((item, index) => (
 
-                                    <option  key={index} value={item.id}>{item.code} - {item.model} - {item.marca} - ({item.placa})</option>
+                                    <option key={index} value={item.id}>{item.code} - {item.model} - {item.marca} - ({item.placa})</option>
 
 
                                 ))}

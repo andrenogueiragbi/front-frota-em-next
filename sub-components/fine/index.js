@@ -9,7 +9,7 @@ import AlertToast from 'widgets/Alert/Alert'
 
 
 
-const CurrentPlan = ({ item }) => {
+const CurrentPlan = ({ item,setUfIBGE,cities,states }) => {
 
     const { findMotorista, findFrota,deleteMulta } = useContext(DataContext);
     const [showEdit, setShowEdit] = useState(false)
@@ -42,10 +42,13 @@ const CurrentPlan = ({ item }) => {
 
 
                                 <p>
-                                    Local: <span className="text-primary">{item.local}</span>
+                                    Local: <span className="text-primary">{item.local}  {item.cidade}-{item.uf}</span>
                                 </p>
                                 <p>
                                     Justificativa: <span className="text-primary">{item.justificativa}</span>
+                                </p>
+                                <p>
+                                    Pontos: <span className="text-primary">{item.pontos}</span>
                                 </p>
 
                                 <h3 className='d-flex align-items-center'>
@@ -92,7 +95,16 @@ const CurrentPlan = ({ item }) => {
 
 
 
-                                <EditFine item={item} showEdit={showEdit} setShowEdit={setShowEdit} />
+                                <EditFine 
+                                item={item} 
+                                showEdit={showEdit} 
+                                setShowEdit={setShowEdit}
+                                setUfIBGE={setUfIBGE}
+                                cities={cities}
+                                states={states}
+                                
+                                
+                                />
 
                             </div>
                         </Col>

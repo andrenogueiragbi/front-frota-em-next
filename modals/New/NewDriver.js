@@ -203,10 +203,24 @@ const modalDriverNew = ({ states, showNew, setShowNew, ufIBGE, setUfIBGE, cities
                             <input type="text" name="ncnh" className="form-control" value={formData?.ncnh} onChange={(e) => handleInputChange(e)} />
                         </div>
 
+
                         <div className="col-md-2">
                             <label className="col-form-label">Categoria:</label>
-                            <input type="text" name="categoria" className="form-control" value={formData?.categoria} onChange={(e) => handleInputChange(e)} />
+                            <select name="categoria" className="form-control" id="status-select" value={formData?.categoria} onChange={(e) => handleInputChange(e)} >
+                                <option value="">Selecione uma opção</option>
+
+                                {["A","B","C","D","E","A e B","A e C","A e D","A e E"].map((item, index) => (
+                                    <option key={index} value={item}>{item}</option>
+
+
+                                ))}
+
+                            </select>
                         </div>
+
+
+
+
                         <div className="col-md-2">
                             <label className="col-form-label"  >Vencimento CNH:</label>
                             <input type="date" name="vencimento" className="form-control" value={formData?.vencimento} onChange={(e) => handleInputChange(e)} />

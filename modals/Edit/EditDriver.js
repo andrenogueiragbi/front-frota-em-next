@@ -5,7 +5,7 @@ import AlertToast from 'widgets/Alert/Alert';
 import { toast } from 'react-toastify';
 
 
-const modalDriverEdit = ({ item, showEdit, setShowEdit }) => {
+const modalDriverEdit = ({ item, showEdit, setShowEdit, ufIBGE, cities, setUfIBGE, states }) => {
 
     const { updateMotorista } = useContext(DataContext);
 
@@ -39,6 +39,8 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit }) => {
 
     async function handleInputChange(event) {
         const { name, value } = event.target;
+
+        if (name === 'uf') setUfIBGE(value)
 
         setForm({
             ...formData,
@@ -161,10 +163,23 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit }) => {
                             <input type="text" name="ncnh" className="form-control" value={formData?.ncnh} onChange={(e) => handleInputChange(e)} />
                         </div>
 
+
                         <div className="col-md-2">
                             <label className="col-form-label">Categoria:</label>
-                            <input type="text" name="categoria" className="form-control" value={formData?.categoria} onChange={(e) => handleInputChange(e)} />
+                            <select name="categoria" className="form-control" id="status-select" value={formData?.categoria} onChange={(e) => handleInputChange(e)} >
+                                <option value="">Selecione uma opção</option>
+
+                                {["A", "B", "C", "D", "E", "A e B", "A e C", "A e D", "A e E"].map((item, index) => (
+                                    <option key={index} value={item}>{item}</option>
+
+
+                                ))}
+
+                            </select>
                         </div>
+
+
+
                         <div className="col-md-2">
                             <label className="col-form-label"  >Vencimento CNH:</label>
                             <input type="date" name="vencimento" className="form-control" value={formData?.vencimento} onChange={(e) => handleInputChange(e)} />
@@ -199,12 +214,12 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit }) => {
                             <select name="uf" className="form-control" id="status-select" value={formData?.uf} onChange={(e) => handleInputChange(e)} >
                                 <option value="">Selecione uma opção</option>
 
-         {/*                        {states.map((item, index) => (
+                                {states?.map((item, index) => (
                                     <option key={index} value={item.sigla}>{item.sigla}</option>
 
 
                                 ))}
- */}
+
                             </select>
                         </div>
 
@@ -215,11 +230,11 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit }) => {
                                 {formData.uf !== item.uf ? <option value="">Selecione uma opção</option> : <option value={formData?.cidade}>{formData?.cidade}</option>}
 
 
-             {/*                    {cities.map((item, index) => (
+                                {cities.map((item, index) => (
                                     <option key={index} value={item?.nome}>{item?.nome}</option>
 
 
-                                ))} */}
+                                ))}
 
                             </select>
                         </div>

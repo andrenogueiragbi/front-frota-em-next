@@ -1,9 +1,11 @@
 'use client'
 // import node module libraries
-import { Fragment, useContext, useState } from "react";
+import { Fragment, useContext, useState, useEffect } from "react";
 import Link from 'next/link';
 import { Container, Col, Row, Card, Form, } from 'react-bootstrap';
 import { FineCard } from 'sub-components'
+import { toast } from 'react-toastify';
+
 
 
 
@@ -16,6 +18,61 @@ const Home = () => {
 
     const { sorteMulta } = useContext(DataContext);
     const [showNew, setShowNew] = useState(false)
+
+    const [states, setStates] = useState([])
+    const [cities, setCities] = useState([])
+    const [ufIBGE, setUfIBGE] = useState(null)
+
+
+
+    useEffect(() => {
+
+        async function searchIBGE() {
+            const options = { method: 'GET' };
+            fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados/', options)
+                .then(response => response.json())
+                .then(response => setStates(response))
+                .catch(err => console.error(err));
+
+
+        }
+
+        searchIBGE()
+
+
+    }, [])
+
+
+    useEffect(() => {
+
+        async function searchIBGE() {
+
+            const options = { method: 'GET' };
+            await toast.promise(
+                fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${ufIBGE}/municipios`, options)
+                    .then(response => response.json())
+                    .then(response => setCities(response))
+                    .catch(err => console.error(err)),
+                {
+                    pending: `Buscando cidades ${ufIBGE}`,
+                    error: 'Falha na API do IBGE em busca cidades'
+
+                }
+            );
+
+
+
+
+
+
+        }
+
+        searchIBGE()
+
+
+    }, [ufIBGE])
+
+
 
 
 
@@ -57,11 +114,18 @@ const Home = () => {
                                 <Row className="mt-6">
                                     <Col xl={{ span: 8, offset: 2 }} lg={{ span: 10, offset: 1 }} md={12} xs={12}  >
                                         <Row>
-                                           
-     
+
+
 
                                             {sorteMulta.map((item, index) => (
-                                                 <FineCard key={index} item={item} />
+                                                <FineCard 
+                                                key={index} 
+                                                item={item} 
+                                                setUfIBGE={setUfIBGE}
+                                                cities={cities}
+                                                states={states}
+                                                
+                                                />
 
                                             ))}
 
@@ -88,7 +152,16 @@ const Home = () => {
 
 
             </Container>
-            <NewFine showNew={showNew} setShowNew={setShowNew} />
+
+            <NewFine
+                showNew={showNew}
+                setShowNew={setShowNew}
+                ufIBGE={ufIBGE}
+                setUfIBGE={setUfIBGE}
+                cities={cities}
+                states={states}
+
+            />
 
 
         </Fragment>

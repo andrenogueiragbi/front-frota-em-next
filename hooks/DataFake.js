@@ -52,72 +52,6 @@ const DataContextProvider = (props) => {
             integracao: "BC",
             status: 'INATIVO',
         },
-        {
-            id: 3,
-            nome: "Lucas Vieira da Silva",
-            CPF: "0412478856",
-            RG: "2328204748",
-            cargo: "Desenvolvedor",
-            supervisor: "André",
-            ncnh: "102030456",
-            categoria: "AB",
-            vencimento: "2021-01-01",
-            endereco: "Rua principal",
-            bairro: "BHN",
-            cidade: "Guanambi",
-            n: "61",
-            uf: "BA",
-            email: "lucasadm1@gmail.com",
-            celular: "77 88169-0606",
-            foto: 'https://i.pravatar.cc/150?img=2',
-            whatsapp: "77 88169-0606",
-            integracao: "BC",
-            status: 'INATIVO',
-        },
-        {
-            id: 4,
-            nome: "Lucas Vieira da Silva",
-            CPF: "0412478856",
-            RG: "2328204748",
-            cargo: "Desenvolvedor",
-            supervisor: "André",
-            ncnh: "102030456",
-            categoria: "AB",
-            vencimento: "2021-01-01",
-            endereco: "Rua principal",
-            bairro: "BHN",
-            cidade: "Guanambi",
-            n: "61",
-            uf: "BA",
-            email: "lucasadm1@gmail.com",
-            celular: "77 88169-0606",
-            foto: 'https://i.pravatar.cc/150?img=2',
-            whatsapp: "77 88169-0606",
-            integracao: "BC",
-            status: 'INATIVO',
-        },
-        {
-            id: 5,
-            nome: "Lucas Vieira da Silva",
-            CPF: "0412478856",
-            RG: "2328204748",
-            cargo: "Desenvolvedor",
-            supervisor: "André",
-            ncnh: "102030456",
-            categoria: "AB",
-            vencimento: "2021-01-01",
-            endereco: "Rua principal",
-            bairro: "BHN",
-            cidade: "Guanambi",
-            n: "61",
-            uf: "BA",
-            email: "lucasadm1@gmail.com",
-            celular: "77 88169-0606",
-            foto: 'https://i.pravatar.cc/150?img=2',
-            whatsapp: "77 88169-0606",
-            integracao: "BC",
-            status: 'INATIVO',
-        },
 
     ])
 
@@ -317,6 +251,8 @@ const DataContextProvider = (props) => {
         p_empresa: "200,00",
         p_motorista: "398,37",
         pontos: "20",
+        uf:"BA",
+        cidade:"Guanambi"
 
     },
     {
@@ -334,59 +270,11 @@ const DataContextProvider = (props) => {
         p_empresa: "0,00",
         p_motorista: "193,00",
         pontos: "2",
+        uf:"BA",
+        cidade:"Guanambi"
 
     },
-    {
-        id: 2,
-        motorista_id: 2,
-        veiculo_id: 2,
-        data: "05 mar 2023",
-        hora: "08:52",
-        tipo: "Usar celular em quanto dirige na via",
-        local: "Rua camerino Neves",
-        justificativa: "Não percebeu",
-        placa: "ABC 4321",
-        valor: "193,00",
-        pagamento: "Á vista",
-        p_empresa: "0,00",
-        p_motorista: "193,00",
-        pontos: "2",
-
-    },
-    {
-        id: 2,
-        motorista_id: 2,
-        veiculo_id: 2,
-        data: "05 mar 2023",
-        hora: "08:52",
-        tipo: "Usar celular em quanto dirige na via",
-        local: "Rua camerino Neves",
-        justificativa: "Não percebeu",
-        placa: "ABC 4321",
-        valor: "193,00",
-        pagamento: "Á vista",
-        p_empresa: "0,00",
-        p_motorista: "193,00",
-        pontos: "2",
-
-    },
-    {
-        id: 2,
-        motorista_id: 2,
-        veiculo_id: 2,
-        data: "05 mar 2023",
-        hora: "08:52",
-        tipo: "Usar celular em quanto dirige na via",
-        local: "Rua camerino Neves",
-        justificativa: "Não percebeu",
-        placa: "ABC 4321",
-        valor: "193,00",
-        pagamento: "Á vista",
-        p_empresa: "0,00",
-        p_motorista: "193,00",
-        pontos: "2",
-
-    },
+   
 
     ])
 
@@ -463,13 +351,13 @@ const DataContextProvider = (props) => {
 
     const sorteMulta = multa.sort((a, b) => (a.id < b.id ? -1 : 1));
 
-    const addMulta = (veiculo_id, motorista_id, data, hora, tipo, local, justificativa, placa, valor, pagamento, p_empresa, p_motorista, pontos) => {
+    const addMulta = (veiculo_id, motorista_id, data, hora, tipo, local, justificativa, placa, valor, pagamento, p_empresa, p_motorista, pontos,uf,cidade) => {
 
         console.log(veiculo_id, motorista_id, data, hora, tipo, local, justificativa, placa, valor, pagamento, p_empresa, p_motorista, pontos)
 
         setMulta([...multa, {
             id: multa.length + 1,
-            veiculo_id, motorista_id, data, hora, tipo, local, justificativa, placa, valor, pagamento, p_empresa, p_motorista, pontos
+            veiculo_id, motorista_id, data, hora, tipo, local, justificativa, placa, valor, pagamento, p_empresa, p_motorista, pontos,uf,cidade
         }])
     }
 

@@ -11,7 +11,7 @@ import AlertToast from 'widgets/Alert/Alert'
 import { DataContext } from 'hooks/DataFake';
 
 
-function LineTr({ item }) {
+function LineTr({ item, ufIBGE, cities, setUfIBGE, states }) {
     const [showEdit, setShowEdit] = useState(false)
 
     const { deleteMotorista } = useContext(DataContext);
@@ -62,7 +62,15 @@ function LineTr({ item }) {
                 <div className="d-flex align-items-center">
                     <button className="bg-transparent border border-danger border-2 p-1 m-1 rounded-2 d-flex justify-content-center align-items-center" onClick={() => deleteDriver(item.id, item.nome)} ><i className="fe fe-x fs-3 text-danger" title='Inativar'></i></button>
                     <button className="bg-transparent border border-warning border-2 p-1 m-1 rounded-2 d-flex justify-content-center align-items-center" onClick={() => setShowEdit(!showEdit)} ><i className="fe fe-edit-3 fs-3 text-warning" title='Editar'></i></button>
-                    <EditDriver item={item} showEdit={showEdit} setShowEdit={setShowEdit} />
+                    <EditDriver
+                        item={item}
+                        showEdit={showEdit}
+                        setShowEdit={setShowEdit}
+                        ufIBGE={ufIBGE}
+                        setUfIBGE={setUfIBGE}
+                        cities={cities}
+                        states={states}
+                    />
 
                 </div>
             </td>
@@ -76,7 +84,7 @@ function LineTr({ item }) {
 
 
 
-const listDriver = ({ motorista }) => {
+const listDriver = ({ motorista, ufIBGE, cities, setUfIBGE, states }) => {
 
 
 
@@ -107,7 +115,14 @@ const listDriver = ({ motorista }) => {
 
                         <tbody>
                             {motorista.map((item, index) => (
-                                <LineTr key={index} item={item} />
+                                <LineTr
+                                    key={index}
+                                    item={item}
+                                    ufIBGE={ufIBGE}
+                                    setUfIBGE={setUfIBGE}
+                                    cities={cities}
+                                    states={states}
+                                />
 
                             ))}
                         </tbody>
