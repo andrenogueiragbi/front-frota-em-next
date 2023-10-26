@@ -62,6 +62,12 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit, ufIBGE, cities, setUfIBG
     }
 
 
+    useEffect(() => {
+        if (showEdit) setUfIBGE(formData.uf)
+    })
+
+
+
 
 
 
