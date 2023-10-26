@@ -3,13 +3,17 @@ import { Modal, Button, Image } from 'react-bootstrap';
 import { useState, useEffect, useContext } from 'react';
 import AlertToast from 'widgets/Alert/Alert';
 import { DataContext } from 'hooks/DataFake';
+import { toast } from 'react-toastify';
 
 
 
 
-const modalDriverNew = ({ showNew, setShowNew }) => {
+
+const modalDriverNew = ({ states, showNew, setShowNew, ufIBGE, setUfIBGE, cities }) => {
 
     const { addMotorista } = useContext(DataContext);
+
+
 
     const [formData, setForm] = useState({
         id: "",
@@ -34,12 +38,11 @@ const modalDriverNew = ({ showNew, setShowNew }) => {
         integracao: ""
     });
 
-
-
-
     function handleInputChange(event) {
 
         const { name, value } = event.target;
+
+        if (name === 'uf') setUfIBGE(value)
 
         setForm({
             ...formData,
@@ -49,21 +52,16 @@ const modalDriverNew = ({ showNew, setShowNew }) => {
 
     };
 
-
     function newMotor() {
 
         if (formData.nome) {
 
             addMotorista(formData.nome, formData.CPF, formData.RG, formData.cargo, formData.supervisor, formData.ncnh, formData.categoria, formData.emissao, formData.vencimento, formData.endereco, formData.bairro, formData.cidade, formData.n, formData.uf, formData.email, formData.celular, formData.whatsapp, formData.integracao)
-
-            //setMotorista([...motorista, formData]);
-            AlertToast('Dados cadastrados com sucesso!', 'success',2000)
-
-
+            AlertToast('Dados cadastrados com sucesso!', 'success', 2000)
 
         } else {
-            return AlertToast('Atenção. Verique os campos requeridos!', 'warn')
 
+            return AlertToast('Atenção. Verique os campos requeridos!', 'warn')
 
         }
 
@@ -99,9 +97,7 @@ const modalDriverNew = ({ showNew, setShowNew }) => {
 
     }
 
-
     function closeModal() {
-
         setForm({ //Zerando variaveis do formulario
             id: "",
             nome: "",
@@ -127,8 +123,6 @@ const modalDriverNew = ({ showNew, setShowNew }) => {
         setShowNew(!showNew) //fechando modal
 
     }
-
-
 
 
 
@@ -235,19 +229,55 @@ const modalDriverNew = ({ showNew, setShowNew }) => {
                             <input type="text" name="bairro" className="form-control" value={formData?.bairro} onChange={(e) => handleInputChange(e)} />
                         </div>
 
-                        <div className="col-md-3">
-                            <label className="col-form-label">Cidade</label>
-                            <input type="text" name="cidade" className="form-control" value={formData?.cidade} onChange={(e) => handleInputChange(e)} />
-                        </div>
-
                         <div className="col-md-1">
                             <label className="col-form-label">Nº</label>
                             <input type="text" name="n" className="form-control" value={formData?.n} onChange={(e) => handleInputChange(e)} />
                         </div>
+
+
                         <div className="col-md-2">
+                            <label className="col-form-label">UF:</label>
+                            <select name="uf" className="form-control" id="status-select" value={formData?.uf} onChange={(e) => handleInputChange(e)} >
+                                <option value="">Selecione uma opção</option>
+
+                                {states.map((item, index) => (
+                                    <option key={index} value={item.sigla}>{item.sigla}</option>
+
+
+                                ))}
+
+                            </select>
+                        </div>
+
+                        <div className="col-md-3">
+                            <label className="col-form-label">Cidade:</label>
+                            <select name="cidade" className="form-control" id="status-select" value={formData?.cidade} onChange={(e) => handleInputChange(e)} >
+                                <option value="">Selecione uma opção</option>
+
+                                {
+                                    cities.map((item, index) => (
+                                        <option key={index} value={item?.nome}>{item?.nome}</option>
+
+
+                                    ))
+                                }
+
+                            </select>
+                        </div>
+
+
+                        {/*                         <div className="col-md-3">
+                            <label className="col-form-label">Cidade</label>
+                            <input type="text" name="cidade" className="form-control" value={formData?.cidade} onChange={(e) => handleInputChange(e)} />
+                        </div> */}
+
+
+                        {/*                         <div className="col-md-2">
                             <label className="col-form-label">UF</label>
                             <input type="text" name="uf" className="form-control" value={formData?.uf} onChange={(e) => handleInputChange(e)} />
                         </div>
+ */}
+
 
 
 

@@ -2,11 +2,13 @@ import { Modal, Button, Image } from 'react-bootstrap';
 import { useState, useEffect, useContext } from 'react';
 import { DataContext } from 'hooks/DataFake';
 import AlertToast from 'widgets/Alert/Alert';
+import { toast } from 'react-toastify';
 
 
 const modalDriverEdit = ({ item, showEdit, setShowEdit }) => {
 
     const { updateMotorista } = useContext(DataContext);
+
 
     const id = item.id
 
@@ -35,7 +37,7 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit }) => {
     });
 
 
-    function handleInputChange(event) {
+    async function handleInputChange(event) {
         const { name, value } = event.target;
 
         setForm({
@@ -49,12 +51,16 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit }) => {
     function editMotor() {
 
 
-        AlertToast('Dados atualizados com sucesso!', 'info',2000)
+        AlertToast('Dados atualizados com sucesso!', 'info', 2000)
 
         updateMotorista(id, formData)
         setShowEdit(!showEdit)
 
+
     }
+
+
+
 
 
 
@@ -71,9 +77,9 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit }) => {
                     Editar Motorista
                     <i className="fe fe-users fs-3 text-white ms-2"></i>
                 </Modal.Title>
-            
-            
-            
+
+
+
             </Modal.Header>
             <Modal.Body  >
 
@@ -181,19 +187,43 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit }) => {
                             <input type="text" name="bairro" className="form-control" value={formData?.bairro} onChange={(e) => handleInputChange(e)} />
                         </div>
 
-                        <div className="col-md-3">
-                            <label className="col-form-label">Cidade</label>
-                            <input type="text" name="cidade" className="form-control" value={formData?.cidade} onChange={(e) => handleInputChange(e)} />
-                        </div>
+
 
                         <div className="col-md-1">
                             <label className="col-form-label">Nº</label>
                             <input type="text" name="n" className="form-control" value={formData?.n} onChange={(e) => handleInputChange(e)} />
                         </div>
+
                         <div className="col-md-2">
-                            <label className="col-form-label">UF</label>
-                            <input type="text" name="uf" className="form-control" value={formData?.uf} onChange={(e) => handleInputChange(e)} />
+                            <label className="col-form-label">UF:</label>
+                            <select name="uf" className="form-control" id="status-select" value={formData?.uf} onChange={(e) => handleInputChange(e)} >
+                                <option value="">Selecione uma opção</option>
+
+         {/*                        {states.map((item, index) => (
+                                    <option key={index} value={item.sigla}>{item.sigla}</option>
+
+
+                                ))}
+ */}
+                            </select>
                         </div>
+
+                        <div className="col-md-3">
+                            <label className="col-form-label">Cidade:</label>
+                            <select name="cidade" className="form-control" id="status-select" value={formData?.cidade} onChange={(e) => handleInputChange(e)} >
+
+                                {formData.uf !== item.uf ? <option value="">Selecione uma opção</option> : <option value={formData?.cidade}>{formData?.cidade}</option>}
+
+
+             {/*                    {cities.map((item, index) => (
+                                    <option key={index} value={item?.nome}>{item?.nome}</option>
+
+
+                                ))} */}
+
+                            </select>
+                        </div>
+
 
 
 

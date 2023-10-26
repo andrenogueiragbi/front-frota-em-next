@@ -2,9 +2,11 @@
 // import node module libraries
 import { Fragment } from "react";
 import Link from 'next/link';
-import { useState, useEffect,useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { NewDriver } from 'modals'
-import {DataContext} from 'hooks/DataFake';
+import { DataContext } from 'hooks/DataFake';
+import { toast } from 'react-toastify';
+
 
 
 
@@ -16,7 +18,65 @@ import { Col, Row, Container } from 'react-bootstrap';
 const Driver = () => {
 
     const [showNew, setShowNew] = useState(false)
-    const {sorteMotorista} = useContext(DataContext);
+    const { sorteMotorista } = useContext(DataContext);
+
+    const [states, setStates] = useState([])
+    const [cities, setCities] = useState([])
+    const [ufIBGE, setUfIBGE] = useState('BA')
+
+
+    useEffect(() => {
+
+        async function searchIBGE() {
+            const options = { method: 'GET' };
+            fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados/', options)
+                .then(response => response.json())
+                .then(response => setStates(response))
+                .catch(err => console.error(err));
+
+
+        }
+
+        searchIBGE()
+
+
+    }, [])
+
+
+    useEffect(() => {
+
+        async function searchIBGE() {
+
+            const options = { method: 'GET' };
+            await toast.promise(
+                fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${ufIBGE}/municipios`, options)
+                    .then(response => response.json())
+                    .then(response => setCities(response))
+                    .catch(err => console.error(err)),
+                {
+                    pending: `Buscando cidades ${ufIBGE}`,
+                    error: 'Falha na API do IBGE em busca cidades'
+
+                }
+            );
+
+
+
+
+
+
+        }
+
+        searchIBGE()
+
+
+    }, [ufIBGE])
+
+
+
+
+
+
 
 
     return (
@@ -48,7 +108,15 @@ const Driver = () => {
             </Container>
             {/* MODAL EDIT*/}
 
-            <NewDriver showNew={showNew} setShowNew={setShowNew} />
+            <NewDriver
+                states={states}
+                showNew={showNew}
+                setShowNew={setShowNew}
+                ufIBGE={ufIBGE}
+                setUfIBGE={setUfIBGE}
+                cities={cities}
+
+            />
 
 
         </Fragment>

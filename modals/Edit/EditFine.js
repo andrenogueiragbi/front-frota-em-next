@@ -236,16 +236,13 @@ const modalFineEdit = ({ item, showEdit, setShowEdit }) => {
                     </div>
 
 
-
-
-
                 </form>
 
 
             </Modal.Body>
 
             <Modal.Footer>
-                <Button variant="secondary" onClick={() => closeModal()}>
+                <Button variant="secondary" onClick={() => setShowEdit(!showEdit)}>
                     Fechar
                 </Button>
                 <Button variant="primary" onClick={() => editFine()}>
