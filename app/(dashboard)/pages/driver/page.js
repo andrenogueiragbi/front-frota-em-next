@@ -4,8 +4,7 @@ import { Fragment } from "react";
 import Link from 'next/link';
 import { useState, useEffect, useContext } from 'react'
 import { NewDriver } from 'modals'
-import { DataContext } from 'hooks/DataFake';
-import { toast } from 'react-toastify';
+
 
 
 
@@ -18,35 +17,6 @@ import { Col, Row, Container } from 'react-bootstrap';
 const Driver = () => {
 
     const [showNew, setShowNew] = useState(false)
-    const { sorteMotorista } = useContext(DataContext);
-
-    const [driver, setDiver] = useState()
-
-
-
-    useEffect(() => {
-
-        async function searchMotorista() {
-
-            const options = { method: 'GET' };
-            await toast.promise(
-                fetch(`https://api-frota.onrender.com/driver`, options)
-                    .then(response => response.json())
-                    .then(response => setDiver(response.drivers))
-                    .catch(err => console.error(err)),
-                {
-                    pending: `Buscando Motoristas`,
-                    error: 'Falha na API de buscar motoristas'
-
-                }
-            );
-
-        }
-
-        searchMotorista()
-
-
-    }, [])
 
 
 
@@ -74,17 +44,15 @@ const Driver = () => {
 
                 {/* Active Projects  */}
                 <ListDriver
-                    motorista={sorteMotorista}
-                    driver={driver}
 
                 />
-
 
 
             </Container>
             {/* MODAL EDIT*/}
 
             {showNew && <NewDriver showNew={showNew} setShowNew={setShowNew} />}
+
 
 
         </Fragment>
