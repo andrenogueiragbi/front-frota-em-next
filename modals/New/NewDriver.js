@@ -2,7 +2,6 @@
 import { Modal, Button, Image } from 'react-bootstrap';
 import { useState, useEffect, useContext } from 'react';
 import AlertToast from 'widgets/Alert/Alert';
-import { DataContext } from 'hooks/DataFake';
 import { toast } from 'react-toastify';
 
 
@@ -10,8 +9,6 @@ import { toast } from 'react-toastify';
 
 
 const modalDriverNew = ({ showNew, setShowNew }) => {
-
-    const { addMotorista } = useContext(DataContext);
 
     const [states, setStates] = useState([])
     const [cities, setCities] = useState([])
@@ -101,7 +98,7 @@ const modalDriverNew = ({ showNew, setShowNew }) => {
 
     };
 
-    async function newMotor() {
+    async function newDriver() {
 
 
         const options = {
@@ -119,6 +116,28 @@ const modalDriverNew = ({ showNew, setShowNew }) => {
                 .then(response => {
                     if (response.ok) {
                         AlertToast(response.message_pt, 'success')
+                        setForm({ //Zerando variaveis do formulario
+                            name: "",
+                            cpf: "",
+                            rg: "",
+                            workload: "",
+                            supervisor: "",
+                            cnh_number: "",
+                            cnh_category: "",
+                            cnh_expiration: "",
+                            address: "",
+                            neighborhood: "",
+                            city: "",
+                            number_address: "",
+                            state: "",
+                            email: "",
+                            cell_phone: "",
+                            whatsapp: "",
+                            integration_code: ""
+                        })
+                        setShowNew(!showNew) //fechando modal
+
+
                     } else if (response.message_en === 'server error') {
                         AlertToast(`${response.message_pt} ou dados pertencente a outro motorista`, 'error')
                     } else {
@@ -133,42 +152,8 @@ const modalDriverNew = ({ showNew, setShowNew }) => {
             }
         )
 
-        /*         if (formData.nome) {
-        
-                    addMotorista(formData.nome, formData.CPF, formData.RG, formData.cargo, formData.supervisor, formData.ncnh, formData.categoria, formData.emissao, formData.vencimento, formData.endereco, formData.bairro, formData.cidade, formData.n, formData.uf, formData.email, formData.celular, formData.whatsapp, formData.integracao)
-                    AlertToast('Dados cadastrados com sucesso!', 'success', 2000)
-        
-                } else {
-        
-                    return AlertToast('Atenção. Verique os campos requeridos!', 'warn')
-        
-                } */
 
 
-
-
-        /* 
-                setForm({ //Zerando variaveis do formulario
-                    name: "",
-                    cpf: "",
-                    rg: "",
-                    workload: "",
-                    supervisor: "",
-                    cnh_number: "",
-                    cnh_category: "",
-                    cnh_expiration: "",
-                    address: "",
-                    neighborhood: "",
-                    city: "",
-                    number_address: "",
-                    state: "",
-                    email: "",
-                    cell_phone: "",
-                    whatsapp: "",
-                    integration_code: ""
-                })
-                setShowNew(!showNew) //fechando modal
-         */
 
 
     }
@@ -284,7 +269,7 @@ const modalDriverNew = ({ showNew, setShowNew }) => {
                             <select name="cnh_category" className="form-control" id="status-select" value={formData?.cnh_category} onChange={(e) => handleInputChange(e)} >
                                 <option value="">Selecione uma opção</option>
 
-                                {["A", "B", "C", "D", "E", "A e B", "A e C", "A e D", "A e E"].map((item, index) => (
+                                {["A", "B", "C", "D", "E", "AB", "AC", "AD", "AE"].map((item, index) => (
                                     <option key={index} value={item}>{item}</option>
 
 
@@ -395,7 +380,7 @@ const modalDriverNew = ({ showNew, setShowNew }) => {
                 <Button variant="secondary" onClick={() => closeModal()}>
                     Fechar
                 </Button>
-                <Button variant="primary" onClick={() => newMotor()}>
+                <Button variant="primary" onClick={() => newDriver()}>
                     Salvar
                 </Button>
             </Modal.Footer>
