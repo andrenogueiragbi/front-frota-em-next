@@ -236,7 +236,7 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit, ufIBGE, cities, setUfIBG
                                 {formData.uf !== item.uf ? <option value="">Selecione uma opção</option> : <option value={formData?.cidade}>{formData?.cidade}</option>}
 
 
-                                {cities.map((item, index) => (
+                                {cities.lenght > 0 && cities.map((item, index) => (
                                     <option key={index} value={item?.nome}>{item?.nome}</option>
 
 

@@ -20,61 +20,33 @@ const Driver = () => {
     const [showNew, setShowNew] = useState(false)
     const { sorteMotorista } = useContext(DataContext);
 
-    const [states, setStates] = useState([])
-    const [cities, setCities] = useState([])
-    const [ufIBGE, setUfIBGE] = useState(null)
+    const [driver, setDiver] = useState()
 
-
-    useEffect(() => {
-
-        async function searchIBGE() {
-            const options = { method: 'GET' };
-            fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados/', options)
-                .then(response => response.json())
-                .then(response => setStates(response))
-                .catch(err => console.error(err));
-
-
-        }
-
-        searchIBGE()
-
-
-    }, [])
 
 
     useEffect(() => {
 
-        async function searchIBGE() {
+        async function searchMotorista() {
 
             const options = { method: 'GET' };
             await toast.promise(
-                fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${ufIBGE}/municipios`, options)
+                fetch(`https://api-frota.onrender.com/driver`, options)
                     .then(response => response.json())
-                    .then(response => setCities(response))
+                    .then(response => setDiver(response.drivers))
                     .catch(err => console.error(err)),
                 {
-                    pending: `Buscando cidades ${ufIBGE}`,
-                    error: 'Falha na API do IBGE em busca cidades'
+                    pending: `Buscando Motoristas`,
+                    error: 'Falha na API de buscar motoristas'
 
                 }
             );
 
-
-
-
-
-
         }
 
-        searchIBGE()
+        searchMotorista()
 
 
-    }, [ufIBGE])
-
-
-
-
+    }, [])
 
 
 
@@ -103,10 +75,7 @@ const Driver = () => {
                 {/* Active Projects  */}
                 <ListDriver
                     motorista={sorteMotorista}
-                    ufIBGE={ufIBGE}
-                    setUfIBGE={setUfIBGE}
-                    cities={cities}
-                    states={states}
+                    driver={driver}
 
                 />
 
@@ -115,15 +84,7 @@ const Driver = () => {
             </Container>
             {/* MODAL EDIT*/}
 
-            <NewDriver
-                states={states}
-                showNew={showNew}
-                setShowNew={setShowNew}
-                ufIBGE={ufIBGE}
-                setUfIBGE={setUfIBGE}
-                cities={cities}
-
-            />
+            {showNew && <NewDriver showNew={showNew} setShowNew={setShowNew} />}
 
 
         </Fragment>
