@@ -130,7 +130,7 @@ const modalDriverNew = ({ showNew, setShowNew }) => {
         };
 
         await toast.promise(
-            fetch(`http://localhost:3334/driver`, options)
+            fetch(`https://api-frota.onrender.com/driver`, options)
                 .then(response => response.json())
                 .then(response => {
                     if (response.ok) {
