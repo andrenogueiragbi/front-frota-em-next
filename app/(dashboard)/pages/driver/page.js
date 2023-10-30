@@ -21,6 +21,7 @@ const Driver = () => {
 
 
 
+
     return (
         <Fragment>
             <div className="bg-primary pt-10 pb-21"></div>
@@ -44,6 +45,7 @@ const Driver = () => {
 
                 {/* Active Projects  */}
                 <ListDriver
+                    showNew={showNew}
 
                 />
 

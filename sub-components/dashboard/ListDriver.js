@@ -41,7 +41,7 @@ function LineTr({ item }) {
 
                         <div className="d-flex justify-content-between align-items-center">
 
-                            <Image src={item.foto ? `${item.foto}` : '/images/avatar/motorista4.png'} className="rounded-circle avatar-md" alt="" />
+                            <Image src={item.image ? item.image: '/images/avatar/placeholder-user.jpg'} className="rounded-circle avatar-md" alt="" />
 
                         </div>
 
@@ -87,7 +87,7 @@ function LineTr({ item }) {
 
 
 
-const listDriver = () => {
+const listDriver = ({showNew}) => {
 
 
     const [driver, setDiver] = useState()
@@ -129,7 +129,7 @@ const listDriver = () => {
 
 
 
-    }, [page,limit])
+    }, [page,limit,showNew])
 
 
 

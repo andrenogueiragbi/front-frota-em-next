@@ -13,6 +13,13 @@ const modalDriverNew = ({ showNew, setShowNew }) => {
     const [states, setStates] = useState([])
     const [cities, setCities] = useState([])
     const [ufIBGE, setUfIBGE] = useState(null)
+    const [selectedImage, setSelectedImage] = useState(null);
+
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        setSelectedImage(file);
+    };
+
 
 
     useEffect(() => {
@@ -81,7 +88,9 @@ const modalDriverNew = ({ showNew, setShowNew }) => {
         email: "",
         cell_phone: "",
         whatsapp: "",
-        integration_code: ""
+        integration_code: "",
+        image: "",
+
     });
 
     function handleInputChange(event) {
@@ -90,28 +99,38 @@ const modalDriverNew = ({ showNew, setShowNew }) => {
 
         if (name === 'state') setUfIBGE(value)
 
+
+
+
         setForm({
             ...formData,
             [name]: value,
 
         });
 
+
+
+
+
     };
 
     async function newDriver() {
 
+        const formDataToSend = new FormData();
+        formDataToSend.append('avatar', selectedImage);
+        for (const key in formData) {
+            formDataToSend.append(key, formData[key]);
+          }
+      
 
         const options = {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData) // Converte o objeto em uma string JSON
+            body: formDataToSend,
 
         };
 
         await toast.promise(
-            fetch(`https://api-frota.onrender.com/driver`, options)
+            fetch(`http://localhost:3334/driver`, options)
                 .then(response => response.json())
                 .then(response => {
                     if (response.ok) {
@@ -133,7 +152,9 @@ const modalDriverNew = ({ showNew, setShowNew }) => {
                             email: "",
                             cell_phone: "",
                             whatsapp: "",
-                            integration_code: ""
+                            integration_code: "",
+                            image: "",
+
                         })
                         setShowNew(!showNew) //fechando modal
 
@@ -176,7 +197,8 @@ const modalDriverNew = ({ showNew, setShowNew }) => {
             email: "",
             cell_phone: "",
             whatsapp: "",
-            integration_code: ""
+            integration_code: "",
+            image: "",
         })
         setShowNew(!showNew) //fechando modal
 
@@ -208,9 +230,9 @@ const modalDriverNew = ({ showNew, setShowNew }) => {
                         <div className="icon-shape">
                             <div className='d-flex flex-column'>
                                 <div className='d-flex flex-column align-items-center'>
-                                    <Image className="m-3 rounded-circle bg-light border border-3" src={'/images/avatar/motorista4.png'} height={90} width={90} alt="" />
+                                    <Image className="m-3 rounded-circle bg-light border border-3" src={'/images/avatar/placeholder-user.jpg'} height={90} width={90} alt="" />
                                     <label className='bg-primary' style={{ borderRadius: '5px', color: '#fff', cursor: 'pointer', margin: '10px', padding: '6px' }} htmlFor="customFile">Selecione uma foto &#187;</label>
-                                    <input style={{ display: 'none' }} id='customFile' type='file' />
+                                    <input name="image" id='customFile' type='file' onChange={handleImageChange} />
 
                                 </div>
 
