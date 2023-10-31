@@ -7,12 +7,11 @@ import AlertToast from 'widgets/Alert/Alert';
 import { toast } from 'react-toastify';
 
 
-const modalDriverEdit = ({ item, showEdit, setShowEdit }) => {
+const modalDriverEdit = ({ item, showEdit, setShowEdit, isEdit, setIsEdit, states, cities,setUfIBGE }) => {
 
     const id = item.id
 
     const [formData, setForm] = useState({
-        id: item.id,
         active: item.active,
         name: item.name,
         cpf: item.cpf,
@@ -38,6 +37,7 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit }) => {
     const [selectedAvatar, setSelectedAvatar] = useState(null);
 
     const handleImageChange = (event) => {
+
         const file = event.target.files[0];
         const selectedFileName = event.target.files[0].name;
         document.getElementById('selectedFileName').textContent = selectedFileName;
@@ -50,7 +50,7 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit }) => {
     async function handleInputChange(event) {
         const { name, value } = event.target;
 
-        if (name === 'uf') setUfIBGE(value)
+        if (name === 'state') setUfIBGE(value)
 
         setForm({
             ...formData,
@@ -60,28 +60,61 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit }) => {
 
     };
 
-    function editMotor() {
 
+    async function editDriver(id) {
 
-        AlertToast('Dados atualizados com sucesso!', 'info', 2000)
+        const formDataToSend = new FormData();
 
-        updateMotorista(id, formData)
-        setShowEdit(!showEdit)
+        if (selectedImage) {
+            formDataToSend.append('avatar', selectedImage);
+        }
+
+        for (const key in formData) {
+            formDataToSend.append(key, formData[key]);
+        }
+
+        const options = {
+            method: 'PUT',
+            body: formDataToSend,
+
+        };
+
+        await toast.promise(
+            fetch(`https://api-frota.onrender.com/driver/${id}`, options)
+                .then(response => response.json())
+                .then(response => {
+                    if (response.ok) {
+
+                        setShowEdit(!showEdit)
+                        AlertToast(response.message_pt, 'success')
+                        setIsEdit(!isEdit)
+
+                    } else if (response.message_en === 'server error') {
+
+                        AlertToast(`${response.message_pt} ou dados pertencente a outro motorista`, 'error')
+
+                    } else {
+
+                        AlertToast(response.message_pt, 'warn')
+                    }
+                })
+                .catch(err => console.error(err)),
+            {
+                pending: `Salvado Motorista ${formData.name}`,
+                error: 'Falha em salvar dados do motorista'
+
+            }
+        )
 
 
     }
 
 
-    /*     useEffect(() => {
+
+    useEffect(() => {
             if (showEdit) setUfIBGE(formData.uf)
-        })
+    })
     
-     */
-
-
-
-
-
 
     return (
 
@@ -121,16 +154,21 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit }) => {
                     </div>
 
 
-
                     <div className="d-flex justify-content-center">
                         <div className="icon-shape">
                             <div className='d-flex flex-column'>
-                                <div className="input-group col-md-8">
-                                    <label className="form-check-label me-2" for="inativo">Inativar</label>
+                                <div className="input-group col-md-8 align-items-center">
+                                    <label className="form-check-label me-2" htmlFor="inativo">Inativar</label>
+
                                     <div className="form-check form-switch">
-                                        <input className="form-check-input" type="checkbox" id="inativo" style={{'width':'50px', 'height': '30px'}} />
-                                        <label className="form-check-label" for="inativo">Ativo</label>
+                                        <input className="form-check-input" type="checkbox" id="inativo" style={{ 'width': '50px', 'height': '30px' }} checked={formData.active} onChange={() => setForm({
+                                            ...formData,
+                                            active: !formData.active,
+
+                                        })} />
                                     </div>
+                                    <label className="form-check-label" htmlFor="inativo">Ativo</label>
+
                                 </div>
                             </div>
                         </div>
@@ -232,11 +270,11 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit }) => {
                             <select name="state" className="form-control" id="status-select" value={formData?.state} onChange={(e) => handleInputChange(e)} >
                                 <option value="">{item.state}</option>
 
-                                {/*                {states.map((item, index) => (
+                                {states.map((item, index) => (
                                     <option key={index} value={item.sigla}>{item.sigla}</option>
 
 
-                                ))} */}
+                                ))}
 
                             </select>
                         </div>
@@ -246,13 +284,13 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit }) => {
                             <select name="city" className="form-control" id="status-select" value={formData?.city} onChange={(e) => handleInputChange(e)} >
                                 <option value="">{item.city}</option>
 
-                                {/*                        {
+                                {
                                     cities.map((item, index) => (
                                         <option key={index} value={item?.nome}>{item?.nome}</option>
 
 
                                     ))
-                                } */}
+                                }
 
                             </select>
                         </div>
@@ -299,7 +337,7 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit }) => {
                 <Button variant="secondary" onClick={() => setShowEdit(!showEdit)}>
                     Fechar
                 </Button>
-                <Button variant="primary" onClick={() => editMotor()}>
+                <Button variant="primary" onClick={() => editDriver(id)}>
                     Salvar Alterações
                 </Button>
             </Modal.Footer>

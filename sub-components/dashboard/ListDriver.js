@@ -13,21 +13,14 @@ import AlertToast from 'widgets/Alert/Alert'
 import { DataContext } from 'hooks/DataFake';
 
 
-function LineTr({ item }) {
+function LineTr({ item, isEdit, setIsEdit ,states,cities,setUfIBGE}) {
 
     const [showEdit, setShowEdit] = useState(false)
-
-
-
-
 
     function deleteDriver(id, nome) {
         AlertToast(`ID: ${id}, ${nome} apagado!`, 'error')
 
     }
-
-
-
 
     return (
         <tr key={item.id}>
@@ -39,7 +32,7 @@ function LineTr({ item }) {
 
                         <div className="d-flex justify-content-between align-items-center">
 
-                            <Image src={item.image ? item.image: '/images/avatar/placeholder-user.jpg'} className="rounded-circle avatar-md" alt="" />
+                            <Image src={item.image ? item.image : '/images/avatar/placeholder-user.jpg'} className="rounded-circle avatar-md" alt="" />
 
                         </div>
 
@@ -67,7 +60,13 @@ function LineTr({ item }) {
                         item={item}
                         showEdit={showEdit}
                         setShowEdit={setShowEdit}
-                    /> 
+                        isEdit={isEdit}
+                        setIsEdit={setIsEdit}
+                        states={states}
+                        cities={cities}
+                        setUfIBGE={setUfIBGE}
+
+                    />
 
                 </div>
             </td>
@@ -81,7 +80,7 @@ function LineTr({ item }) {
 
 
 
-const listDriver = ({showNew}) => {
+const listDriver = ({ showNew }) => {
 
 
     const [driver, setDiver] = useState()
@@ -90,6 +89,10 @@ const listDriver = ({showNew}) => {
     const [limit, setLimit] = useState('5 linhas')
     const [Loading, setLoading] = useState(false)
     const [search, setSearch] = useState('')
+    const [isEdit, setIsEdit] = useState(false)
+    const [states, setStates] = useState([])
+    const [cities, setCities] = useState([])
+    const [ufIBGE, setUfIBGE] = useState(null)
 
     useEffect(() => {
 
@@ -122,9 +125,53 @@ const listDriver = ({showNew}) => {
 
         searchMotorista()
 
+    }, [page, limit, showNew, search, isEdit])
+
+    useEffect(() => {
+
+        async function searchIBGE() {
+            const options = { method: 'GET' };
+            fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados/', options)
+                .then(response => response.json())
+                .then(response => setStates(response))
+                .catch(err => console.error(err));
 
 
-    }, [page,limit,showNew,search])
+        }
+
+        searchIBGE()
+
+
+    }, [])
+
+
+    useEffect(() => {
+
+        async function searchIBGE() {
+
+            if (ufIBGE) {
+
+                const options = { method: 'GET' };
+                await toast.promise(
+                    fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${ufIBGE}/municipios`, options)
+                        .then(response => response.json())
+                        .then(response => setCities(response))
+                        .catch(err => console.error(err)),
+                    {
+                        pending: `Buscando cidades ${ufIBGE}`,
+                        error: 'Falha na API do IBGE em busca cidades'
+
+                    }
+                )
+            }
+
+        }
+
+        searchIBGE()
+
+
+    }, [ufIBGE])
+
 
 
     function handerNumberLine(e) {
@@ -171,6 +218,11 @@ const listDriver = ({showNew}) => {
                                 <LineTr
                                     key={index}
                                     item={item}
+                                    isEdit={isEdit}
+                                    setIsEdit={setIsEdit}
+                                    states={states}
+                                    cities={cities}
+                                    setUfIBGE={setUfIBGE}
 
                                 />
 
@@ -206,7 +258,7 @@ const listDriver = ({showNew}) => {
                                 <select name="city" className="border border-black border-1 rounded-2 p-1" id="status-select" style={{ 'width': '100px' }} value={limit} onChange={(e) => handerNumberLine(e)}  >
 
                                     {
-                                        ['5 linhas','10 linhas', '100 linhas', "1000 linhas"].map((item, index) => (
+                                        ['5 linhas', '10 linhas', '100 linhas', "1000 linhas"].map((item, index) => (
                                             <option className='' key={index} value={item}>{item}</option>
 
 
