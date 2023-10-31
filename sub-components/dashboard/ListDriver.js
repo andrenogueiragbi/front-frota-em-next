@@ -93,8 +93,9 @@ const listDriver = ({showNew}) => {
     const [driver, setDiver] = useState()
 
     const [page, setPage] = useState(1)
-    const [limit, setLimit] = useState('10 linhas')
+    const [limit, setLimit] = useState('5 linhas')
     const [Loading, setLoading] = useState(false)
+    const [search, setSearch] = useState('')
 
     useEffect(() => {
 
@@ -107,7 +108,7 @@ const listDriver = ({showNew}) => {
 
 
                 await toast.promise(
-                    fetch(`https://api-frota.onrender.com/driver?page=${page}&limit=${limit.split(' ')[0]}`, options)
+                    fetch(`https://api-frota.onrender.com/driver?page=${page}&limit=${limit.split(' ')[0]}&search=${search}`, options)
                         .then(response => response.json())
                         .then(response => setDiver(response))
                         .catch(err => console.error(err)),
@@ -129,7 +130,7 @@ const listDriver = ({showNew}) => {
 
 
 
-    }, [page,limit,showNew])
+    }, [page,limit,showNew,search])
 
 
 
@@ -140,6 +141,16 @@ const listDriver = ({showNew}) => {
 
     }
 
+    function handerSearch(e) {
+        setPage(1)
+        setSearch(e.target.value)
+        setLimit('10 linhas')
+
+    }
+
+
+    
+
 
     return (
         <Row className="mt-6">
@@ -147,7 +158,7 @@ const listDriver = ({showNew}) => {
                 <Card>
                     <Card.Header className="bg-white  py-4">
                         <Form className="d-flex align-items-center col-md-3 ">
-                            <Form.Control type="search" placeholder="Search" />
+                            <Form.Control type="search" placeholder="Search" value={search} onChange={handerSearch} />
                         </Form>
                     </Card.Header>
 
@@ -204,7 +215,7 @@ const listDriver = ({showNew}) => {
                                 <select name="city" className="border border-black border-1 rounded-2 p-1" id="status-select" style={{ 'width': '100px' }} value={limit} onChange={(e) => handerNumberLine(e)}  >
 
                                     {
-                                        ['10 linhas', '100 linhas', "1000 linhas"].map((item, index) => (
+                                        ['5 linhas','10 linhas', '100 linhas', "1000 linhas"].map((item, index) => (
                                             <option className='' key={index} value={item}>{item}</option>
 
 
