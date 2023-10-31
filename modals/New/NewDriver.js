@@ -14,9 +14,13 @@ const modalDriverNew = ({ showNew, setShowNew }) => {
     const [cities, setCities] = useState([])
     const [ufIBGE, setUfIBGE] = useState(null)
     const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedAvatar, setSelectedAvatar] = useState(null);
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
+        const selectedFileName = event.target.files[0].name;
+        document.getElementById('selectedFileName').textContent = selectedFileName;
+        setSelectedAvatar(URL.createObjectURL(file))
         setSelectedImage(file);
     };
 
@@ -120,8 +124,8 @@ const modalDriverNew = ({ showNew, setShowNew }) => {
         formDataToSend.append('avatar', selectedImage);
         for (const key in formData) {
             formDataToSend.append(key, formData[key]);
-          }
-      
+        }
+
 
         const options = {
             method: 'POST',
@@ -207,7 +211,6 @@ const modalDriverNew = ({ showNew, setShowNew }) => {
 
 
 
-
     return (
         <Modal className='modal-xl' show={showNew} onHide={() => setShowNew(!showNew)} >
             <Modal.Header className='bg-secondary' closeButton>
@@ -230,9 +233,10 @@ const modalDriverNew = ({ showNew, setShowNew }) => {
                         <div className="icon-shape">
                             <div className='d-flex flex-column'>
                                 <div className='d-flex flex-column align-items-center'>
-                                    <Image className="m-3 rounded-circle bg-light border border-3" src={'/images/avatar/placeholder-user.jpg'} height={90} width={90} alt="" />
+                                    <Image className="m-3 rounded-circle bg-light border border-3" src={selectedAvatar ? selectedAvatar : '/images/avatar/placeholder-user.jpg'} height={90} width={90} alt="" />
                                     <label className='bg-primary' style={{ borderRadius: '5px', color: '#fff', cursor: 'pointer', margin: '10px', padding: '6px' }} htmlFor="customFile">Selecione uma foto &#187;</label>
-                                    <input name="image" id='customFile' type='file' onChange={handleImageChange} />
+                                    <input name="image" id='customFile' type='file' onChange={handleImageChange} style={{ display: 'none' }} accept="image/*" />
+                                    <p id="selectedFileName"></p>
 
                                 </div>
 
