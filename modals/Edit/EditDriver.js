@@ -1,40 +1,50 @@
 import { Modal, Button, Image } from 'react-bootstrap';
 import { useState, useEffect, useContext } from 'react';
-import { DataContext } from 'hooks/DataFake';
+import moment from 'moment';
+
+
 import AlertToast from 'widgets/Alert/Alert';
 import { toast } from 'react-toastify';
 
 
-const modalDriverEdit = ({ item, showEdit, setShowEdit, ufIBGE, cities, setUfIBGE, states }) => {
-
-    const { updateMotorista } = useContext(DataContext);
-
+const modalDriverEdit = ({ item, showEdit, setShowEdit }) => {
 
     const id = item.id
 
     const [formData, setForm] = useState({
         id: item.id,
-        nome: item.nome,
-        CPF: item.CPF,
-        RG: item.RG,
-        cargo: item.cargo,
+        active: item.active,
+        name: item.name,
+        cpf: item.cpf,
+        rg: item.rg,
+        workload: item.workload,
         supervisor: item.supervisor,
-        ncnh: item.ncnh,
-        categoria: item.categoria,
-        vencimento: item.vencimento,
-        endereco: item.endereco,
-        bairro: item.bairro,
-        cidade: item.cidade,
-        n: item.n,
-        uf: item.uf,
+        cnh_number: item.cnh_number,
+        cnh_category: item.cnh_category,
+        cnh_expiration: item.cnh_expiration,
+        address: item.address,
+        neighborhood: item.neighborhood,
+        number_address: item.number_address,
+        city: item.city,
         email: item.email,
-        celular: item.celular,
-        foto: item.foto,
+        state: item.state,
+        cell_phone: item.cell_phone,
         whatsapp: item.whatsapp,
-        integracao: item.integracao,
-        status: item.status
+        integration_code: item.integration_code
 
     });
+
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedAvatar, setSelectedAvatar] = useState(null);
+
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        const selectedFileName = event.target.files[0].name;
+        document.getElementById('selectedFileName').textContent = selectedFileName;
+        setSelectedAvatar(URL.createObjectURL(file))
+        setSelectedImage(file);
+    };
+
 
 
     async function handleInputChange(event) {
@@ -62,12 +72,11 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit, ufIBGE, cities, setUfIBG
     }
 
 
-    useEffect(() => {
-        if (showEdit) setUfIBGE(formData.uf)
-    })
-
-
-
+    /*     useEffect(() => {
+            if (showEdit) setUfIBGE(formData.uf)
+        })
+    
+     */
 
 
 
@@ -99,9 +108,10 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit, ufIBGE, cities, setUfIBG
                         <div className="icon-shape">
                             <div className='d-flex flex-column'>
                                 <div className='d-flex flex-column align-items-center'>
-                                    <Image className="m-3 rounded-circle" src={item.foto} height={90} width={90} alt="" />
+                                    <Image className="m-3 rounded-circle bg-light border border-3" src={selectedAvatar ? selectedAvatar : item.image ? item.image : '/images/avatar/placeholder-user.jpg'} height={90} width={90} alt="" />
                                     <label className='bg-primary' style={{ borderRadius: '5px', color: '#fff', cursor: 'pointer', margin: '10px', padding: '6px' }} htmlFor="customFile">Selecione uma foto &#187;</label>
-                                    <input style={{ display: 'none' }} id='customFile' type='file' />
+                                    <input name="image" id='customFile' type='file' onChange={handleImageChange} style={{ display: 'none' }} accept="image/*" />
+                                    <p id="selectedFileName"></p>
 
                                 </div>
 
@@ -111,21 +121,23 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit, ufIBGE, cities, setUfIBG
                     </div>
 
 
-                    <div className="d-flex justify-content-center mb-3 ">
+
+                    <div className="d-flex justify-content-center">
                         <div className="icon-shape">
                             <div className='d-flex flex-column'>
-                                <div className="input-group col-md-6">
-                                    <label className="input-group-text">Status</label>
-                                    <select name="status" className="form-control custom-select " id="status-select" value={formData?.status} onChange={(e) => handleInputChange(e)}>
-                                        <option value="ATIVO">ATIVO</option>
-                                        <option value="INATIVO">INATIVO</option>
-                                    </select>
+                                <div className="input-group col-md-8">
+                                    <label className="form-check-label me-2" for="inativo">Inativar</label>
+                                    <div className="form-check form-switch">
+                                        <input className="form-check-input" type="checkbox" id="inativo" style={{'width':'50px', 'height': '30px'}} />
+                                        <label className="form-check-label" for="inativo">Ativo</label>
+                                    </div>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
+
+
+
 
 
 
@@ -135,17 +147,17 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit, ufIBGE, cities, setUfIBG
 
                         <div className="col-md-6 me-auto">
                             <label className="col-form-label">Nome:</label>
-                            <input type="text" name="nome" className="form-control" value={formData?.nome} onChange={(e) => handleInputChange(e)} />
+                            <input type="text" name="name" className="form-control" value={formData?.name} onChange={(e) => handleInputChange(e)} />
                         </div>
 
                         <div className="col-md-3">
                             <label className="col-form-label">CPF:</label>
-                            <input type="text" name="CPF" className="form-control" value={formData?.CPF} onChange={(e) => handleInputChange(e)} />
+                            <input type="text" name="cpf" className="form-control" value={formData?.cpf} onChange={(e) => handleInputChange(e)} />
                         </div>
 
                         <div className="col-md-3">
                             <label className="col-form-label">RG:</label>
-                            <input type="text" name="RG" className="form-control" value={formData?.RG} onChange={(e) => handleInputChange(e)} />
+                            <input type="text" name="rg" className="form-control" value={formData?.rg} onChange={(e) => handleInputChange(e)} />
                         </div>
 
 
@@ -156,7 +168,7 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit, ufIBGE, cities, setUfIBG
 
                         <div className="col-md-3">
                             <label className="col-form-label">Cargo:</label>
-                            <input type="text" name="cargo" className="form-control" value={formData?.cargo} onChange={(e) => handleInputChange(e)} />
+                            <input type="text" name="workload" className="form-control" value={formData?.workload} onChange={(e) => handleInputChange(e)} />
                         </div>
 
                         <div className="col-md-3">
@@ -166,16 +178,16 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit, ufIBGE, cities, setUfIBG
 
                         <div className="col-md-2">
                             <label className="col-form-label">Nº CNH:</label>
-                            <input type="text" name="ncnh" className="form-control" value={formData?.ncnh} onChange={(e) => handleInputChange(e)} />
+                            <input type="text" name="cnh_number" className="form-control" value={formData?.cnh_number} onChange={(e) => handleInputChange(e)} />
                         </div>
 
 
                         <div className="col-md-2">
                             <label className="col-form-label">Categoria:</label>
-                            <select name="categoria" className="form-control" id="status-select" value={formData?.categoria} onChange={(e) => handleInputChange(e)} >
+                            <select name="cnh_category" className="form-control" id="status-select" value={formData?.cnh_category} onChange={(e) => handleInputChange(e)} >
                                 <option value="">Selecione uma opção</option>
 
-                                {["A", "B", "C", "D", "E", "A e B", "A e C", "A e D", "A e E"].map((item, index) => (
+                                {["A", "B", "C", "D", "E", "AB", "AC", "AD", "AE"].map((item, index) => (
                                     <option key={index} value={item}>{item}</option>
 
 
@@ -186,9 +198,10 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit, ufIBGE, cities, setUfIBG
 
 
 
+
                         <div className="col-md-2">
                             <label className="col-form-label"  >Vencimento CNH:</label>
-                            <input type="date" name="vencimento" className="form-control" value={formData?.vencimento} onChange={(e) => handleInputChange(e)} />
+                            <input type="date" name="cnh_expiration" className="form-control" value={moment(item.cnh_expiration, 'YYYY-MM-DD').format('YYYY-MM-DD')} onChange={(e) => handleInputChange(e)} />
                         </div>
 
 
@@ -200,52 +213,49 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit, ufIBGE, cities, setUfIBG
 
                         <div className="col-md-3">
                             <label className="col-form-label">Endereço:</label>
-                            <input type="text" name="endereco" className="form-control" value={formData?.endereco} onChange={(e) => handleInputChange(e)} />
+                            <input type="text" name="address" className="form-control" value={formData?.address} onChange={(e) => handleInputChange(e)} />
                         </div>
 
                         <div className="col-md-3">
                             <label className="col-form-label">Bairro:</label>
-                            <input type="text" name="bairro" className="form-control" value={formData?.bairro} onChange={(e) => handleInputChange(e)} />
+                            <input type="text" name="neighborhood" className="form-control" value={formData?.neighborhood} onChange={(e) => handleInputChange(e)} />
                         </div>
-
-
 
                         <div className="col-md-1">
                             <label className="col-form-label">Nº</label>
-                            <input type="text" name="n" className="form-control" value={formData?.n} onChange={(e) => handleInputChange(e)} />
+                            <input type="text" name="number_address" className="form-control" value={formData?.number_address} onChange={(e) => handleInputChange(e)} />
                         </div>
+
 
                         <div className="col-md-2">
                             <label className="col-form-label">UF:</label>
-                            <select name="uf" className="form-control" id="status-select" value={formData?.uf} onChange={(e) => handleInputChange(e)} >
-                                <option value="">Selecione uma opção</option>
+                            <select name="state" className="form-control" id="status-select" value={formData?.state} onChange={(e) => handleInputChange(e)} >
+                                <option value="">{item.state}</option>
 
-                                {states?.map((item, index) => (
+                                {/*                {states.map((item, index) => (
                                     <option key={index} value={item.sigla}>{item.sigla}</option>
 
 
-                                ))}
+                                ))} */}
 
                             </select>
                         </div>
 
                         <div className="col-md-3">
                             <label className="col-form-label">Cidade:</label>
-                            <select name="cidade" className="form-control" id="status-select" value={formData?.cidade} onChange={(e) => handleInputChange(e)} >
+                            <select name="city" className="form-control" id="status-select" value={formData?.city} onChange={(e) => handleInputChange(e)} >
+                                <option value="">{item.city}</option>
 
-                                {formData.uf !== item.uf ? <option value="">Selecione uma opção</option> : <option value={formData?.cidade}>{formData?.cidade}</option>}
+                                {/*                        {
+                                    cities.map((item, index) => (
+                                        <option key={index} value={item?.nome}>{item?.nome}</option>
 
 
-                                {cities.lenght > 0 && cities.map((item, index) => (
-                                    <option key={index} value={item?.nome}>{item?.nome}</option>
-
-
-                                ))}
+                                    ))
+                                } */}
 
                             </select>
                         </div>
-
-
 
 
                     </div>
@@ -260,7 +270,7 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit, ufIBGE, cities, setUfIBG
 
                         <div className="col-md-3">
                             <label className="col-form-label">Celular:</label>
-                            <input type="text" name="celular" className="form-control" value={formData?.celular} onChange={(e) => handleInputChange(e)} />
+                            <input type="text" name="cell_phone" className="form-control" value={formData?.cell_phone} onChange={(e) => handleInputChange(e)} />
                         </div>
 
                         <div className="col-md-3">
@@ -270,11 +280,13 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit, ufIBGE, cities, setUfIBG
 
                         <div className="col-md-2">
                             <label className="col-form-label">Código Integração:</label>
-                            <input type="text" name="integracao" className="form-control" value={formData?.integracao} onChange={(e) => handleInputChange(e)} />
+                            <input type="text" name="integration_code" className="form-control" value={formData?.integration_code} onChange={(e) => handleInputChange(e)} />
                         </div>
 
 
                     </div>
+
+
 
 
 

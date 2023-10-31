@@ -14,9 +14,8 @@ import { DataContext } from 'hooks/DataFake';
 
 
 function LineTr({ item }) {
-    const [showEdit, setShowEdit] = useState(false)
 
-    const { deleteMotorista } = useContext(DataContext);
+    const [showEdit, setShowEdit] = useState(false)
 
 
 
@@ -24,7 +23,6 @@ function LineTr({ item }) {
 
     function deleteDriver(id, nome) {
         AlertToast(`ID: ${id}, ${nome} apagado!`, 'error')
-        deleteMotorista(id)
 
     }
 
@@ -65,15 +63,11 @@ function LineTr({ item }) {
                 <div className="d-flex align-items-center">
                     <button className="bg-transparent border border-danger border-2 p-1 m-1 rounded-2 d-flex justify-content-center align-items-center" onClick={() => deleteDriver(item.id, item.nome)} ><i className="fe fe-x fs-3 text-danger" title='Inativar'></i></button>
                     <button className="bg-transparent border border-warning border-2 p-1 m-1 rounded-2 d-flex justify-content-center align-items-center" onClick={() => setShowEdit(!showEdit)} ><i className="fe fe-edit-3 fs-3 text-warning" title='Editar'></i></button>
-                    {/*                     <EditDriver
+                    <EditDriver
                         item={item}
                         showEdit={showEdit}
                         setShowEdit={setShowEdit}
-                        ufIBGE={ufIBGE}
-                        setUfIBGE={setUfIBGE}
-                        cities={cities}
-                        states={states}
-                    /> */}
+                    /> 
 
                 </div>
             </td>
@@ -133,8 +127,6 @@ const listDriver = ({showNew}) => {
     }, [page,limit,showNew,search])
 
 
-
-
     function handerNumberLine(e) {
         setPage(1)
         setLimit(e.target.value)
@@ -149,7 +141,6 @@ const listDriver = ({showNew}) => {
     }
 
 
-    
 
 
     return (

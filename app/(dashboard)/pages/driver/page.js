@@ -19,9 +19,6 @@ const Driver = () => {
     const [showNew, setShowNew] = useState(false)
 
 
-
-
-
     return (
         <Fragment>
             <div className="bg-primary pt-10 pb-21"></div>
