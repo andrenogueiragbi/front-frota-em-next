@@ -53,6 +53,8 @@
     "sass-loader": "^13.3.2",
     "simplebar": "^6.2.5",
     "simplebar-react": "^3.2.4",
+    "sweetalert2": "^11.9.0",
+    "sweetalert2-react-content": "^5.0.7",
     "uuid": "^9.0.0"
   }
 }

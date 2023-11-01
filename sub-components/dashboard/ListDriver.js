@@ -6,7 +6,7 @@ import moment from 'moment'
 import { toast } from 'react-toastify';
 
 
-import { EditDriver } from 'modals'
+import { EditDriver,DeleteDriver } from 'modals'
 
 
 import AlertToast from 'widgets/Alert/Alert'
@@ -16,6 +16,7 @@ import { DataContext } from 'hooks/DataFake';
 function LineTr({ item, isEdit, setIsEdit ,states,cities,setUfIBGE}) {
 
     const [showEdit, setShowEdit] = useState(false)
+    const [showDelete, setShowDelete] = useState(false)
 
     function deleteDriver(id, nome) {
         AlertToast(`ID: ${id}, ${nome} apagado!`, 'error')
@@ -54,7 +55,7 @@ function LineTr({ item, isEdit, setIsEdit ,states,cities,setUfIBGE}) {
 
             <td className="align-middle">
                 <div className="d-flex align-items-center">
-                    <button className="bg-transparent border border-danger border-2 p-1 m-1 rounded-2 d-flex justify-content-center align-items-center" onClick={() => deleteDriver(item.id, item.nome)} ><i className="fe fe-x fs-3 text-danger" title='Inativar'></i></button>
+                    <button className="bg-transparent border border-danger border-2 p-1 m-1 rounded-2 d-flex justify-content-center align-items-center" onClick={() => setShowDelete(!showDelete)} ><i className="fe fe-x fs-3 text-danger" title='Inativar'></i></button>
                     <button className="bg-transparent border border-warning border-2 p-1 m-1 rounded-2 d-flex justify-content-center align-items-center" onClick={() => setShowEdit(!showEdit)} ><i className="fe fe-edit-3 fs-3 text-warning" title='Editar'></i></button>
                     <EditDriver
                         item={item}
@@ -67,6 +68,10 @@ function LineTr({ item, isEdit, setIsEdit ,states,cities,setUfIBGE}) {
                         setUfIBGE={setUfIBGE}
 
                     />
+
+                    <DeleteDriver showDelete={showDelete} setShowDelete={setShowDelete} item={item} />
+
+                    
 
                 </div>
             </td>
