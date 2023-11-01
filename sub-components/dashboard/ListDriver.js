@@ -18,10 +18,6 @@ function LineTr({ item, isEdit, setIsEdit ,states,cities,setUfIBGE}) {
     const [showEdit, setShowEdit] = useState(false)
     const [showDelete, setShowDelete] = useState(false)
 
-    function deleteDriver(id, nome) {
-        AlertToast(`ID: ${id}, ${nome} apagado!`, 'error')
-
-    }
 
     return (
         <tr key={item.id}>

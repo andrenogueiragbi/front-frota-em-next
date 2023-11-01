@@ -1,7 +1,52 @@
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
+
 import { Modal, Button, Image } from 'react-bootstrap';
+import AlertToast from 'widgets/Alert/Alert';
+import { toast } from 'react-toastify';
+
+
+
 const DeleteDriver = ({ item, showDelete, setShowDelete }) => {
+
+    async function handerDelete(id) {
+
+        const options = {
+            method: 'DELETE',
+
+        };
+
+        await toast.promise(
+            fetch(`https://api-frota.onrender.com/driver/${id}`, options)
+                .then(response => response.json())
+                .then(response => {
+                    if (response.ok) {
+
+                        AlertToast('Registro apagado com sucesso', 'success')
+                      
+                        setShowDelete(!showDelete) //fechando modal
+
+                    } else if (response.message_en === 'server error') {
+
+                        AlertToast(`${response.message_pt} ou dados pertencente a outro motorista`, 'error')
+                    } else {
+
+                        AlertToast(response.message_pt, 'warn')
+                    }
+                })
+                .catch(err => console.error(err)),
+            {
+                pending: `Apagando Motorista de id ${id}`,
+                error: 'Falha em salvar dados do motorista'
+
+            }
+        )
+
+
+
+
+
+
+
+    }
 
 
     return (
@@ -27,15 +72,14 @@ const DeleteDriver = ({ item, showDelete, setShowDelete }) => {
 
 
                         <div class="modal-body">
-                            <h3 style="color: #007bff;">Título Moderno</h3>
-                            <p style="font-size: 1.2rem;">Este é um texto de exemplo no seu modal. Você pode adicionar parágrafos, estilizar o texto e adicionar elementos HTML conforme necessário.</p>
-                            <ul class="list-group">
-                                <li class="list-group-item">Item 1</li>
-                                <li class="list-group-item">Item 2</li>
-                                <li class="list-group-item">Item 3</li>
-                            </ul>
-                            <img src="sua-imagem.jpg" alt="Imagem Moderna" style="max-width: 100%; border-radius: 10px;"/>
-                                <a href="#" class="btn btn-primary mt-3">Botão Moderno</a>
+                            <div className="d-flex flex-column justify-content-center align-items-center text-center">
+
+
+                                <h3 className="text-bg-danger rounded mb-3 fs-3 p-1 text-center d-flex justify-content-center align-items-center w-50"><i className="fe fe-x fs-1 text-white border border-1 rounded-0 border-white  m-1"></i>ATENÇÃO</h3>
+
+                                <p className="fs-3 fw-bold" style={{ 'font-size': '1.2rem' }}>Deseja relamente apagar o registro de número {item.id}?</p>
+
+                            </div>
                         </div>
 
 
@@ -56,8 +100,8 @@ const DeleteDriver = ({ item, showDelete, setShowDelete }) => {
                 <Button variant="secondary" onClick={() => setShowDelete(!showDelete)}>
                     Fechar
                 </Button>
-                <Button variant="primary" onClick={() => setShowDelete(!showDelete)}>
-                    Salvar Alterações
+                <Button variant="primary" onClick={() => handerDelete(item.id)}>
+                    Apagar
                 </Button>
             </Modal.Footer>
 
