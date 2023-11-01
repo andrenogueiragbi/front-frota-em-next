@@ -158,16 +158,16 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit, isEdit, setIsEdit, state
                         <div className="icon-shape">
                             <div className='d-flex flex-column'>
                                 <div className="input-group col-md-8 align-items-center">
-                                    <label className="form-check-label me-2" htmlFor="inativo">Inativar</label>
+                                    <label className="form-check-label me-2 fs-3" htmlFor="inativo">Inativar</label>
 
-                                    <div className="form-check form-switch">
-                                        <input className="form-check-input" type="checkbox" id="inativo" style={{ 'width': '50px', 'height': '30px' }} checked={formData.active} onChange={() => setForm({
+                                    <div className="form-check form-switch ">
+                                        <input className={`form-check-input ${formData.active ? 'bg-success': 'bg-danger'} p-3`} type="checkbox" id="inativo" style={{ 'width': '55px', 'height': '20px' }} checked={formData.active} onChange={() => setForm({
                                             ...formData,
                                             active: !formData.active,
 
                                         })} />
                                     </div>
-                                    <label className="form-check-label" htmlFor="inativo">Ativo</label>
+                                    <label className="form-check-label ms-2 fs-3" htmlFor="inativo">Ativo</label>
 
                                 </div>
                             </div>

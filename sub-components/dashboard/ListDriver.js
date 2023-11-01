@@ -6,14 +6,14 @@ import moment from 'moment'
 import { toast } from 'react-toastify';
 
 
-import { EditDriver,DeleteDriver } from 'modals'
+import { EditDriver, DeleteDriver } from 'modals'
 
 
 import AlertToast from 'widgets/Alert/Alert'
 import { DataContext } from 'hooks/DataFake';
 
 
-function LineTr({ item, isEdit, setIsEdit ,states,cities,setUfIBGE}) {
+function LineTr({ item, isEdit, setIsEdit, isDelete, setIsDelete, states, cities, setUfIBGE }) {
 
     const [showEdit, setShowEdit] = useState(false)
     const [showDelete, setShowDelete] = useState(false)
@@ -65,9 +65,16 @@ function LineTr({ item, isEdit, setIsEdit ,states,cities,setUfIBGE}) {
 
                     />
 
-                    <DeleteDriver showDelete={showDelete} setShowDelete={setShowDelete} item={item} />
+                    <DeleteDriver
+                        item={item}
+                        showDelete={showDelete}
+                        setShowDelete={setShowDelete}
+                        isDelete={isDelete}
+                        setIsDelete={setIsDelete}
 
-                    
+                    />
+
+
 
                 </div>
             </td>
@@ -91,6 +98,7 @@ const listDriver = ({ showNew }) => {
     const [Loading, setLoading] = useState(false)
     const [search, setSearch] = useState('')
     const [isEdit, setIsEdit] = useState(false)
+    const [isDelete, setIsDelete] = useState(false)
     const [states, setStates] = useState([])
     const [cities, setCities] = useState([])
     const [ufIBGE, setUfIBGE] = useState(null)
@@ -126,7 +134,7 @@ const listDriver = ({ showNew }) => {
 
         searchMotorista()
 
-    }, [page, limit, showNew, search, isEdit])
+    }, [page, limit, showNew, search, isEdit, isDelete])
 
     useEffect(() => {
 
@@ -221,6 +229,8 @@ const listDriver = ({ showNew }) => {
                                     item={item}
                                     isEdit={isEdit}
                                     setIsEdit={setIsEdit}
+                                    isDelete={isDelete}
+                                    setIsDelete={setIsDelete}
                                     states={states}
                                     cities={cities}
                                     setUfIBGE={setUfIBGE}

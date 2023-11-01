@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 
 
-const DeleteDriver = ({ item, showDelete, setShowDelete }) => {
+const DeleteDriver = ({ item, showDelete, setShowDelete, isDelete, setIsDelete }) => {
 
     async function handerDelete(id) {
 
@@ -21,8 +21,9 @@ const DeleteDriver = ({ item, showDelete, setShowDelete }) => {
                     if (response.ok) {
 
                         AlertToast(response.message_pt, 'success')
-                      
+
                         setShowDelete(!showDelete) //fechando modal
+                        setIsDelete(!isDelete) //fechando atualizando lista
 
                     } else if (response.message_en === 'server error') {
 
@@ -51,7 +52,7 @@ const DeleteDriver = ({ item, showDelete, setShowDelete }) => {
 
     return (
         <Modal className='modal' show={showDelete} onHide={() => setShowDelete(!showDelete)} >
-            <Modal.Header style={{backgroundColor: '#da6b6e'}}   >
+            <Modal.Header style={{ backgroundColor: '#da6b6e' }}   >
                 <Modal.Title className='text-center d-flex align-items-center  text-white' title='Nova Frota'>
                     <i className="fe fe-file-text fs-3 text-white me-2"></i>
                     Apagar Motorista
@@ -74,7 +75,7 @@ const DeleteDriver = ({ item, showDelete, setShowDelete }) => {
                         <div class="modal-body">
                             <div className="d-flex flex-column justify-content-center align-items-center text-center">
 
-                                <i className='fe fe-alert-triangle text-white p-2 rounded-circle text-center' style={{fontSize:'60px',backgroundColor: '#da6b6e'}}></i>
+                                <i className='fe fe-alert-triangle text-white p-2 rounded-circle text-center' style={{ fontSize: '60px', backgroundColor: '#da6b6e' }}></i>
                                 <p className="fs-3 fw-bold" style={{ 'font-size': '1.2rem' }}>Deseja relamente apagar o registro de {item.name}?</p>
 
                             </div>
