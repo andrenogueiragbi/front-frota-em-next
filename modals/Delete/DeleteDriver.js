@@ -20,13 +20,13 @@ const DeleteDriver = ({ item, showDelete, setShowDelete }) => {
                 .then(response => {
                     if (response.ok) {
 
-                        AlertToast('Registro apagado com sucesso', 'success')
+                        AlertToast(response.message_pt, 'success')
                       
                         setShowDelete(!showDelete) //fechando modal
 
                     } else if (response.message_en === 'server error') {
 
-                        AlertToast(`${response.message_pt} ou dados pertencente a outro motorista`, 'error')
+                        AlertToast(`${response.message_pt}`, 'error')
                     } else {
 
                         AlertToast(response.message_pt, 'warn')
@@ -51,7 +51,7 @@ const DeleteDriver = ({ item, showDelete, setShowDelete }) => {
 
     return (
         <Modal className='modal' show={showDelete} onHide={() => setShowDelete(!showDelete)} >
-            <Modal.Header className='bg-secondary' closeButton>
+            <Modal.Header style={{backgroundColor: '#da6b6e'}}   >
                 <Modal.Title className='text-center d-flex align-items-center  text-white' title='Nova Frota'>
                     <i className="fe fe-file-text fs-3 text-white me-2"></i>
                     Apagar Motorista
@@ -74,33 +74,24 @@ const DeleteDriver = ({ item, showDelete, setShowDelete }) => {
                         <div class="modal-body">
                             <div className="d-flex flex-column justify-content-center align-items-center text-center">
 
-
-                                <h3 className="text-bg-danger rounded mb-3 fs-3 p-1 text-center d-flex justify-content-center align-items-center w-50"><i className="fe fe-x fs-1 text-white border border-1 rounded-0 border-white  m-1"></i>ATENÇÃO</h3>
-
-                                <p className="fs-3 fw-bold" style={{ 'font-size': '1.2rem' }}>Deseja relamente apagar o registro de número {item.id}?</p>
+                                <i className='fe fe-alert-triangle text-white p-2 rounded-circle text-center' style={{fontSize:'60px',backgroundColor: '#da6b6e'}}></i>
+                                <p className="fs-3 fw-bold" style={{ 'font-size': '1.2rem' }}>Deseja relamente apagar o registro de {item.name}?</p>
 
                             </div>
                         </div>
 
-
-
-
                     </div>
-
-
-
-
 
                 </form>
 
 
             </Modal.Body>
 
-            <Modal.Footer>
-                <Button variant="secondary" onClick={() => setShowDelete(!showDelete)}>
+            <Modal.Footer className='d-flex justify-content-center'>
+                <Button className='text-secondary fw-bold fs-4 border border-secondary' variant="none" onClick={() => setShowDelete(!showDelete)}>
                     Fechar
                 </Button>
-                <Button variant="primary" onClick={() => handerDelete(item.id)}>
+                <Button className='text-danger fw-bold fs-4 border border-danger' variant="none" onClick={() => handerDelete(item.id)}>
                     Apagar
                 </Button>
             </Modal.Footer>
