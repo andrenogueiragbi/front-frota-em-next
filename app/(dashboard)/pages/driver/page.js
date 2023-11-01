@@ -6,9 +6,6 @@ import { useState, useEffect, useContext } from 'react'
 import { NewDriver } from 'modals'
 
 
-
-
-
 // import sub components
 import { ListDriver } from "sub-components";
 import { Col, Row, Container } from 'react-bootstrap';

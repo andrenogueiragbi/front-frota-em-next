@@ -22,8 +22,11 @@ const DeleteDriver = ({ item, showDelete, setShowDelete, isDelete, setIsDelete }
 
                         AlertToast(response.message_pt, 'success')
 
+
                         setShowDelete(!showDelete) //fechando modal
                         setIsDelete(!isDelete) //fechando atualizando lista
+
+
 
                     } else if (response.message_en === 'server error') {
 

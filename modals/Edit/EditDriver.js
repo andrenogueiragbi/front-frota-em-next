@@ -7,7 +7,7 @@ import AlertToast from 'widgets/Alert/Alert';
 import { toast } from 'react-toastify';
 
 
-const modalDriverEdit = ({ item, showEdit, setShowEdit, isEdit, setIsEdit, states, cities,setUfIBGE }) => {
+const modalDriverEdit = ({ item, showEdit, setShowEdit, isEdit, setIsEdit, states, cities, setUfIBGE }) => {
 
     const id = item.id
 
@@ -70,6 +70,7 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit, isEdit, setIsEdit, state
         }
 
         for (const key in formData) {
+            if (!formData[key] && key !== 'active' && key !== 'integration_code') return AlertToast(`Prencha todos os campos requeridos!`, 'warn')
             formDataToSend.append(key, formData[key]);
         }
 
@@ -85,9 +86,15 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit, isEdit, setIsEdit, state
                 .then(response => {
                     if (response.ok) {
 
-                        setShowEdit(!showEdit)
+
                         AlertToast(response.message_pt, 'success')
+
                         setIsEdit(!isEdit)
+                        setShowEdit(!showEdit)
+
+
+
+
 
                     } else if (response.message_en === 'server error') {
 
@@ -103,8 +110,7 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit, isEdit, setIsEdit, state
                 pending: `Salvado Motorista ${formData.name}`,
                 error: 'Falha em salvar dados do motorista'
 
-            }
-        )
+            })
 
 
     }
@@ -112,9 +118,9 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit, isEdit, setIsEdit, state
 
 
     useEffect(() => {
-            if (showEdit) setUfIBGE(formData.uf)
+        if (showEdit) setUfIBGE(formData.uf)
     })
-    
+
 
     return (
 
@@ -158,16 +164,16 @@ const modalDriverEdit = ({ item, showEdit, setShowEdit, isEdit, setIsEdit, state
                         <div className="icon-shape">
                             <div className='d-flex flex-column'>
                                 <div className="input-group col-md-8 align-items-center">
-                                    <label className="form-check-label me-2 fs-3" htmlFor="inativo">{formData.active ? 'Inativar': 'Inativo'}</label>
+                                    <label className="form-check-label me-2 fs-3" htmlFor="inativo">{formData.active ? 'Inativar' : 'Inativo'}</label>
 
                                     <div className="form-check form-switch ">
-                                        <input className={`form-check-input ${formData.active ? 'bg-success': ''} p-3`} type="checkbox" id="inativo" style={{ 'width': '55px', 'height': '20px' }} checked={formData.active} onChange={() => setForm({
+                                        <input className={`form-check-input ${formData.active ? 'bg-success' : ''} p-3`} type="checkbox" id="inativo" style={{ 'width': '55px', 'height': '20px' }} checked={formData.active} onChange={() => setForm({
                                             ...formData,
                                             active: !formData.active,
 
                                         })} />
                                     </div>
-                                    <label className="form-check-label ms-2 fs-3" htmlFor="inativo">{formData.active ? 'Ativo': 'Ativar'}</label>
+                                    <label className="form-check-label ms-2 fs-3" htmlFor="inativo">{formData.active ? 'Ativo' : 'Ativar'}</label>
 
                                 </div>
                             </div>
