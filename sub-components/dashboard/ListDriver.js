@@ -20,8 +20,8 @@ function LineTr({ item, isEdit, setIsEdit, isDelete, setIsDelete, states, cities
 
 
     return (
-        <tr key={item.id}>
-            <td className={`align-middle  ${!item.active ?'text-secondary' :'fw-bold'}`}>{item.id}</td>
+        <tr>
+            <td className="align-middle">{item.id.split('-')[0]}</td>
 
             <td className="align-middle">
                 <div className="d-flex align-items-center">
@@ -29,21 +29,21 @@ function LineTr({ item, isEdit, setIsEdit, isDelete, setIsDelete, states, cities
 
                         <div className="d-flex justify-content-between align-items-center">
 
-                            <Image src={item.image ? item.image : '/images/avatar/placeholder-user.jpg'} className="rounded-circle avatar-md" alt=""   style={{ filter: `${!item.active ? 'grayscale(100%)': ''}` }} />
+                            <Image src={item.image ? item.image : '/images/avatar/placeholder-user.jpg'} className="rounded-circle avatar-md" alt="" />
 
                         </div>
 
                     </div>
                     <div className="ms-3 lh-1">
                         <h5 className=" mb-1">
-                            <Link href="#" className={`text-inherit ${!item.active ? 'text-secondary' :'fw-bold'}`}>{`${item.name}${!item.active ?' - INATIVO' :''}`}</Link></h5>
+                            <Link href="#" className="text-inherit">{item.name}</Link></h5>
                     </div>
                 </div>
             </td>
             {/* <td className="align-middle">{item.workload}</td> */}
 
-            <td className="align-middle"><span className={`badge ${!item.active ? 'border border-1 border-secondary text-secondary' :'bg-primary'} `}>{item.cnh_category}</span></td>
-            <td className={`align-middle ${!item.active ?'text-secondary' :'fw-bold'} `}>{moment(item.cnh_expiration, 'YYYY-MM-DD').format('DD/MM/YYYY')}</td>
+            <td className="align-middle"><span className={`badge bg-${item.cnh_category.toUpperCase() == 'A' ? 'primary' : item.cnh_category.toUpperCase() == 'AB' ? 'success' : item.cnh_category.toUpperCase() == 'C' ? 'danger' : item.cnh_category.toUpperCase() == 'D' ? 'warning' : 'info'}`}>{item.cnh_category}</span></td>
+            <td className="align-middle">{moment(item.cnh_expiration, 'YYYY-MM-DD').format('DD/MM/YYYY')}</td>
 
             {/* icons */}
 
@@ -213,7 +213,7 @@ const listDriver = ({ showNew }) => {
                     <Table responsive className="text-nowrap mb-0">
                         <thead className="table-light">
                             <tr>
-                                <th>ID</th>
+                                <th>Código</th>
                                 <th>Nome</th>
                                 {/*  <th>Cargo</th> */}
                                 <th>Categoria</th>
@@ -252,8 +252,9 @@ const listDriver = ({ showNew }) => {
 
 
                                 <input
-                                    className="border border-black border-1 rounded-1 p-1 w-15 ps-2"
+                                    className="border border-black border-1 rounded-1 p-1"
                                     type="text"
+                                    style={{ width: '70px' }}
                                     value={page}
                                     onChange={(e) => setPage(e.target.value.replace(/[^0-9]/g, '') < driver?.pagination.lastPage ? e.target.value.replace(/[^0-9]/g, '') : driver?.pagination.lastPage)}
 
@@ -265,7 +266,7 @@ const listDriver = ({ showNew }) => {
                                 <button className="bg-transparent border border-black border-1 p-1 m-1 rounded-2 d-flex justify-content-center align-items-center" onClick={() => setPage(page < driver.pagination.lastPage ? page + 1 : page)} ><i className="fe fe-arrow-right fs-3 text-black" title='Inativar'></i></button>
 
 
-                                <select name="city" className="border border-black border-1 rounded-2 p-1  w-15" id="status-select" value={limit} onChange={(e) => handerNumberLine(e)}  >
+                                <select name="city" className="border border-black border-1 rounded-2 p-1" id="status-select" style={{ 'width': '100px' }} value={limit} onChange={(e) => handerNumberLine(e)}  >
 
                                     {
                                         ['5 linhas', '10 linhas', '100 linhas', "1000 linhas"].map((item, index) => (

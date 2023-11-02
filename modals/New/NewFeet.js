@@ -10,7 +10,7 @@ export function year() {
     const anostart = parseInt(dataAtual.getFullYear()) - 35;
     const arrayYear = []
 
-    for (let i = anoAtual+1; i >= anostart; i--) {
+    for (let i = anoAtual + 1; i >= anostart; i--) {
         arrayYear.push(i)
 
     }
@@ -41,7 +41,7 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
         nmotor: "",
         tipo: "",
         status: "",
-        km:""
+        km: ""
     });
 
 
@@ -64,10 +64,10 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
         if (formData.model && formData.code, formData.marca, formData.placa) {
 
 
-            addFrota(formData.model, formData.code, formData.marca, formData.placa, formData.km, formData.chassi, formData.combustivel, formData.ano, formData.nmotor, formData.tipo,formData.km)
+            addFrota(formData.model, formData.code, formData.marca, formData.placa, formData.km, formData.chassi, formData.combustivel, formData.ano, formData.nmotor, formData.tipo, formData.km)
 
             //setMotorista([...motorista, formData]);
-            AlertToast('Dados cadastrados com sucesso!', 'success',2000)
+            AlertToast('Dados cadastrados com sucesso!', 'success', 2000)
 
 
 
@@ -95,7 +95,7 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
             nmotor: "",
             tipo: "",
             status: "",
-            km:""
+            km: ""
         })
         setShowNew(!showNew) //fechando modal
 
@@ -120,7 +120,7 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
             nmotor: "",
             tipo: "",
             status: "",
-            km:""
+            km: ""
 
         })
         setShowNew(!showNew) //fechando modal
@@ -132,7 +132,7 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
 
 
     return (
-        <Modal className='modal' show={showNew} onHide={() => setShowNew(!showNew)} >
+        <Modal className='modal-lg' show={showNew} onHide={() => setShowNew(!showNew)} >
             <Modal.Header className='bg-secondary' closeButton>
                 <Modal.Title className='text-center d-flex align-items-center  text-white' title='Nova Frota'>
                     <i className="fe fe-file-plus fs-3 text-white me-2"></i>
@@ -166,19 +166,41 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
 
                     </div>
 
+                    <div className="d-flex justify-content-center">
+                        <div className="icon-shape">
+                            <div className='d-flex flex-column'>
+                                <div className="input-group col-md-8 align-items-center">
+                                    <label className="form-check-label me-2 fs-3" htmlFor="inativo">{formData.active ? 'Inativar' : 'Inativo'}</label>
 
+                                    <div className="form-check form-switch ">
+                                        <input className={`form-check-input ${formData.active ? 'bg-success' : ''} p-3`} type="checkbox" id="inativo" style={{ 'width': '55px', 'height': '20px' }} checked={formData.active} onChange={() => setForm({
+                                            ...formData,
+                                            active: !formData.active,
+
+                                        })} />
+                                    </div>
+                                    <label className="form-check-label ms-2 fs-3" htmlFor="inativo">{formData.active ? 'Ativo' : 'Ativar'}</label>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
                     <div className="row">
 
-                        <div className="col-md-6 me-auto">
+                        <div className="col-md-4 me-auto">
                             <label className="col-form-label">Modelo:</label>
                             <input type="text" name="model" className="form-control" required value={formData?.model} onChange={(e) => handleInputChange(e)} />
                         </div>
 
-                        <div className="col-md-6">
+                        <div className="col-md-4">
                             <label className="col-form-label">Codigo:</label>
                             <input type="text" name="code" className="form-control" required value={formData?.code} onChange={(e) => handleInputChange(e)} />
+                        </div>
+                        <div className="col-md-4 me-auto">
+                            <label className="col-form-label">Placa:</label>
+                            <input type="text" name="plate" className="form-control" required value={formData?.plate} onChange={(e) => handleInputChange(e)} />
                         </div>
 
                     </div>
@@ -187,34 +209,25 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
 
                     <div className="row">
 
-                        <div className="col-md-6 me-auto">
-                            <label className="col-form-label">Placa:</label>
-                            <input type="text" name="placa" className="form-control" required value={formData?.placa} onChange={(e) => handleInputChange(e)} />
-                        </div>
 
-                        <div className="col-md-6">
+
+                        <div className="col-md-4">
                             <label className="col-form-label">Chassi:</label>
                             <input type="text" name="chassi" className="form-control" value={formData?.chassi} onChange={(e) => handleInputChange(e)} />
                         </div>
 
-
-
-                    </div>
-
-                    <div className="row">
-
-                        <div className="col-md-6">
+                        <div className="col-md-4">
                             <label className="col-form-label">Nº Motor:</label>
-                            <input type="text" name="nmotor" className="form-control" value={formData?.nmotor} onChange={(e) => handleInputChange(e)} />
+                            <input type="text" name="engine_number" className="form-control" value={formData?.engine_number} onChange={(e) => handleInputChange(e)} />
                         </div>
 
 
-                        <div className="col-md-6">
+                        <div className="col-md-4">
                             <label className="col-form-label">Ano:</label>
-                            <select name="ano" className="form-control" id="status-select" value={formData?.ano} onChange={(e) => handleInputChange(e)} >
+                            <select name="year" className="form-control" id="status-select" value={formData?.year} onChange={(e) => handleInputChange(e)} >
                                 <option value="">Selecione uma opção</option>
 
-                                {year().map((item,index) => (
+                                {year().map((item, index) => (
 
                                     <option key={index} value={item}>{item}</option>
 
@@ -224,20 +237,15 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
                             </select>
                         </div>
 
-
-
                     </div>
-
-
 
 
                     <div className="row">
 
-
-                        <div className="col-md-6">
+                        <div className="col-md-3">
                             <label className="col-form-label">Combustível:</label>
-                            <select name="combustivel" className="form-control" id="status-select" value={formData?.combustivel} onChange={(e) => handleInputChange(e)} >
-                                <option value="">Selecione uma opção</option>
+                            <select name="fuel" className="form-control" id="status-select" value={formData?.fuel} onChange={(e) => handleInputChange(e)} >
+                                <option value={formData?.fuel}>{formData?.fuel}</option>
                                 <option value="Álcool">Álcool</option>
                                 <option value="Gasolina">Gasolina</option>
                                 <option value="Flex">Flex</option>
@@ -246,25 +254,15 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
                         </div>
 
 
-                        <div className="col-md-6">
+                        <div className="col-md-3">
                             <label className="col-form-label">Marca:</label>
-                            <input type="text" name="marca" className="form-control" required value={formData?.marca} onChange={(e) => handleInputChange(e)} />
+                            <input type="text" name="brand" className="form-control" required value={formData?.brand} onChange={(e) => handleInputChange(e)} />
                         </div>
 
-
-                    </div>
-
-
-
-
-
-
-                    <div className="row">
-
-                        <div className="col-md-6">
+                        <div className="col-md-3">
                             <label className="col-form-label">Tipo:</label>
-                            <select name="tipo" className="form-control" id="status-select" value={formData?.tipo} onChange={(e) => handleInputChange(e)} >
-                                <option value="">Selecione uma opção</option>
+                            <select name="type" className="form-control" id="status-select" value={formData?.type} onChange={(e) => handleInputChange(e)} >
+                                <option value={formData?.type}>{formData?.type}</option>
                                 <option value="Sedan">Sedan</option>
                                 <option value="Hatch">Hatch</option>
                                 <option value="Picape">Picape</option>
@@ -274,15 +272,13 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
                                 <option value="Bicicleta">Bicicleta</option>
 
                             </select>
-                            {/*  <input type="text" name="tipo" className="form-control" value={formData?.tipo} onChange={(e) => handleInputChange(e)} /> */}
                         </div>
 
 
-                        <div className="col-md-6 me-auto">
+                        <div className="col-md-3 me-auto">
                             <label className="col-form-label">KM:</label>
                             <input type="number" min={0} name="km" className="form-control" value={formData?.km} onChange={(e) => handleInputChange(e)} />
                         </div>
-
 
 
                     </div>

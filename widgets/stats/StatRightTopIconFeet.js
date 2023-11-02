@@ -29,7 +29,7 @@ const StatRightTopIcon = ({ item }) => {
                             <h4 className="mb-0 type_feet">{item.model}</h4>
                         </div>
                         <div className="icon-shape rounded-2">
-                            <Image src={item.icon} height={50} width={90} alt="" />
+                            <Image src={item.image} height={50} width={90} alt="" />
                         </div>
                     </div>
 
@@ -43,7 +43,7 @@ const StatRightTopIcon = ({ item }) => {
                                 </div>
                             </div>
 
-                            <p className="mb-0 marca type_marca_feet">{item.marca}</p>
+                            <p className="mb-0 marca type_marca_feet">{item.brand}</p>
                         </div>
 
 
@@ -55,7 +55,7 @@ const StatRightTopIcon = ({ item }) => {
                                 <Image className="me-1" src={`/images/frota/brasil.png`} height={7} width={11} alt="" />
 
                             </div>
-                            <div className="mt-1 ms-2 me-2 fw-bold text-black">{item.placa?.toUpperCase()}</div>
+                            <div className="mt-1 ms-2 me-2 fw-bold text-black">{item.plate?.toUpperCase()}</div>
                         </div>
 
 
