@@ -22,7 +22,7 @@ function LineTr({ item, isEdit, setIsEdit, isDelete, setIsDelete, states, cities
 
     return (
         <tr>
-            <td className="align-middle">{item.id.split('-')[0]}</td>
+            <td className={`align-middle ${item.active ? '' : 'text-secondary'}`}>{item.id.split('-')[0]}</td>
 
             <td className="align-middle">
                 <div className="d-flex align-items-center">
@@ -30,21 +30,21 @@ function LineTr({ item, isEdit, setIsEdit, isDelete, setIsDelete, states, cities
 
                         <div className="d-flex justify-content-between align-items-center">
 
-                            <Image src={item.image ? item.image : '/images/avatar/placeholder-user.jpg'} className="rounded-circle avatar-md" alt="" />
+                            <Image src={item.image ? item.image : '/images/avatar/placeholder-user.jpg'} className="rounded-circle avatar-md" style={{ 'filter': `${item.active ? 'none' : 'grayscale(100%)'}` }} alt="" />
 
                         </div>
 
                     </div>
                     <div className="ms-3 lh-1">
                         <h5 className=" mb-1">
-                            <Link href="#" className="text-inherit">{item.name}</Link></h5>
+                            <Link href="#" className={`text-inherit ${item.active ? '' : 'text-secondary'}`}>{item.name} {item.active ? "" : ' - INATIVO'}</Link></h5>
                     </div>
                 </div>
             </td>
             {/* <td className="align-middle">{item.workload}</td> */}
 
-            <td className="align-middle"><span className={`badge bg-${item.cnh_category.toUpperCase() == 'A' ? 'primary' : item.cnh_category.toUpperCase() == 'AB' ? 'success' : item.cnh_category.toUpperCase() == 'C' ? 'danger' : item.cnh_category.toUpperCase() == 'D' ? 'warning' : 'info'}`}>{item.cnh_category}</span></td>
-            <td className="align-middle">{moment(item.cnh_expiration, 'YYYY-MM-DD').format('DD/MM/YYYY')}</td>
+            <td className="align-middle"><span className={`badge bg-${item.active ? item.cnh_category.toUpperCase() == 'A' ? 'primary' : item.cnh_category.toUpperCase() == 'AB' ? 'success' : item.cnh_category.toUpperCase() == 'C' ? 'danger' : item.cnh_category.toUpperCase() == 'D' ? 'warning' : 'info' : 'secondary'}`}>{item.cnh_category}</span></td>
+            <td className={`align-middle ${item.active ? '' : 'text-secondary'}`}>{moment(item.cnh_expiration, 'YYYY-MM-DD').format('DD/MM/YYYY')}</td>
 
             {/* icons */}
 
@@ -54,7 +54,7 @@ function LineTr({ item, isEdit, setIsEdit, isDelete, setIsDelete, states, cities
                 <div className="d-flex align-items-center">
                     <button className="bg-transparent border border-danger border-2 p-1 m-1 rounded-2 d-flex justify-content-center align-items-center" onClick={() => setShowDelete(!showDelete)} ><i className="fe fe-x fs-3 text-danger" title='Inativar'></i></button>
                     <button className="bg-transparent border border-warning border-2 p-1 m-1 rounded-2 d-flex justify-content-center align-items-center" onClick={() => setShowEdit(!showEdit)} ><i className="fe fe-edit-3 fs-3 text-warning" title='Editar'></i></button>
-                    <EditDriver
+                    {showEdit && <EditDriver
                         item={item}
                         showEdit={showEdit}
                         setShowEdit={setShowEdit}
@@ -64,17 +64,19 @@ function LineTr({ item, isEdit, setIsEdit, isDelete, setIsDelete, states, cities
                         cities={cities}
                         setUfIBGE={setUfIBGE}
 
-                    />
+                    />}
 
-                    <DeleteDriver
-                        item={item}
-                        showDelete={showDelete}
-                        setShowDelete={setShowDelete}
-                        isDelete={isDelete}
-                        setIsDelete={setIsDelete}
+                    {showDelete &&
+                        <DeleteDriver
+                            item={item}
+                            showDelete={showDelete}
+                            setShowDelete={setShowDelete}
+                            isDelete={isDelete}
+                            setIsDelete={setIsDelete}
 
-                    />
+                        />
 
+                    }
 
 
                 </div>
@@ -98,6 +100,7 @@ const listDriver = ({ showNew }) => {
     const [limit, setLimit] = useState('5 linhas')
     const [Loading, setLoading] = useState(false)
     const [search, setSearch] = useState('')
+    const [status, setStatus] = useState(true)
     const [isEdit, setIsEdit] = useState(false)
     const [isDelete, setIsDelete] = useState(false)
     const [states, setStates] = useState([])
@@ -113,17 +116,15 @@ const listDriver = ({ showNew }) => {
 
             if (page) {
 
-                setDiver(null)
-                
+
                 await toast.promise(
                     fetch(`https://api-frota.onrender.com/driver?page=${page}&limit=${limit.split(' ')[0]}&search=${search}`, options)
                         .then(response => response.json())
                         .then(response => setDiver(response))
                         .catch(err => console.error(err)),
                     {
-                        //pending: `Buscando Motoristas`,
-                        error: 'Falha na API de buscar motoristas'
-
+                        pending: `Buscando Motoristas`,
+                        error: 'Falha na API de buscar motoristas',
                     }
                 );
             }
@@ -136,7 +137,7 @@ const listDriver = ({ showNew }) => {
 
         searchMotorista()
 
-    }, [page, limit, showNew, search, isEdit, isDelete])
+    }, [page, limit, showNew, search, isEdit, isDelete, status])
 
     useEffect(() => {
 
@@ -201,13 +202,49 @@ const listDriver = ({ showNew }) => {
 
 
 
+
+
     return (
         <Row className="mt-6">
             <Col md={12} xs={12}>
                 <Card>
+                    {console.log(status)}
                     <Card.Header className="bg-white  py-4">
-                        <Form className="d-flex align-items-center col-md-3 ">
-                            <Form.Control type="search" placeholder="Search" value={search} onChange={handerSearch} />
+                        <Form className="d-flex justify-content-between align-items-md-center">
+
+                            <Form.Control style={{ 'width': '25%' }} type="search" placeholder="Search" value={search} onChange={handerSearch} />
+                            <div className="d-flex gap-2">
+                                <div className="form-check">
+                                    <input
+                                        className="form-check-input"
+                                        type="radio"
+                                        name="radioGroup"
+                                        id="exampleRadios1"
+                                        value="ativos"
+                                        checked={status === true} // Verifica se o estado é verdadeiro para marcar este radio button
+                                        onChange={() => setStatus(true)}
+                                    />
+                                    <label className="form-check-label" htmlFor="exampleRadios1">
+                                        Ativos
+                                    </label>
+                                </div>
+                                <div className="form-check">
+                                    <input
+                                        className="form-check-input"
+                                        type="radio"
+                                        name="radioGroup"
+                                        id="exampleRadios2"
+                                        value="inativos"
+                                        checked={status === false} // Verifica se o estado é falso para marcar este radio button
+                                        onChange={() => setStatus(false)}
+                                    />
+                                    <label className="form-check-label" htmlFor="exampleRadios2">
+                                        Inativos
+                                    </label>
+                                </div>
+                            </div>
+
+
                         </Form>
                     </Card.Header>
 
@@ -226,23 +263,23 @@ const listDriver = ({ showNew }) => {
 
                         <tbody>
 
-                            { driver ?
-                            driver.drivers.map((item, index) => (
-                                <LineTr
-                                    key={index}
-                                    index={index}
-                                    item={item}
-                                    isEdit={isEdit}
-                                    setIsEdit={setIsEdit}
-                                    isDelete={isDelete}
-                                    setIsDelete={setIsDelete}
-                                    states={states}
-                                    cities={cities}
-                                    setUfIBGE={setUfIBGE}
+                            {driver ?
+                                driver.drivers.map((item, index) => (
+                                    <LineTr
+                                        key={index}
+                                        index={index}
+                                        item={item}
+                                        isEdit={isEdit}
+                                        setIsEdit={setIsEdit}
+                                        isDelete={isDelete}
+                                        setIsDelete={setIsDelete}
+                                        states={states}
+                                        cities={cities}
+                                        setUfIBGE={setUfIBGE}
 
-                                />
+                                    />
 
-                            )): false}
+                                )) : false}
                         </tbody>
                     </Table>
 

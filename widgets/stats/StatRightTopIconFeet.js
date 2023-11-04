@@ -63,9 +63,9 @@ const StatRightTopIcon = ({ item, isEdit, setIsEdit }) => {
 
                 </Card.Body>
             </Card>
+            {showEdit && <EditFeet item={item} showEdit={showEdit} setShowEdit={setShowEdit} isEdit={isEdit} setIsEdit={setIsEdit} />
+            }
 
-
-            <EditFeet item={item} showEdit={showEdit} setShowEdit={setShowEdit} isEdit={isEdit} setIsEdit={setIsEdit} />
 
         </>
 

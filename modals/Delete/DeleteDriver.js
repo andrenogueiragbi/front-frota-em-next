@@ -7,6 +7,8 @@ import { toast } from 'react-toastify';
 
 const DeleteDriver = ({ item, showDelete, setShowDelete, isDelete, setIsDelete }) => {
 
+    console.log(' me camando no delete')
+
     async function handerDelete(id) {
 
         const options = {
