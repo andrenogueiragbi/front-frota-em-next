@@ -19,6 +19,7 @@ function LineTr({ item, isEdit, setIsEdit, isDelete, setIsDelete, states, cities
     const [showDelete, setShowDelete] = useState(false)
 
 
+
     return (
         <tr>
             <td className="align-middle">{item.id.split('-')[0]}</td>
@@ -91,7 +92,7 @@ function LineTr({ item, isEdit, setIsEdit, isDelete, setIsDelete, states, cities
 const listDriver = ({ showNew }) => {
 
 
-    const [driver, setDiver] = useState()
+    const [driver, setDiver] = useState(null)
 
     const [page, setPage] = useState(1)
     const [limit, setLimit] = useState('5 linhas')
@@ -112,7 +113,8 @@ const listDriver = ({ showNew }) => {
 
             if (page) {
 
-
+                setDiver(null)
+                
                 await toast.promise(
                     fetch(`https://api-frota.onrender.com/driver?page=${page}&limit=${limit.split(' ')[0]}&search=${search}`, options)
                         .then(response => response.json())
@@ -223,9 +225,12 @@ const listDriver = ({ showNew }) => {
                         </thead>
 
                         <tbody>
-                            {driver?.drivers?.map((item, index) => (
+
+                            { driver ?
+                            driver.drivers.map((item, index) => (
                                 <LineTr
                                     key={index}
+                                    index={index}
                                     item={item}
                                     isEdit={isEdit}
                                     setIsEdit={setIsEdit}
@@ -237,7 +242,7 @@ const listDriver = ({ showNew }) => {
 
                                 />
 
-                            ))}
+                            )): false}
                         </tbody>
                     </Table>
 
@@ -260,7 +265,7 @@ const listDriver = ({ showNew }) => {
 
                                 />
 
-                                <label>de {driver?.pagination.lastPage}</label>
+                                <label>de {driver?.pagination?.lastPage}</label>
 
 
                                 <button className="bg-transparent border border-black border-1 p-1 m-1 rounded-2 d-flex justify-content-center align-items-center" onClick={() => setPage(page < driver.pagination.lastPage ? page + 1 : page)} ><i className="fe fe-arrow-right fs-3 text-black" title='Inativar'></i></button>
@@ -278,7 +283,7 @@ const listDriver = ({ showNew }) => {
 
                                 </select>
 
-                                <label>Total {driver?.pagination.total}</label>
+                                <label>Total {driver?.pagination?.total}</label>
 
                                 {Loading ?
 

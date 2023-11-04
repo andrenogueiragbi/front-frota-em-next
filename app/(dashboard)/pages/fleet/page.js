@@ -21,6 +21,11 @@ const Home = () => {
     const { sorteFrota } = useContext(DataContext);
     const [showNew, setShowNew] = useState(false)
     const [isEdit, setIsEdit] = useState(false)
+    const [isNew, setIsNew] = useState(false)
+    const [search, setSearch] = useState('')
+
+
+    
 
     useEffect(() => {
 
@@ -29,7 +34,7 @@ const Home = () => {
             const options = { method: 'GET' };
 
             await toast.promise(
-                fetch(`https://api-frota.onrender.com/fleet`, options)
+                fetch(`https://api-frota.onrender.com/fleet?search=${search}`, options)
                     .then(response => response.json())
                     .then(response => setFleet(response))
                     .catch(err => console.error(err)),
@@ -46,7 +51,7 @@ const Home = () => {
 
         searchFleet()
 
-    }, [isEdit])
+    }, [isEdit,isNew,search])
 
 
 
@@ -78,7 +83,7 @@ const Home = () => {
                         <Card>
                             <Card.Header className="bg-white  py-4">
                                 <Form className="d-flex align-items-center col-md-3 ">
-                                    <Form.Control type="search" placeholder="Search" />
+                                    <Form.Control type="search" placeholder="Search" value={search} onChange={(e)=> setSearch(e.target.value)} />
                                 </Form>
                             </Card.Header>
 
@@ -114,7 +119,7 @@ const Home = () => {
 
 
             </Container>
-            <NewFeet showNew={showNew} setShowNew={setShowNew} />
+            <NewFeet showNew={showNew} setShowNew={setShowNew} isNew={isNew} setIsNew={setIsNew} />
 
 
         </Fragment>

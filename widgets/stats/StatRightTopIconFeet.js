@@ -29,7 +29,7 @@ const StatRightTopIcon = ({ item, isEdit, setIsEdit }) => {
                             <h4 className="mb-0 type_feet">{item.model}</h4>
                         </div>
                         <div className="icon-shape rounded-2">
-                            <Image src={item.image} height={50} width={90} alt="" />
+                            <Image src={item.image ? item.image : '/images/avatar/placeholder-car2.png'} height={50} width={90} alt="" />
                         </div>
                     </div>
 

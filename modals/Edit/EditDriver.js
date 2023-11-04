@@ -9,6 +9,8 @@ import { toast } from 'react-toastify';
 
 const modalDriverEdit = ({ item, showEdit, setShowEdit, isEdit, setIsEdit, states, cities, setUfIBGE }) => {
 
+    console.log(item)
+
     const id = item.id
 
     const [formData, setForm] = useState({

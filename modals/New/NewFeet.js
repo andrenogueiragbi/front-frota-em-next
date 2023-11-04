@@ -3,6 +3,8 @@ import { Modal, Button, Image } from 'react-bootstrap';
 import { useState, useEffect, useContext } from 'react';
 import AlertToast from 'widgets/Alert/Alert';
 import { DataContext } from 'hooks/DataFake';
+import { toast } from 'react-toastify';
+
 
 export function year() {
     const dataAtual = new Date();
@@ -22,10 +24,12 @@ export function year() {
 
 
 
-const modalFeetNew = ({ showNew, setShowNew }) => {
+const modalFeetNew = ({ showNew, setShowNew ,isNew,setIsNew }) => {
 
 
     const { addFrota } = useContext(DataContext);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedAvatar, setSelectedAvatar] = useState(null);
 
     const [formData, setForm] = useState({
         id: "",
@@ -58,75 +62,75 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
 
     };
 
-
-    function newFrota() {
-
-        if (formData.model && formData.code, formData.marca, formData.placa) {
-
-
-            addFrota(formData.model, formData.code, formData.marca, formData.placa, formData.km, formData.chassi, formData.combustivel, formData.ano, formData.nmotor, formData.tipo, formData.km)
-
-            //setMotorista([...motorista, formData]);
-            AlertToast('Dados cadastrados com sucesso!', 'success', 2000)
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        const selectedFileName = event.target.files[0].name;
+        document.getElementById('selectedFileName').textContent = selectedFileName;
+        setSelectedAvatar(URL.createObjectURL(file))
+        setSelectedImage(file);
+    };
 
 
 
-        } else {
-            return AlertToast('Atenção. Verique os campos requeridos!', 'warn')
+    async function newFrota() {
 
-
+        const formDataToSend = new FormData();
+        formDataToSend.append('image', selectedImage);
+        for (const key in formData) {
+            formDataToSend.append(key, formData[key]);
         }
 
 
+        const options = {
+            method: 'POST',
+            body: formDataToSend,
+
+        };
+
+        await toast.promise(
+            fetch(`https://api-frota.onrender.com/fleet`, options)
+                .then(response => response.json())
+                .then(response => {
+                    if (response.ok) {
+                        AlertToast(response.message_pt, 'success')
+                        setShowNew(!showNew);
+                        setForm({ //Zerando variaveis do formulario
+                            id: "",
+                            model: "",
+                            code: "",
+                            icon: "",
+                            marca: "",
+                            placa: "",
+                            km: "",
+                            chassi: "",
+                            combustivel: "",
+                            ano: "",
+                            nmotor: "",
+                            tipo: "",
+                            status: "",
+                            km: ""
+
+                        })
+                        setIsNew(!isNew)
+                        setShowNew(!showNew) //fechando modal
 
 
+                    } else if (response.message_en === 'server error') {
+                        AlertToast(`${response.message_pt} ou dados pertencente a outro veículo`, 'error')
+                    } else {
+                        AlertToast(response.message_pt, 'warn')
+                    }
+                })
+                .catch(err => console.error(err)),
+            {
+                pending: `Salvado veívulo ${formData.model}`,
+                error: 'Falha em salvar dados do veívulo'
 
-        setForm({ //Zerando variaveis do formulario
-            id: "",
-            model: "",
-            code: "",
-            icon: "",
-            marca: "",
-            placa: "",
-            km: "",
-            chassi: "",
-            combustivel: "",
-            ano: "",
-            nmotor: "",
-            tipo: "",
-            status: "",
-            km: ""
-        })
-        setShowNew(!showNew) //fechando modal
-
+            }
+        )
 
 
     }
-
-
-    function closeModal() {
-
-        setForm({ //Zerando variaveis do formulario
-            id: "",
-            model: "",
-            code: "",
-            icon: "",
-            marca: "",
-            placa: "",
-            km: "",
-            chassi: "",
-            combustivel: "",
-            ano: "",
-            nmotor: "",
-            tipo: "",
-            status: "",
-            km: ""
-
-        })
-        setShowNew(!showNew) //fechando modal
-
-    }
-
 
 
 
@@ -145,25 +149,20 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
 
                 <form >
 
-                    <div className="row">
-
-                        <div className="d-flex justify-content-center mb-3 ">
-                            <div className="icon-shape">
-                                <div className='d-flex flex-column'>
-                                    <div className='d-flex flex-column align-items-center'>
-                                        <Image className="m-3" src='/images/frota/cinza.png' height={60} width={60} alt="" />
-                                        <label className='bg-primary' style={{ borderRadius: '5px', color: '#fff', cursor: 'pointer', margin: '10px', padding: '6px' }} htmlFor="customFile">Selecione uma foto &#187;</label>
-                                        <input style={{ display: 'none' }} id='customFile' type='file' />
-
-                                    </div>
-
+                    <div className="d-flex justify-content-center mb-3 ">
+                        <div className="icon-shape">
+                            <div className='d-flex flex-column'>
+                                <div className='d-flex flex-column align-items-center'>
+                                    <Image className="m-3 rounded-circle bg-light border border-3 " src={selectedAvatar ? selectedAvatar : '/images/avatar/placeholder-car2.png'} height={90} width={90} alt="" />
+                                    <label className='bg-primary' style={{ borderRadius: '5px', color: '#fff', cursor: 'pointer', margin: '10px', padding: '6px' }} htmlFor="customFile">Selecione uma foto &#187;</label>
+                                    <input name="image" id='customFile' type='file' onChange={handleImageChange} style={{ display: 'none' }} accept="image/*" />
+                                    <p id="selectedFileName"></p>
 
                                 </div>
+
+
                             </div>
                         </div>
-
-
-
                     </div>
 
 
@@ -274,7 +273,8 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
             </Modal.Body>
 
             <Modal.Footer>
-                <Button variant="secondary" onClick={() => closeModal()}>
+                <Button variant="secondary" onClick={() => setShowNew(!showNew)
+                }>
                     Fechar
                 </Button>
                 <Button variant="primary" onClick={() => newFrota()}>

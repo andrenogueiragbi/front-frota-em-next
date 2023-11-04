@@ -67,6 +67,7 @@ const modalFeetEdit = ({ item, showEdit, setShowEdit ,isEdit, setIsEdit}) => {
         }
 
         if(formData.km < item.km){
+            alert(`${formData.km < item.km} ${formData.km} < ${item.km}`)
             return AlertToast(`O km novo não pode ser menor do que o valor antivo!`, 'warn')
         }
 
@@ -153,7 +154,7 @@ const modalFeetEdit = ({ item, showEdit, setShowEdit ,isEdit, setIsEdit}) => {
                         <div className="icon-shape">
                             <div className='d-flex flex-column'>
                                 <div className='d-flex flex-column align-items-center'>
-                                    <Image className="m-3" src={selectedAvatar ? selectedAvatar : item.image ? item.image : '/images/avatar/placeholder-user.jpg'} height={50} width={90} alt="" />
+                                    <Image className="m-3" src={selectedAvatar ? selectedAvatar : item.image ? item.image : '/images/avatar/placeholder-car2.png'} height={50} width={90} alt="" />
                                     <label className='bg-primary' style={{ borderRadius: '5px', color: '#fff', cursor: 'pointer', margin: '10px', padding: '6px' }} htmlFor="customFile">Selecione uma foto &#187;</label>
                                     <input name="image" id='customFile' type='file' onChange={handleImageChange} style={{ display: 'none' }} accept="image/*" />
                                     <p id="selectedFileName"></p>
