@@ -23,9 +23,11 @@ const Home = () => {
     const [isEdit, setIsEdit] = useState(false)
     const [isNew, setIsNew] = useState(false)
     const [search, setSearch] = useState('')
+    const [status, setStatus] = useState(true)
 
 
-    
+
+
 
     useEffect(() => {
 
@@ -34,12 +36,12 @@ const Home = () => {
             const options = { method: 'GET' };
 
             await toast.promise(
-                fetch(`https://api-frota.onrender.com/fleet?search=${search}`, options)
+                fetch(`https://api-frota.onrender.com/fleet?search=${search}&status=${status}`, options)
                     .then(response => response.json())
                     .then(response => setFleet(response))
                     .catch(err => console.error(err)),
                 {
-                   /*  pending: `Buscando frota`, */
+                    /*  pending: `Buscando frota`, */
                     error: 'Falha na API de buscar frota'
 
                 }
@@ -51,7 +53,13 @@ const Home = () => {
 
         searchFleet()
 
-    }, [isEdit,isNew,search])
+    }, [isEdit, isNew, search,status])
+
+    function handerSearch(e) {
+        setSearch(e.target.value)
+    
+    }
+
 
 
 
@@ -82,8 +90,41 @@ const Home = () => {
                     <Col md={12} xs={12}>
                         <Card>
                             <Card.Header className="bg-white  py-4">
-                                <Form className="d-flex align-items-center col-md-3 ">
-                                    <Form.Control type="search" placeholder="Search" value={search} onChange={(e)=> setSearch(e.target.value)} />
+                                <Form className="d-flex justify-content-between align-items-md-center">
+
+                                    <Form.Control style={{ 'width': '25%' }} type="search" placeholder="Search" value={search} onChange={handerSearch} />
+                                    <div className="d-flex gap-2">
+                                        <div className="form-check">
+                                            <input
+                                                className="form-check-input"
+                                                type="radio"
+                                                name="radioGroup"
+                                                id="exampleRadios1"
+                                                value="ativos"
+                                                checked={status === true} // Verifica se o estado é verdadeiro para marcar este radio button
+                                                onChange={() => setStatus(true)}
+                                            />
+                                            <label className="form-check-label" htmlFor="exampleRadios1">
+                                                Ativos
+                                            </label>
+                                        </div>
+                                        <div className="form-check">
+                                            <input
+                                                className="form-check-input"
+                                                type="radio"
+                                                name="radioGroup"
+                                                id="exampleRadios2"
+                                                value="inativos"
+                                                checked={status === false} // Verifica se o estado é falso para marcar este radio button
+                                                onChange={() => setStatus(false)}
+                                            />
+                                            <label className="form-check-label" htmlFor="exampleRadios2">
+                                                Inativos
+                                            </label>
+                                        </div>
+                                    </div>
+
+
                                 </Form>
                             </Card.Header>
 

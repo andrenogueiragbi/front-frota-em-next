@@ -4,13 +4,7 @@ import { Col, Row, Card, Table, Image, Form } from 'react-bootstrap';
 import { useState, useEffect, useContext } from 'react'
 import moment from 'moment'
 import { toast } from 'react-toastify';
-
-
 import { EditDriver, DeleteDriver } from 'modals'
-
-
-import AlertToast from 'widgets/Alert/Alert'
-import { DataContext } from 'hooks/DataFake';
 
 
 function LineTr({ item, isEdit, setIsEdit, isDelete, setIsDelete, states, cities, setUfIBGE }) {
@@ -116,9 +110,8 @@ const listDriver = ({ showNew }) => {
 
             if (page) {
 
-
                 await toast.promise(
-                    fetch(`https://api-frota.onrender.com/driver?page=${page}&limit=${limit.split(' ')[0]}&search=${search}`, options)
+                    fetch(`https://api-frota.onrender.com/driver?page=${page}&limit=${limit.split(' ')[0]}&search=${search}&status=${status}`, options)
                         .then(response => response.json())
                         .then(response => setDiver(response))
                         .catch(err => console.error(err)),
