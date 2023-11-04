@@ -4,7 +4,7 @@ import { Card, Image } from 'react-bootstrap';
 import { useState } from 'react'
 import { EditFeet, EditDriver } from 'modals'
 
-const StatRightTopIcon = ({ item }) => {
+const StatRightTopIcon = ({ item, isEdit, setIsEdit }) => {
 
 
     const [showEdit, setShowEdit] = useState(false)
@@ -65,7 +65,7 @@ const StatRightTopIcon = ({ item }) => {
             </Card>
 
 
-            <EditFeet item={item} showEdit={showEdit} setShowEdit={setShowEdit} />
+            <EditFeet item={item} showEdit={showEdit} setShowEdit={setShowEdit} isEdit={isEdit} setIsEdit={setIsEdit} />
 
         </>
 

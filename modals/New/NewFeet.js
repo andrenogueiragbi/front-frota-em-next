@@ -166,25 +166,6 @@ const modalFeetNew = ({ showNew, setShowNew }) => {
 
                     </div>
 
-                    <div className="d-flex justify-content-center">
-                        <div className="icon-shape">
-                            <div className='d-flex flex-column'>
-                                <div className="input-group col-md-8 align-items-center">
-                                    <label className="form-check-label me-2 fs-3" htmlFor="inativo">{formData.active ? 'Inativar' : 'Inativo'}</label>
-
-                                    <div className="form-check form-switch ">
-                                        <input className={`form-check-input ${formData.active ? 'bg-success' : ''} p-3`} type="checkbox" id="inativo" style={{ 'width': '55px', 'height': '20px' }} checked={formData.active} onChange={() => setForm({
-                                            ...formData,
-                                            active: !formData.active,
-
-                                        })} />
-                                    </div>
-                                    <label className="form-check-label ms-2 fs-3" htmlFor="inativo">{formData.active ? 'Ativo' : 'Ativar'}</label>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
 
                     <div className="row">

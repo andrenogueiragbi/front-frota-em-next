@@ -2,6 +2,8 @@ import { Modal, Button, Image } from 'react-bootstrap';
 import { useState, useEffect, useContext } from 'react';
 import { DataContext } from 'hooks/DataFake';
 import AlertToast from 'widgets/Alert/Alert';
+import { toast } from 'react-toastify';
+
 
 export function year() {
     const dataAtual = new Date();
@@ -21,7 +23,7 @@ export function year() {
 
 
 
-const modalFeetEdit = ({ item, showEdit, setShowEdit }) => {
+const modalFeetEdit = ({ item, showEdit, setShowEdit ,isEdit, setIsEdit}) => {
 
     const { updateFrota } = useContext(DataContext);
     const [selectedImage, setSelectedImage] = useState(null);
@@ -29,19 +31,9 @@ const modalFeetEdit = ({ item, showEdit, setShowEdit }) => {
 
     const id = item.id
 
-    /*        model,
-        code,
-        plate,
-        chassi,  //optional
-        engine_number, //optional
-        year,
-        fuel,
-        brand,
-        type,
-        km */
 
     const [formData, setForm] = useState({
-        active:item.active,
+        active: item.active,
         model: item.model,
         code: item.code,
         plate: item.plate,
@@ -67,11 +59,60 @@ const modalFeetEdit = ({ item, showEdit, setShowEdit }) => {
 
     };
 
-    function editFeet() {
+    async function editFeet() {
+        const formDataToSend = new FormData();
 
-        AlertToast('Dados atualizados com sucesso!', 'info', 2000)
-        updateFrota(id, formData)
-        setShowEdit(!showEdit)
+        if (selectedImage) {
+            formDataToSend.append('image', selectedImage);
+        }
+
+        if(formData.km < item.km){
+            return AlertToast(`O km novo não pode ser menor do que o valor antivo!`, 'warn')
+        }
+
+        for (const key in formData) {
+            console.log(key,formData[key])
+
+            if (!formData[key] && key !== 'km' &&  key !== 'active' && key !== 'chassi' && key !== 'engine_number') return AlertToast(`Prencha todos os campos requeridos!`, 'warn')
+            formDataToSend.append(key, formData[key]);
+        }
+
+        const options = {
+            method: 'PUT',
+            body: formDataToSend,
+
+        };
+
+        await toast.promise(
+            fetch(`https://api-frota.onrender.com/fleet/${id}`, options)
+                .then(response => response.json())
+                .then(response => {
+                    if (response.ok) {
+
+
+                        AlertToast(response.message_pt, 'success')
+                        setIsEdit(!isEdit)
+                        setShowEdit(!showEdit)
+
+
+                    } else if (response.message_en === 'server error') {
+
+                        AlertToast(`${response.message_pt} ou dados pertencente a outro motorista`, 'error')
+
+                    } else {
+
+                        AlertToast(response.message_pt, 'warn')
+                    }
+                })
+                .catch(err => console.error(err)),
+            {
+                pending: `Salvado Frota ${formData.model}`,
+                error: 'Falha em salvar dados da frota'
+
+            })
+
+
+
 
     }
 
@@ -167,7 +208,7 @@ const modalFeetEdit = ({ item, showEdit, setShowEdit }) => {
 
                     <div className="row">
 
-  
+
 
                         <div className="col-md-4">
                             <label className="col-form-label">Chassi:</label>

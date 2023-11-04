@@ -1,6 +1,6 @@
 'use client'
 // import node module libraries
-import { Fragment, useContext, useState,useEffect } from "react";
+import { Fragment, useContext, useState, useEffect } from "react";
 import Link from 'next/link';
 import { Container, Col, Row, Card, Form, } from 'react-bootstrap';
 import { toast } from 'react-toastify';
@@ -20,6 +20,7 @@ const Home = () => {
     const [fleet, setFleet] = useState()
     const { sorteFrota } = useContext(DataContext);
     const [showNew, setShowNew] = useState(false)
+    const [isEdit, setIsEdit] = useState(false)
 
     useEffect(() => {
 
@@ -27,17 +28,17 @@ const Home = () => {
 
             const options = { method: 'GET' };
 
-                await toast.promise(
-                    fetch(`https://api-frota.onrender.com/fleet`, options)
-                        .then(response => response.json())
-                        .then(response => setFleet(response))
-                        .catch(err => console.error(err)),
-                    {
-                        pending: `Buscando frota`,
-                        error: 'Falha na API de buscar frota'
+            await toast.promise(
+                fetch(`https://api-frota.onrender.com/fleet`, options)
+                    .then(response => response.json())
+                    .then(response => setFleet(response))
+                    .catch(err => console.error(err)),
+                {
+                   /*  pending: `Buscando frota`, */
+                    error: 'Falha na API de buscar frota'
 
-                    }
-                );
+                }
+            );
 
         }
 
@@ -45,7 +46,7 @@ const Home = () => {
 
         searchFleet()
 
-    }, [])
+    }, [isEdit])
 
 
 
@@ -92,7 +93,7 @@ const Home = () => {
                                     {fleet?.fleets.map((item, index) => (
 
                                         <Col xl={4} lg={6} md={12} xs={12} className="mt-6" key={index}>
-                                            <StatRightTopIconFeet key={index} item={item} />
+                                            <StatRightTopIconFeet key={index} item={item} isEdit={isEdit} setIsEdit={setIsEdit} />
                                         </Col>
 
                                     ))}
